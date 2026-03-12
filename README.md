@@ -132,115 +132,48 @@ Repositorio GitHub del proyecto:
 
 ---
 
-## 🧱 Arquitectura técnica
+## 🧾 Objetivos del proyecto
 
-Arquitectura cliente–servidor:
-
-- **Frontend (React)**:  
-  - Pantallas: registro/login mayores, registro/login voluntarios, creación de solicitud, listado de solicitudes, dashboard de voluntario.
-  - Integración progresiva con el backend (primero mocks, luego API real).[file:90][file:91]
-
-- **Backend (Spring Boot)**:  
-  - Endpoints REST para HU1–HU8.
-  - Persistencia en MySQL (usuarios, solicitudes, visitas, valoraciones, recompensas).[file:91]
-
-- **Integración**:  
-  - API JSON sobre HTTP.
-  - Desarrollo local: frontend en `localhost:3000`, backend en `localhost:8080`.
+- Reducir la **soledad no deseada** y aumentar la sensación de acompañamiento de las personas mayores.
+- Crear un canal estructurado que permita a los jóvenes **ofrecer ayuda ligera** y compañía en su propio entorno.
+- Implementar un sistema de **tareas**: las personas mayores solicitan ayuda, los voluntarios aceptan y realizan esas tareas.
+- Diseñar un sistema de **recompensas en puntos** para los voluntarios por cada tarea completada.
+- Entregar un **MVP funcional** que cubra las historias de usuario principales y sirva como base para futuras ampliaciones (valoraciones, panel de coordinador, etc.).
 
 ---
 
-## 🗓️ Plan de trabajo (Sprints)
+## 🏗️ Arquitectura técnica
 
-### Sprint 1 – Análisis y diseño (2 semanas)
+GenerAction sigue una arquitectura cliente–servidor:
 
-- Refinar problema, objetivos y actores.
-- Definir perfiles de usuario principales.
-- Priorizar historias de usuario HU1–HU8.
-- Diseñar arquitectura del sistema.
-- Definir esquema de base de datos.
-- Diseñar la plataforma a nivel estético (UI/UX) para mayores, voluntarios y coordinador.
-- Seleccionar stack tecnológico.[file:91]
+- **Backend**: Spring Boot (Java)  
+  - Spring Web (API REST)
+  - Spring Data JPA (acceso a datos)
+  - MySQL (persistencia)
+- **Frontend**: React (Vite, JavaScript)  
+  - React Router DOM (rutas)
+  - Axios (consumo API)
+  - Tailwind CSS (estilos)
+- **Comunicación**: API REST JSON entre frontend y backend
+- **Despliegue objetivo**: empaquetar el build de React dentro del JAR de Spring Boot y/o desplegar en servicios cloud (Render, etc.).
 
-**Entregables Sprint 1**:[file:91]
+Estructura de carpetas:
 
-- Documento de introducción, análisis del problema y objetivos.
-- Matriz de competencia con proyectos similares (Adopta un Abuelo, Madrid te Acompaña, Grandes Amigos, etc.).[file:91]
-- Historias de usuario HU1–HU8.
-- Mockups y prototipo funcional inicial en Figma.
-- Repositorio GitHub creado y documentado.[file:91]
+```bash
+GenerAction-app/
+├── backend/      # Proyecto Spring Boot (API + BD)
+└── frontend/     # Proyecto React (UI)
 
-### Sprint 2 – Funcionalidades & Frontend (2–3 semanas)
+👥 Equipo
+Carmen Sánchez Hernández
 
-- Configuración inicial del proyecto.
-- Desarrollo de componentes UI:
-  - Pantalla de registro/login para mayores.
-  - Pantalla de registro/login para voluntarios.
-  - Pantalla de creación de solicitud (mayor).
-  - Pantalla de listado de solicitudes (voluntario).
-  - Dashboard básico de voluntario: “mis visitas pendientes”.[file:90][file:91]
-- Integración inicial con backend simulado (mocks).
-- Testing unitario de componentes.
+Julián Avilés Medina
 
-**Entregables Sprint 2**:[file:90][file:91]
+Jaime Serres Fernández
 
-- Repositorio GitHub con la implementación inicial de frontend.
-- Flujo completo: Mayor → Solicitud → Voluntario acepta la solicitud (simulado).
-- Tests unitarios básicos.
-- Documentación de componentes realizados.
+Álvaro Fernández-Aller
 
-### Sprint 3 – Backend y base de datos (2–3 semanas)
+Walter Andrés Dybek Sánchez
 
-- Configuración del proyecto backend.
-- Creación de tablas (usuarios, solicitudes, visitas, valoraciones, recompensas).
-- Implementación de endpoints para HU1–HU5.
-- Testing unitario backend.
-- Documentación del desarrollo y unificación con BD.
-- Despliegue inicial en local.[file:90][file:91]
-
-### Sprint 4 – Valoraciones y panel básico (2 semanas)
-
-- Implementar sistema de valoración (HU6).
-- Persistir ratings 1–5 en backend.
-- Componente de valoración en frontend.
-- Wallet de recompensas.
-- Panel de coordinador (HU7) con dashboard (usuarios activos, visitas, satisfacción media).
-- Testing unitario y global.
-- Mejoras de UX basadas en feedback.[file:90][file:91]
-
-### Sprint 5 – Estabilización y entrega final (2 semanas)
-
-- Corrección de errores, optimizaciones.
-- Testing completo de todos los flujos.
-- Validación del despliegue.
-- Vídeo demo.
-- Preparación de presentación final.
-- Redacción de memoria (análisis, resultados, lecciones aprendidas).
-- Evaluación de la soledad con escala UCLA.
-- Validación global de HU1–HU8.[file:90][file:91]
-
----
-
-## 🖼️ Mockups y prototipo funcional Figma
-
-Se ha creado un **prototipo funcional interactivo en Figma** que permite validar los requisitos de HU1–HU8 antes de la implementación técnica:[file:91]
-
-- Flujos para Persona en necesidad, Voluntario, Coordinador y Familiar.
-- Interfaz responsive para móvil y web.
-- Navegación realista que simula el comportamiento final.
-- Validación visual de formularios, estados y transiciones.
-
-Enlace al prototipo Figma:[file:91]  
-`https://www.figma.com/make/P2Dh38s3F2xm3WSu5jte9N/Aplicaci%C3%B3n-de-conexi%C3%B3n-intergeneracional?p=f&t=vOpC5mp2KJYqIDP7-0&fullscreen=1`
-
-Este prototipo ha permitido detectar mejoras UX, como simplificar formularios para personas mayores (un campo por pantalla, tipografía más grande, ayuda por voz o pop-ups).[file:90][file:91]
-
----
-
-## 💻 Repositorio GitHub
-
-El código se desarrolla en **Visual Studio Code** con control de versiones Git y organización por ramas de trabajo.[file:91]  
-Repositorio principal del proyecto:
-
-```text
-https://github.com/mariadelcarmen-sanchez-hernandez/ProyectosII26.git
+Universidad Francisco de Vitoria – Escuela Politécnica Superior
+Grado en Ingeniería Informática – Proyectos II (Convocatoria mayo 2026)
