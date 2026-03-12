@@ -1,70 +1,246 @@
 # GenerAction – Conectando generaciones, combatiendo la soledad
 
-GenerAction es una plataforma web cuyo objetivo es reducir la soledad no deseada y la falta de apoyo cotidiano que sufren muchas personas mayores que viven solas en entornos urbanos. La aplicación conecta a estas personas con jóvenes voluntarios de su mismo entorno para realizar acompañamientos ligeros (paseos, visitas al médico, compras, conversaciones, etc.), coordinados mediante una plataforma digital sencilla y accesible, con apoyo telefónico para quienes lo necesiten.
+GenerAction es una plataforma web que aborda el problema de la **soledad no deseada** y la falta de apoyo cotidiano que sufren muchas personas mayores que viven solas en entornos urbanos, especialmente en la Comunidad de Madrid.[file:91] Esta situación afecta a su bienestar emocional, su sensación de seguridad y, en muchos casos, a su salud física y mental.[file:91] Al mismo tiempo existe una brecha intergeneracional: los jóvenes conviven en las mismas ciudades, pero apenas tienen espacios estructurados para relacionarse con personas mayores y ofrecerles compañía y ayuda ligera en su día a día.[file:91]
 
-El proyecto se desarrolla en el contexto de la asignatura **Proyectos II** del Grado en Ingeniería Informática de la **Universidad Francisco de Vitoria (UFV)**, como trabajo del equipo C1. G.A., y aplica metodología ágil por sprints, desde la definición del problema y las historias de usuario hasta el prototipado en Figma y la implementación técnica completa.
+El proyecto propone un servicio que conecta personas mayores con jóvenes voluntarios de su mismo entorno para realizar acompañamientos como paseos, visitas al médico, compras o conversaciones, coordinado mediante una **plataforma digital sencilla y accesible**, complementada con apoyo telefónico para quienes lo necesiten.[file:91] Cada tarea que un voluntario realiza genera puntos de recompensa, fomentando su participación continuada y creando un impacto social medible.
 
----
-
-## 🎯 Problema y contexto
-
-Nuestro foco inicial se centra en las personas mayores de 65 años que viven solas en la Comunidad de Madrid.
-
-Algunas características clave:
-
-- **Magnitud del problema**: En España existen aproximadamente 2,5 millones de personas mayores que viven solas (INE).
-- **Necesidad**: La soledad y el apoyo diario son carencias urgentes, con una valoración de 5/5 en necesidad.
-- **Accesibilidad**: Son usuarios localizables a través de censos, centros de mayores y servicios sociales (4/5 en accesibilidad).
-
-A la vez, muchos jóvenes viven en las mismas ciudades pero en una “burbuja digital”, con pocas oportunidades estructuradas para relacionarse con personas mayores y ofrecerles compañía real. GenerAction quiere tender ese puente intergeneracional.
+Este proyecto se desarrolla en la asignatura **Proyectos II** del Grado en Ingeniería Informática de la **Universidad Francisco de Vitoria (UFV)** por el equipo C1. G.A., aplicando metodología ágil (SCRUM) con planificación por sprints, prototipos en Figma y despliegue incremental.[file:91][file:90]
 
 ---
 
-## 👥 Perfiles de usuario
+## 👥 Equipo
 
-El diseño del sistema se basa en perfiles reales de usuario recogidos en el análisis:
+**Equipo C1. G.A. – Convocatoria mayo 2026**:[file:91]
 
-- **Francisca, 78 años**  
-  Fue ama de casa, muy culta pero solitaria. Le gustaría que alguien le ayudase con el móvil u ordenador para poder hablar con su nieta que vive lejos. Le cuesta recurrir a servicios sociales porque tardan mucho y prefiere hablar con una persona real, no con una máquina.
+- Carmen Sánchez Hernández  
+- Julián Avilés Medina  
+- Jaime Serres Fernández  
+- Álvaro Fernández-Aller  
+- Walter Andrés Dybek Sánchez  
 
-- **María Luisa, 79 años**  
-  Fue enfermera, sigue siendo bastante independiente pero su familia insiste en que no salga sola. Pide ayuda por teléfono y a través de la Seguridad Social. Prefiere las llamadas a las apps, y le haría confiar poder conocer un poco al joven que va a ayudarla.
-
-- **Daniel, 20 años**  
-  Estudiante de Ingeniería, le gusta la tecnología pero siente que vive aislado de la realidad de su barrio. Quiere conectar con personas mayores y mejorar su CV con experiencias de impacto social. Le motiva saber que ayuda de verdad, y también acumular puntos canjeables (cine, cafeterías, etc.) porque como estudiante va justo de dinero.
-
-A partir de estos perfiles se han definido las **historias de usuario (HU1–HU8)** que guían tanto el diseño del frontend como del backend y la base de datos.
+Universidad Francisco de Vitoria – Escuela Politécnica Superior.[file:91]
 
 ---
 
-## 🧾 Objetivos del proyecto
+## 🎯 Objetivos del proyecto
 
-- Reducir la **soledad no deseada** y aumentar la sensación de acompañamiento de las personas mayores.
-- Crear un canal estructurado que permita a los jóvenes **ofrecer ayuda ligera** y compañía en su propio entorno.
-- Implementar un sistema de **tareas**: las personas mayores solicitan ayuda, los voluntarios aceptan y realizan esas tareas.
-- Diseñar un sistema de **recompensas en puntos** para los voluntarios por cada tarea completada.
-- Entregar un **MVP funcional** que cubra las historias de usuario principales y sirva como base para futuras ampliaciones (valoraciones, panel de coordinador, etc.).
+### Objetivo general
+
+Mermar lo máximo posible la soledad que padecen las personas mayores y reducir la separación generacional existente entre jóvenes y ancianos, diseñando y desarrollando una solución tecnológica viable que permita organizar de forma segura y sencilla un servicio de acompañamiento entre jóvenes voluntarios y personas mayores que viven solas o en residencias con libertad de movimiento.[file:91]
+
+### Objetivos específicos (resumen)
+
+- Identificar y modelar los **perfiles de usuario principales** (personas mayores, jóvenes voluntarios y coordinadores).[file:91]
+- Diseñar y construir una **base de datos** coherente y segura para usuarios, solicitudes de ayuda, visitas y valoraciones.[file:91]
+- Desarrollar un **prototipo funcional** (frontend + backend + BD) que permita:
+  - Registrar mayores y voluntarios vía web.
+  - Crear solicitudes de acompañamiento.
+  - Asignar voluntarios a visitas.
+  - Registrar la realización de la visita.
+  - Valorar las visitas.
+  - Generar recompensas en una wallet de puntos.[file:91]
+- Definir y documentar **historias de usuario HU1–HU8** como guía del desarrollo iterativo.[file:91]
+- Establecer un **plan de trabajo basado en SCRUM** (sprints, revisiones, retrospectivas) con entrega integrada demostrable en mayo.[file:91][file:90]
+- Evaluar el impacto del prototipo mediante la **escala UCLA de soledad**.[file:91]
 
 ---
 
-## 🏗️ Arquitectura técnica
+## 👤 Perfiles de usuario
 
-GenerAction sigue una arquitectura cliente–servidor:
+El proyecto se apoya en entrevistas y arquetipos de usuario:[file:91]
 
-- **Backend**: Spring Boot (Java)  
-  - Spring Web (API REST)
-  - Spring Data JPA (acceso a datos)
-  - MySQL (persistencia)
-- **Frontend**: React (Vite, JavaScript)  
-  - React Router DOM (rutas)
-  - Axios (consumo API)
-  - Tailwind CSS (estilos)
-- **Comunicación**: API REST JSON entre frontend y backend
-- **Despliegue objetivo**: empaquetar el build de React dentro del JAR de Spring Boot y/o desplegar en servicios cloud (Render, etc.).
+- **Francisca, 78 años** – Ama de casa, muy culta pero solitaria, interesada en aprender a usar móvil/ordenador para hablar con su nieta.[file:91]
+- **María Luisa, 79 años** – Ex enfermera, independiente pero con presión familiar para no salir sola, prefiere llamadas telefónicas.[file:91]
+- **Dani, 20 años** – Estudiante de Ingeniería, siente que vive en “burbuja digital”; quiere ayudar, mejorar su CV y le motivan puntos canjeables.[file:91]
+- **Lucía, 19 años** – Estudiante de Diseño, muy social; quiere hacer algo útil con su tiempo y valora ver sus horas y personas ayudadas en su perfil.[file:91]
 
-Estructura de carpetas:
+Estos perfiles inspiran las historias de usuario y el diseño de la experiencia (formularios simples, confianza, motivación por recompensas).
 
-```bash
-GenerAction-app/
-├── backend/      # Proyecto Spring Boot (API + BD)
-└── frontend/     # Proyecto React (UI)
+---
+
+## 📚 Historias de usuario (HU1–HU8)
+
+Las historias de usuario guían el desarrollo iterativo y están asociadas a sprints concretos:[file:91]
+
+- **HU1 – Alta de persona mayor** (S1, S2, prioridad ALTA)  
+  Como persona mayor que vive sola, quiero poder registrarme (con ayuda de un coordinador) para recibir compañía y apoyo.[file:91]
+
+- **HU2 – Alta de voluntario** (S1, S2, prioridad ALTA)  
+  Como joven voluntario, quiero crear mi cuenta indicando mis datos y disponibilidad, y ver mi wallet de recompensas.[file:91]
+
+- **HU3 – Creación de solicitud** (S2, prioridad ALTA)  
+  Como persona mayor, quiero registrar una solicitud de acompañamiento (actividad, fecha, horario).[file:91]
+
+- **HU4 – Asignación de visita** (S2, S3, prioridad ALTA)  
+  Como voluntario, quiero ver solicitudes cercanas y aceptar una.[file:91]
+
+- **HU5 – Registro de visita** (S3, S4, prioridad ALTA)  
+  Como voluntario, quiero registrar que he realizado la visita (fecha, duración) para generar métricas y recompensas.[file:91]
+
+- **HU6 – Valoración de visita** (S4, prioridad MEDIA)  
+  Como persona mayor, quiero valorar al voluntario con puntuación y comentario.[file:91]
+
+- **HU7 – Panel de coordinador** (S4, prioridad MEDIA)  
+  Como responsable del programa, quiero ver un resumen de mayores atendidos, visitas y satisfacción.[file:91]
+
+- **HU8 – Notificaciones a familiares** (S4, S5, prioridad MEDIA)  
+  Cuando el voluntario llega, el familiar autorizado recibe un mensaje de confirmación.[file:91]
+
+---
+
+## 🏗️ Tecnologías a implementar
+
+### Frontend
+
+- HTML, CSS, React (Vite, JavaScript).
+- React Router para navegación.
+- Axios para consumo de API.
+- Tailwind CSS para estilos.
+- Criterios de accesibilidad inspirados en **WCAG 2.1 AA**, especialmente para personas mayores (fuentes grandes, formularios simplificados).[file:91][file:90]
+
+### Backend
+
+- Java 21.
+- Spring Boot (Spring Web, Spring Data JPA, Spring Security).
+- API REST para gestionar usuarios, solicitudes/tareas, visitas, valoraciones y recompensas.[file:91][file:90]
+
+### Base de datos
+
+- MySQL (o MariaDB).
+- Docker para despliegue y entorno de BD (planeado).[file:91]
+- Esquema con tablas para:
+  - `usuarios`
+  - `solicitudes` / `tareas`
+  - `visitas`
+  - `valoraciones`
+  - `recompensas`[file:91]
+
+### Despliegue (en estudio)
+
+- Docker.
+- AWS.
+- GitHub Pages (para documentación y/o frontend estático).[file:91]
+
+### Herramientas de desarrollo y comunicación
+
+- VS Code como IDE principal.[file:91][file:90]
+- Git y GitHub para control de versiones.[file:91]
+- ClickUp como tablero de tareas (backlog, sprints, tareas por miembro).[file:91]
+
+Repositorio GitHub del proyecto:  
+`https://github.com/mariadelcarmen-sanchez-hernandez/ProyectosII26.git`[file:91]
+
+---
+
+## 🧱 Arquitectura técnica
+
+Arquitectura cliente–servidor:
+
+- **Frontend (React)**:  
+  - Pantallas: registro/login mayores, registro/login voluntarios, creación de solicitud, listado de solicitudes, dashboard de voluntario.
+  - Integración progresiva con el backend (primero mocks, luego API real).[file:90][file:91]
+
+- **Backend (Spring Boot)**:  
+  - Endpoints REST para HU1–HU8.
+  - Persistencia en MySQL (usuarios, solicitudes, visitas, valoraciones, recompensas).[file:91]
+
+- **Integración**:  
+  - API JSON sobre HTTP.
+  - Desarrollo local: frontend en `localhost:3000`, backend en `localhost:8080`.
+
+---
+
+## 🗓️ Plan de trabajo (Sprints)
+
+### Sprint 1 – Análisis y diseño (2 semanas)
+
+- Refinar problema, objetivos y actores.
+- Definir perfiles de usuario principales.
+- Priorizar historias de usuario HU1–HU8.
+- Diseñar arquitectura del sistema.
+- Definir esquema de base de datos.
+- Diseñar la plataforma a nivel estético (UI/UX) para mayores, voluntarios y coordinador.
+- Seleccionar stack tecnológico.[file:91]
+
+**Entregables Sprint 1**:[file:91]
+
+- Documento de introducción, análisis del problema y objetivos.
+- Matriz de competencia con proyectos similares (Adopta un Abuelo, Madrid te Acompaña, Grandes Amigos, etc.).[file:91]
+- Historias de usuario HU1–HU8.
+- Mockups y prototipo funcional inicial en Figma.
+- Repositorio GitHub creado y documentado.[file:91]
+
+### Sprint 2 – Funcionalidades & Frontend (2–3 semanas)
+
+- Configuración inicial del proyecto.
+- Desarrollo de componentes UI:
+  - Pantalla de registro/login para mayores.
+  - Pantalla de registro/login para voluntarios.
+  - Pantalla de creación de solicitud (mayor).
+  - Pantalla de listado de solicitudes (voluntario).
+  - Dashboard básico de voluntario: “mis visitas pendientes”.[file:90][file:91]
+- Integración inicial con backend simulado (mocks).
+- Testing unitario de componentes.
+
+**Entregables Sprint 2**:[file:90][file:91]
+
+- Repositorio GitHub con la implementación inicial de frontend.
+- Flujo completo: Mayor → Solicitud → Voluntario acepta la solicitud (simulado).
+- Tests unitarios básicos.
+- Documentación de componentes realizados.
+
+### Sprint 3 – Backend y base de datos (2–3 semanas)
+
+- Configuración del proyecto backend.
+- Creación de tablas (usuarios, solicitudes, visitas, valoraciones, recompensas).
+- Implementación de endpoints para HU1–HU5.
+- Testing unitario backend.
+- Documentación del desarrollo y unificación con BD.
+- Despliegue inicial en local.[file:90][file:91]
+
+### Sprint 4 – Valoraciones y panel básico (2 semanas)
+
+- Implementar sistema de valoración (HU6).
+- Persistir ratings 1–5 en backend.
+- Componente de valoración en frontend.
+- Wallet de recompensas.
+- Panel de coordinador (HU7) con dashboard (usuarios activos, visitas, satisfacción media).
+- Testing unitario y global.
+- Mejoras de UX basadas en feedback.[file:90][file:91]
+
+### Sprint 5 – Estabilización y entrega final (2 semanas)
+
+- Corrección de errores, optimizaciones.
+- Testing completo de todos los flujos.
+- Validación del despliegue.
+- Vídeo demo.
+- Preparación de presentación final.
+- Redacción de memoria (análisis, resultados, lecciones aprendidas).
+- Evaluación de la soledad con escala UCLA.
+- Validación global de HU1–HU8.[file:90][file:91]
+
+---
+
+## 🖼️ Mockups y prototipo funcional Figma
+
+Se ha creado un **prototipo funcional interactivo en Figma** que permite validar los requisitos de HU1–HU8 antes de la implementación técnica:[file:91]
+
+- Flujos para Persona en necesidad, Voluntario, Coordinador y Familiar.
+- Interfaz responsive para móvil y web.
+- Navegación realista que simula el comportamiento final.
+- Validación visual de formularios, estados y transiciones.
+
+Enlace al prototipo Figma:[file:91]  
+`https://www.figma.com/make/P2Dh38s3F2xm3WSu5jte9N/Aplicaci%C3%B3n-de-conexi%C3%B3n-intergeneracional?p=f&t=vOpC5mp2KJYqIDP7-0&fullscreen=1`
+
+Este prototipo ha permitido detectar mejoras UX, como simplificar formularios para personas mayores (un campo por pantalla, tipografía más grande, ayuda por voz o pop-ups).[file:90][file:91]
+
+---
+
+## 💻 Repositorio GitHub
+
+El código se desarrolla en **Visual Studio Code** con control de versiones Git y organización por ramas de trabajo.[file:91]  
+Repositorio principal del proyecto:
+
+```text
+https://github.com/mariadelcarmen-sanchez-hernandez/ProyectosII26.git
