@@ -106,7 +106,7 @@ Las historias de usuario guían el desarrollo iterativo y están asociadas a spr
 
 ### Base de datos
 
-- MySQL (o MariaDB).
+- MySQL
 - Docker para despliegue y entorno de BD (planeado).[file:91]
 - Esquema con tablas para:
   - `usuarios`
