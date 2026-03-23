@@ -164,16 +164,3 @@ GenerAction-app/
 ├── backend/      # Proyecto Spring Boot (API + BD)
 └── frontend/     # Proyecto React (UI)
 
-👥 Equipo
-Carmen Sánchez Hernández
-
-Julián Avilés Medina
-
-Jaime Serres Fernández
-
-Álvaro Fernández-Aller
-
-Walter Andrés Dybek Sánchez
-
-Universidad Francisco de Vitoria – Escuela Politécnica Superior
-Grado en Ingeniería Informática – Proyectos II (Convocatoria mayo 2026)
