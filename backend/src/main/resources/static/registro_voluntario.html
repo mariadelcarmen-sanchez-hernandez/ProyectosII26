@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Voluntariado</title>
+    <link rel="stylesheet" href="registro_style.css">
+</head>
+<body>
+
+    <div class="form-wrapper">
+        <div class="form-container">
+            <header class="form-header">
+                <h1>Registro de Voluntario</h1>
+                <p>Por favor, completa tus datos para unirte al equipo.</p>
+            </header>
+
+            <form id="voluntarioForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nombre">Nombre *</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos *</label>
+                        <input type="text" id="apellidos" name="apellidos" placeholder="Tus apellidos" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Teléfono *</label>
+                        <input type="tel" id="telefono" name="telefono" placeholder="600 000 000" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico *</label>
+                        <input type="email" id="email" name="email" placeholder="ejemplo@correo.com" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="ciudad">Ciudad de residencia *</label>
+                        <input type="text" id="ciudad" name="ciudad" placeholder="Ej: Madrid, Barcelona..." required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Disponibilidad</label>
+                        <div class="checkbox-container">
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="disponibilidad" value="manana"> Mañanas
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="disponibilidad" value="tarde"> Tardes
+                            </label>
+                            <label class="checkbox-item">
+                                <input type="checkbox" name="disponibilidad" value="fin_semana"> Fines de semana
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="comentarios">Comentarios / Motivación</label>
+                        <textarea id="comentarios" name="comentarios" rows="4" placeholder="¿Por qué quieres ser voluntario?"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">Enviar Registro</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="registro_script.js"></script>
+</body>
+</html>

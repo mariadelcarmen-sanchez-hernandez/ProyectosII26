@@ -54,6 +54,38 @@ const progressBar = document.getElementById('progressBar');
 const stepText = document.getElementById('stepText');
 const steps = document.querySelectorAll('.step');
 
+function construirPayloadMayor() {
+    return {
+        nombre: document.getElementById('nombre').value.trim(),
+        apellidos: document.getElementById('apellidos').value.trim(),
+        telefono: document.getElementById('telefono').value.trim(),
+        direccion: 'No indicada',
+        municipio: document.getElementById('ciudad').value.trim() || 'Sin municipio',
+        fechaNacimiento: '1950-01-01',
+        nivelAutonomia: 'medio',
+        preferenciasActividad: document.getElementById('comentarios').value.trim(),
+        contactoFamiliarNombre: '',
+        contactoFamiliarTelefono: ''
+    };
+}
+
+async function registrarMayor() {
+    const payload = construirPayloadMayor();
+
+    const response = await fetch('/api/mayores', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        const error = await response.text();
+        throw new Error(error || 'No se pudo registrar la persona mayor.');
+    }
+
+    return response.json();
+}
+
 function updateDisplay() {
     // Actualizar qué paso se ve
     steps.forEach((s, idx) => {
@@ -75,7 +107,14 @@ nextBtn.addEventListener('click', () => {
         currentStep++;
         updateDisplay();
     } else {
-        alert("¡Formulario Completado!");
+        registrarMayor()
+            .then((mayor) => {
+                alert(`Registro completado para ${mayor.nombre}.`);
+            })
+            .catch((err) => {
+                alert(`Error al registrar: ${err.message}`);
+                console.error(err);
+            });
     }
 });
 

@@ -18,7 +18,7 @@ document.getElementById('voluntarioForm').addEventListener('submit', async funct
     };
 
     try {
-        const response = await fetch("http://localhost:8080/api/voluntarios", {
+        const response = await fetch("/api/voluntarios", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(datos)
@@ -37,5 +37,4 @@ document.getElementById('voluntarioForm').addEventListener('submit', async funct
         console.error(err);
     }
 });
-
 
