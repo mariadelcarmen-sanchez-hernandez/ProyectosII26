@@ -1,0 +1,100 @@
+:root {
+    --primary-blue: #7fa9ff;
+    --dark-blue: #3b82f6;
+    --task-blue-light: #e0ebff;
+    --bg-light: #f0f7ff;
+    --text-dark: #334155;
+    --white: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--bg-light);
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--dark-blue);
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    position: relative;
+}
+
+.nav-back-btn {
+    position: absolute; left: 20px; color: white; text-decoration: none; font-weight: bold;
+}
+
+/* Contenedores */
+.container { display: flex; justify-content: center; padding: 40px 20px; }
+
+.profile-card, .edit-card {
+    background: var(--white);
+    width: 100%;
+    max-width: 800px;
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+/* Foto Redonda */
+.avatar-circle {
+    width: 130px; height: 130px; border-radius: 50%; overflow: hidden;
+    margin: 0 auto 20px; border: 5px solid var(--bg-light);
+}
+.avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+/* BOTÓN EDITAR ESTILO IMAGEN 2 */
+.main-edit-btn {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(127, 169, 255, 0.3);
+    margin-top: 10px;
+}
+
+.main-edit-btn:hover {
+    background: var(--dark-blue);
+    transform: translateY(-2px);
+}
+
+/* Tareas en Dos Columnas con Boxes Azules */
+.tasks-container {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+    text-align: left; margin-top: 40px; border-top: 2px solid var(--bg-light); padding-top: 30px;
+}
+
+.task-box {
+    background-color: var(--task-blue-light);
+    padding: 15px; border-radius: 15px; display: flex; align-items: center;
+    gap: 12px; margin-bottom: 10px;
+}
+
+.task-box .dot { width: 10px; height: 10px; background: var(--primary-blue); border-radius: 50%; }
+.task-box .check { color: #10b981; font-weight: bold; }
+
+/* Formulario de Edición */
+.edit-card h2 { margin-bottom: 30px; color: var(--text-dark); }
+.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.input-group { margin-bottom: 20px; text-align: left; }
+.input-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 1.1rem; }
+.input-group input { width: 100%; padding: 14px; border: 1.5px solid #eef2f6; border-radius: 12px; font-size: 1rem; box-sizing: border-box; }
+
+.certificate-box {
+    background: #f8fafc; padding: 20px; border: 2px dashed var(--primary-blue); border-radius: 15px;
+}
+
+.button-group { display: flex; gap: 15px; margin-top: 30px; }
+.save-btn { background: var(--primary-blue); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; flex: 2; cursor: pointer; }
+.cancel-btn { background: #f1f5f9; color: #64748b; border: none; padding: 15px; border-radius: 12px; flex: 1; cursor: pointer; }
+
+@media (max-width: 768px) { .tasks-container, .input-grid { grid-template-columns: 1fr; } }
