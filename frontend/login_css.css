@@ -143,12 +143,18 @@ h2 { color: var(--text-dark); margin: 10px 0; }
 
 .register-footer {
     margin-top: 25px;
-    font-size: 0.9rem;
+    font-size: 1.1rem; 
     color: #64748b;
+    font-weight: 500;
 }
 
 .register-footer a {
     color: var(--dark-blue);
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
+    transition: color 0.3s;
+}
+.register-footer a:hover {
+    text-decoration: underline;
+    color: var(--primary-blue);
 }
