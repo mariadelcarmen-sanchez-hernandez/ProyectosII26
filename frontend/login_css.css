@@ -22,7 +22,7 @@ body {
     position: relative;
     color: white;
 }
-
+/*
 .back-btn {
     position: absolute;
     left: 20px;
@@ -39,7 +39,7 @@ body {
 .back-btn:hover {
     background: rgba(255, 255, 255, 0.3);
     transform: translateX(-3px);
-}
+}*/
 
 /* Tarjeta de Login */
 .login-container {
