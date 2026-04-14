@@ -17,7 +17,7 @@ body {
 /* Navbar */
 .navbar {
     background-color: var(--dark-blue);
-    height: 70px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -25,10 +25,27 @@ body {
     font-size: 1.2rem;
     position: relative;
 }
+.back-btn {
+    position: absolute;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 18px;
+    transition: all 0.3s ease;
+}
 
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateX(-3px);
+}
+/*
 .nav-back-btn {
     position: absolute; left: 20px; color: white; text-decoration: none; font-weight: bold;
-}
+}*/
 
 /* Contenedor */
 .container { display: flex; justify-content: center; padding: 40px 20px; }
