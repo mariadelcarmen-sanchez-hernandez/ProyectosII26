@@ -1,347 +1,134 @@
-<<<<<<< HEAD
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mis Solicitudes</title>
-  <link rel="stylesheet" href="paginainiciousuario.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenerAction - Mis Solicitudes</title>
+    <link rel="stylesheet" href="paginainiciousuario.css">
 </head>
 <body>
 
-  <!-- Barra superior -->
-  <div class="topbar">
-    <div class="title">GenerAction</div>
-  </div>
+    <div class="topbar">
+        <a href="login.html" class="back-link">← Cerrar Sesión</a>
+        <div class="title">GenerAction</div>
+        <div style="width: 60px;"></div> </div>
 
-  <!-- Banner -->
-  <div class="banner">
-    <div class="user-info">
-      <div class="avatar">👤</div>
-      <div>
-        <p></p>
-        <strong></strong>
-      </div>
-    </div>
-    <h1>Mis Solicitudes</h1>
-  </div>
-    <div class="top-icons">
-      <span class="icon-btn">↪</span>
-    </div>
-
-  <!-- Botón solicitar ayuda -->
-  <div class="cta">
-    <button onclick="openModal()">+ Solicitar Ayuda</button>
-  </div>
-  <div class="modal" id="modal">
-  <div class="modal-content">
-  <!-- Botón cerrar -->
-  <span class="close-btn" onclick="closeModal()">✖</span>
-
-    <h3>Nueva solicitud</h3>
-        <div class="suggestions">
-      <p><strong>Sugerencias:</strong></p>
-      <div class="suggestion">Ir a la compra</div>
-      <div class="suggestion">Pasear al perro</div>
-      <div class="suggestion">Ayuda con el móvil</div>
-      <div class="suggestion">Recoger medicamentos</div>
+    <div class="banner">
+        <div class="user-info">
+            <div class="avatar">👤</div>
+            <h2></h2>
+            <p></p>
         </div>
-    <input type="text" id="taskInput" placeholder="Describe la ayuda que necesitas">
-    <button onclick="addTask()">Guardar</button>
-  </div>
-</div>
-
-  <!-- Card sin solicitudes -->
-  <div class="card">
-    <div class="icon">🏠</div>
-    <h2>No tienes solicitudes</h2>
-    <p>Presiona el botón de arriba para solicitar ayuda</p>
-  </div>
-
-  <!-- Footer -->
-  <div class="footer">
-    <div>
-      🏠<br>Inicio
     </div>
-    <div>
-      ✔️<br>Historial
-    </div>
-    <div>
-      👤<br>Perfil
-    </div>
-  <script>
-    const tabs = document.querySelectorAll('.tab');
-    const cardTitle = document.querySelector('.card h2');
-    const cardText = document.querySelector('.card p');
 
-    tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
+    <div class="main-container">
+        
+        <div class="cta">
+            <button onclick="openModal()">+ Solicitar Ayuda</button>
+        </div>
 
-        if(index === 0){
-          cardTitle.textContent = 'No hay tareas disponibles en este momento';
-          cardText.textContent = 'Vuelve más tarde para ver nuevas tareas';
-        } else {
-          cardTitle.textContent = 'No tienes tareas asignadas';
-          cardText.textContent = 'Cuando aceptes tareas aparecerán aquí';
+        <div class="card" id="taskContainer">
+            <div class="empty-state">
+                <div class="icon-house">🏠</div>
+                <h2>No tienes solicitudes</h2>
+                <p>Presiona el botón de arriba para solicitar ayuda</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            
+            <h2>Nueva solicitud</h2>
+            <p class="subtitle">Selecciona una sugerencia o escribe lo que necesites.</p>
+
+            <div class="suggestions">
+                <div class="suggestion-tag" onclick="fillInput('Ir a la compra')">🛒 Ir a la compra</div>
+                <div class="suggestion-tag" onclick="fillInput('Pasear al perro')">🐕 Pasear al perro</div>
+                <div class="suggestion-tag" onclick="fillInput('Ayuda con el móvil')">📱 Ayuda con el móvil</div>
+                <div class="suggestion-tag" onclick="fillInput('Recoger medicinas')">💊 Medicinas</div>
+            </div>
+
+            <input type="text" id="taskInput" placeholder="Describe brevemente la ayuda que necesitas...">
+            
+            <button class="save-btn" onclick="addTask()">Guardar Solicitud</button>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <a href="inicio.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Inicio</span>
+        </a>
+
+        <a href="perfil.html" class="nav-item active">
+            <span class="nav-icon">👤</span>
+            <span>Perfil</span>
+        </a>
+    </div>
+
+    <script>
+        const modal = document.getElementById('modal');
+        const taskInput = document.getElementById('taskInput');
+        const taskContainer = document.getElementById('taskContainer');
+        let tareas = [];
+
+        function openModal() { modal.style.display = 'flex'; }
+        function closeModal() { modal.style.display = 'none'; }
+        function fillInput(text) { taskInput.value = text; }
+
+        function addTask() {
+            const texto = taskInput.value.trim();
+            if (texto === '') return;
+            
+            tareas.push(texto);
+            renderTareas();
+            taskInput.value = '';
+            closeModal();
         }
-      });
-    });
-  
-    // Navbar inferior funcional
-    const navItems = document.querySelectorAll('.footer div');
 
-    navItems.forEach((item, index) => {
-      item.addEventListener('click', () => {
-        navItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
+        function renderTareas() {
+            taskContainer.innerHTML = '';
 
-        if(index === 0){
-          cardTitle.textContent = 'No hay tareas disponibles en este momento';
-          cardText.textContent = 'Vuelve más tarde para ver nuevas tareas';
-        } else if(index === 1){
-          cardTitle.textContent = 'Historial de tareas creadas';
-          cardText.textContent = 'Cuando crees tareas aparecerán aquí';
-        } else if(index === 2){
-          cardTitle.textContent = 'Perfil de usuario';
-          cardText.textContent = 'Aquí podrás editar tu información';
+            if (tareas.length === 0) {
+                taskContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon-house">🏠</div>
+                        <h2>No tienes solicitudes</h2>
+                        <p>Presiona el botón de arriba para solicitar ayuda</p>
+                    </div>`;
+                return;
+            }
+
+            tareas.forEach((tarea, index) => {
+                const div = document.createElement('div');
+                div.className = 'task-item';
+                div.innerHTML = `
+                    <span class="task-text">${tarea}</span>
+                    <div class="task-actions">
+                        <button class="btn-complete" onclick="completeTask(${index})" title="Completar">✔️</button>
+                        <button class="btn-cancel" onclick="deleteTask(${index})" title="Eliminar">🗑️</button>
+                    </div>
+                `;
+                taskContainer.appendChild(div);
+            });
         }
-      });
-    });
-    const avatar = document.querySelector('.avatar');
 
-    avatar.addEventListener('click', () => {
-      navItems.forEach(i => i.classList.remove('active'));
-      navItems[3].classList.add('active');
+        function deleteTask(index) {
+            tareas.splice(index, 1);
+            renderTareas();
+        }
 
-      cardTitle.textContent = 'Perfil de usuario';
-      cardText.textContent = 'Aquí podrás editar tu información';
-    });
-    const modal = document.getElementById('modal');
-const card = document.querySelector('.card');
+        function completeTask(index) {
+            alert("¡Tarea marcada como completada!");
+            deleteTask(index);
+        }
 
-let tareas = [];
-
-  function openModal(){
-    modal.style.display = 'flex';
-  }
-
-  function addTask(){
-    const input = document.getElementById('taskInput');
-
-    if(input.value.trim() === '') return;
-
-    tareas.push(input.value);
-
-    renderTareas();
-
-    input.value = '';
-    modal.style.display = 'none';
-  }
-
-  function renderTareas(){
-    card.innerHTML = '';
-
-    tareas.forEach(tarea => {
-      const div = document.createElement('div');
-      div.style.background = 'white';
-      div.style.padding = '15px';
-      div.style.margin = '10px 0';
-      div.style.borderRadius = '10px';
-      div.textContent = tarea;
-
-      card.appendChild(div);
-    });
-  }
-    const suggestions = document.querySelectorAll('.suggestion');
-    const input = document.getElementById('taskInput');
-
-    // Cuando haces click en una sugerencia
-    suggestions.forEach(item => {
-      item.addEventListener('click', () => {
-        input.value = item.textContent;
-      });
-    });
-      function closeModal(){
-        modal.style.display = 'none';
-      }
-  </script>
+        // Cerrar modal si se hace clic fuera de la caja blanca
+        window.onclick = function(event) {
+            if (event.target == modal) closeModal();
+        }
+    </script>
 </body>
 </html>
-
-=======
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mis Solicitudes</title>
-  <link rel="stylesheet" href="paginainiciousuario.css">
-</head>
-<body>
-
-  <!-- Barra superior -->
-  <div class="topbar">
-    <div class="title">GenerAction</div>
-  </div>
-
-  <!-- Banner -->
-  <div class="banner">
-    <div class="user-info">
-      <div class="avatar">👤</div>
-      <div>
-        <p></p>
-        <strong></strong>
-      </div>
-    </div>
-    <h1>Mis Solicitudes</h1>
-  </div>
-    <div class="top-icons">
-      <span class="icon-btn">↪</span>
-    </div>
-
-  <!-- Botón solicitar ayuda -->
-  <div class="cta">
-    <button onclick="openModal()">+ Solicitar Ayuda</button>
-  </div>
-  <div class="modal" id="modal">
-  <div class="modal-content">
-  <!-- Botón cerrar -->
-  <span class="close-btn" onclick="closeModal()">✖</span>
-
-    <h3>Nueva solicitud</h3>
-        <div class="suggestions">
-      <p><strong>Sugerencias:</strong></p>
-      <div class="suggestion">Ir a la compra</div>
-      <div class="suggestion">Pasear al perro</div>
-      <div class="suggestion">Ayuda con el móvil</div>
-      <div class="suggestion">Recoger medicamentos</div>
-        </div>
-    <input type="text" id="taskInput" placeholder="Describe la ayuda que necesitas">
-    <button onclick="addTask()">Guardar</button>
-  </div>
-</div>
-
-  <!-- Card sin solicitudes -->
-  <div class="card">
-    <div class="icon">🏠</div>
-    <h2>No tienes solicitudes</h2>
-    <p>Presiona el botón de arriba para solicitar ayuda</p>
-  </div>
-
-  <!-- Footer -->
-  <div class="footer">
-    <div>
-      🏠<br>Inicio
-    </div>
-    <div>
-      ✔️<br>Historial
-    </div>
-    <div>
-      👤<br>Perfil
-    </div>
-  <script>
-    const tabs = document.querySelectorAll('.tab');
-    const cardTitle = document.querySelector('.card h2');
-    const cardText = document.querySelector('.card p');
-
-    tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-
-        if(index === 0){
-          cardTitle.textContent = 'No hay tareas disponibles en este momento';
-          cardText.textContent = 'Vuelve más tarde para ver nuevas tareas';
-        } else {
-          cardTitle.textContent = 'No tienes tareas asignadas';
-          cardText.textContent = 'Cuando aceptes tareas aparecerán aquí';
-        }
-      });
-    });
-  
-    // Navbar inferior funcional
-    const navItems = document.querySelectorAll('.footer div');
-
-    navItems.forEach((item, index) => {
-      item.addEventListener('click', () => {
-        navItems.forEach(i => i.classList.remove('active'));
-        item.classList.add('active');
-
-        if(index === 0){
-          cardTitle.textContent = 'No hay tareas disponibles en este momento';
-          cardText.textContent = 'Vuelve más tarde para ver nuevas tareas';
-        } else if(index === 1){
-          cardTitle.textContent = 'Historial de tareas creadas';
-          cardText.textContent = 'Cuando crees tareas aparecerán aquí';
-        } else if(index === 2){
-          cardTitle.textContent = 'Perfil de usuario';
-          cardText.textContent = 'Aquí podrás editar tu información';
-        }
-      });
-    });
-    const avatar = document.querySelector('.avatar');
-
-    avatar.addEventListener('click', () => {
-      navItems.forEach(i => i.classList.remove('active'));
-      navItems[3].classList.add('active');
-
-      cardTitle.textContent = 'Perfil de usuario';
-      cardText.textContent = 'Aquí podrás editar tu información';
-    });
-    const modal = document.getElementById('modal');
-const card = document.querySelector('.card');
-
-let tareas = [];
-
-  function openModal(){
-    modal.style.display = 'flex';
-  }
-
-  function addTask(){
-    const input = document.getElementById('taskInput');
-
-    if(input.value.trim() === '') return;
-
-    tareas.push(input.value);
-
-    renderTareas();
-
-    input.value = '';
-    modal.style.display = 'none';
-  }
-
-  function renderTareas(){
-    card.innerHTML = '';
-
-    tareas.forEach(tarea => {
-      const div = document.createElement('div');
-      div.style.background = 'white';
-      div.style.padding = '15px';
-      div.style.margin = '10px 0';
-      div.style.borderRadius = '10px';
-      div.textContent = tarea;
-
-      card.appendChild(div);
-    });
-  }
-    const suggestions = document.querySelectorAll('.suggestion');
-    const input = document.getElementById('taskInput');
-
-    // Cuando haces click en una sugerencia
-    suggestions.forEach(item => {
-      item.addEventListener('click', () => {
-        input.value = item.textContent;
-      });
-    });
-      function closeModal(){
-        modal.style.display = 'none';
-      }
-  </script>
-</body>
-</html>
-
->>>>>>> mirepo/main
