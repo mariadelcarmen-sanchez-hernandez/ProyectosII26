@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Visita {
 
+<<<<<<< HEAD
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idVisita;
@@ -24,11 +25,39 @@ public class Visita {
     @JoinColumn(name = "id_solicitud", nullable = false, unique = true)
     private Solicitud solicitud;
 
+=======
+    public enum EstadoVisita {
+        PENDIENTE,
+        ASIGNADA,
+        EN_TRAMITE,
+        REALIZADA,
+        COMPLETADA,
+        NO_REALIZADA,
+        CANCELADA
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_visita")
+    private Long idVisita;
+
+    // Una visita cubre una solicitud concreta
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_solicitud", nullable = false)
+    private Solicitud solicitud;
+
+    // El mayor que recibe la visita
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_mayor", nullable = false)
+    private Mayor mayor;
+
+>>>>>>> mirepo/main
     // El voluntario que acepta y realiza la visita
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_voluntario", nullable = false)
     private Voluntario voluntario;
 
+<<<<<<< HEAD
     @Column(nullable = false)
     private LocalDateTime fechaAsignacion = LocalDateTime.now();
 
@@ -44,4 +73,17 @@ public class Visita {
     public enum EstadoVisita {
         PENDIENTE, REALIZADA, CANCELADA
     }
+=======
+    @Column(name = "fecha_asignacion", nullable = false)
+    private LocalDateTime fechaAsignacion = LocalDateTime.now();
+
+    // Se rellena cuando el voluntario confirma que realizó la visita (HU5)
+    @Column(name = "duracion_minutos")
+    private Integer duracionMinutos;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false, length = 20)
+    private EstadoVisita estado = EstadoVisita.PENDIENTE;
+
+>>>>>>> mirepo/main
 }
