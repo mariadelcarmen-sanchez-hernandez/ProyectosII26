@@ -1,0 +1,265 @@
+:root {
+    --primary-blue: #4f8aff;
+    --dark-blue: #2563eb;
+    --bg-color: #f0f7ff;
+    --white: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--bg-color);
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--primary-blue);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+}
+
+/* --- BOTÓN VOLVER BONITO --- */
+.back-btn {
+    position: absolute;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.1); /* Efecto cristal */
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease; /* Suaviza el hover */
+}
+
+.back-btn .icon {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+/* Hover del botón Volver */
+.back-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateX(-3px); /* Se mueve ligeramente a la izquierda */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.back-btn:hover .icon {
+    transform: translateX(-2px); /* La flecha se mueve más */
+}
+
+.back-btn:active {
+    transform: scale(0.95); /* Efecto de pulsado */
+}
+
+/* Barra de progreso */
+.progress-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.progress-bar {
+    width: 14.2%;
+    height: 100%;
+    background: white;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Tarjeta y Contenedores */
+.container {
+    display: flex;
+    justify-content: center;
+    padding-top: 100px;
+}
+
+.card {
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.next-btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 16px;
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.next-btn:hover {
+    background: var(--dark-blue);
+    transform: translateY(-2px);
+}
+
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.4s; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+:root {
+    --primary-blue: #7fa9ff;
+    --dark-blue: #3b82f6;
+    --bg-color: #f0f7ff;
+    --text-dark: #334155;
+    --white: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+}
+
+/* Navbar & Progreso */
+.navbar {
+    background-color: var(--dark-blue);
+    color: var(--white);
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+}
+
+.back-link {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.progress-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    position: absolute;
+    bottom: 0;
+}
+
+.progress-bar {
+    width: 14.28%; /* 1 de 7 */
+    height: 100%;
+    background: var(--white);
+    transition: width 0.4s ease-in-out;
+}
+
+/* Contenedor Principal */
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px);
+    padding: 20px;
+}
+
+.card {
+    background: var(--white);
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    text-align: center;
+}
+
+.icon-header img {
+    width: 60px;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+}
+
+/* Inputs y Áreas de texto */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1.5px solid #eef2f6;
+    border-radius: 15px;
+    background: #f8fafc;
+    font-size: 1rem;
+    box-sizing: border-box;
+    outline: none;
+    transition: border 0.3s;
+}
+
+input:focus {
+    border-color: var(--primary-blue);
+}
+
+/* Checkboxes Estilizados */
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+}
+
+.option-card {
+    padding: 12px;
+    border: 1px solid #eef2f6;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* Botón Siguiente */
+.btn-next {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--primary-blue);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: background 0.3s;
+}
+
+.btn-next:hover {
+    background-color: var(--dark-blue);
+}
+
+/* Control de pasos */
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+    animation: fadeIn 0.4s ease;
+}
+
