@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
@@ -73,4 +74,81 @@
   </script>
 
 </body>
+=======
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tareas Disponibles</title>
+  <link rel="stylesheet" href="paginainiciovoluntario.css">
+</head>
+<body>
+
+  <!-- Banner verde -->
+  <div class="banner">
+    <div class="user-info">
+      <div class="avatar">👤</div>
+      <div>
+        <p></p>
+        <strong></strong>
+      </div>
+    </div>
+
+    <div class="top-icons">
+      📄 ⤴️
+    </div>
+
+    <div class="tabs">
+      <div class="tab active">Disponibles (0)</div>
+      <div class="tab">Mis Tareas (0)</div>
+    </div>
+  </div>
+
+  <!-- Card vacía -->
+  <div class="card">
+    <div class="icon">♡</div>
+    <h2>No hay tareas disponibles en este momento</h2>
+    <p>Vuelve más tarde para ver nuevas tareas</p>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="active">
+      ⌂<br>Inicio
+    </div>
+    <div>
+      📍<br>Mapa
+    </div>
+    <div>
+      ♡<br>Mis tareas
+    </div>
+    <div>
+      👤<br>Perfil
+    </div>
+  </div>
+    <script>
+    const tabs = document.querySelectorAll('.tab');
+    const cardTitle = document.querySelector('.card h2');
+    const cardText = document.querySelector('.card p');
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        if(index === 0){
+          cardTitle.textContent = 'No hay tareas disponibles en este momento';
+          cardText.textContent = 'Vuelve más tarde para ver nuevas tareas';
+        } else {
+          cardTitle.textContent = 'No tienes tareas asignadas';
+          cardText.textContent = 'Cuando aceptes tareas aparecerán aquí';
+        }
+      });
+    });
+  </script>
+
+</body>
+>>>>>>> mirepo/main
 </html>
