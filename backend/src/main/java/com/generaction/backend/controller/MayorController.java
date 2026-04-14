@@ -6,6 +6,14 @@ import com.generaction.backend.service.MayorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -41,5 +49,18 @@ public class MayorController {
     public ResponseEntity<Void> darDeBaja(@PathVariable Long id) {
         mayorService.darDeBaja(id);
         return ResponseEntity.noContent().build();
+    }
+
+
+    @PostMapping(value = "/{id}/documento", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> subirDocumentoMayor(
+            @PathVariable Long id,
+            @RequestParam("archivo") MultipartFile archivo) {
+        try {
+            mayorService.guardarDocumento(id, archivo);
+            return ResponseEntity.ok("Documento del mayor guardado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al guardar el documento del mayor: " + e.getMessage());
+        }
     }
 }

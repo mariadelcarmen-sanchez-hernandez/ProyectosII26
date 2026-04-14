@@ -60,4 +60,12 @@ public class Mayor {
 
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
+
+    @Column(name = "documento_pdf")
+    private byte[] documentoPdf; // Para almacenar el PDF del mayor (HU2)
+
+    @Column(name = "foto_perfil_mayor")
+    private byte[] fotoPerfilMayor; // Para almacenar la foto de perfil del mayor (HU2)
+
+    
 }

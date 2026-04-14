@@ -1,10 +1,12 @@
 package com.generaction.backend.service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.generaction.backend.dto.MayorDTO;
 import com.generaction.backend.entity.Mayor;
@@ -60,6 +62,15 @@ public class MayorService {
     public void darDeBaja(Long id) {
         Mayor mayor = obtenerPorId(id);
         mayor.setActivo(false);
+        mayorRepository.save(mayor);
+    }
+
+    // Guardar documento PDF del mayor (HU2)
+    public void guardarDocumento(Long id, MultipartFile archivo) throws IOException {
+        Mayor mayor = mayorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Mayor no encontrado"));
+
+        mayor.setDocumentoPdf(archivo.getBytes());
         mayorRepository.save(mayor);
     }
 }

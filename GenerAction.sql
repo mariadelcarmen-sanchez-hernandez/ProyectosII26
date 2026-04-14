@@ -334,3 +334,27 @@ INSERT INTO valoraciones (
 );
 
 SELECT * FROM valoraciones;
+
+-- Añado soporte para los documentos PDF que suban las personas en necesidad
+ALTER TABLE mayores
+ADD COLUMN documento_pdf LONGBLOG NULL COMMENT 'Documento PDF del mayor (por ejemplo, certificado de discapacidad)';
+ADD COLUMN foto_perfil_mayor LONGBLOG NULL COMMENT 'Foto de perfil del mayor';
+
+-- Añado soporte para los documentos PDF que suban los voluntarios
+ALTER TABLE voluntarios
+ADD COLUMN documento_pdf LONGBLOG NULL COMMENT 'Documento PDF del voluntario (por ejemplo, certificado de antecedentes penales)';
+ADD COLUMN foto_perfil_voluntario LONGBLOG NULL COMMENT 'Foto de perfil del voluntario';
+
+-- Verifico que se han añadido correctamente 
+DESCRIBE mayores;
+DESCRIBE voluntarios;
+
+-- Añado soporte para la validación de DNI
+ALTER TABLE mayores
+ADD COLUMN dni_documento LONGBLOB NULL;
+
+ALTER TABLE voluntarios
+ADD COLUMN dni_documento LONGBLOB NULL,
+ADD COLUMN dni_verificado BOOLEAN NOT NULL DEFAULT FALSE,
+ADD COLUMN dni_mimetype VARCHAR(50) NULL,
+ADD COLUMN dni_nombre_archivo VARCHAR(255) NULL;

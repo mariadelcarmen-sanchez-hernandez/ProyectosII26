@@ -59,4 +59,11 @@ public class Voluntario {
 
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
+
+    @Column(name = "documento_pdf")
+    private byte[] documentoPdf; // Para almacenar el PDF del voluntario (HU2)
+
+    @Column(name = "foto_perfil_voluntario")
+    private byte[] fotoPerfilVoluntario; // Para almacenar la foto de perfil del voluntario (HU2)
+
 }
