@@ -1,0 +1,94 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Voluntariado</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- <header class="navbar">
+        <a href="#" class="back-link">← Volver</a>
+        <div id="stepText">Paso 1 de 7</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </header> -->
+
+    <nav class="navbar">
+        <button type="button" class="back-btn" id="prevBtn">
+            <span class="icon">←</span> Volver
+        </button>
+        
+        <div class="step-info">
+            <span id="stepText">Paso 1 de 7</span>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <div class="card">
+            <div class="icon-header">
+                <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Icono">
+            </div>
+
+            <form id="multiStepForm">
+                <div class="step active" data-step="1">
+                    <h2>¿Cuál es su nombre?</h2>
+                    <input type="text" id="nombre" placeholder="Escriba su nombre..." required>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h2>¿Cuáles son sus apellidos?</h2>
+                    <input type="text" id="apellidos" placeholder="Escriba sus apellidos..." required>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h2>¿Su correo electrónico?</h2>
+                    <input type="email" id="email" placeholder="ejemplo@correo.com" required>
+                </div>
+
+                <div class="step" data-step="4">
+                    <h2>¿Cuál es su teléfono?</h2>
+                    <input type="tel" id="telefono" placeholder="600 000 000" required>
+                </div>
+
+                <div class="step" data-step="5">
+                    <h2>¿En qué ciudad reside?</h2>
+                    <input type="text" id="ciudad" placeholder="Ej: Madrid, Barcelona...">
+                </div>
+
+                <div class="step" data-step="6">
+                    <h2>¿Cuál es su disponibilidad?</h2>
+                    <div class="options-grid">
+                        <label class="option-card">
+                            <input type="checkbox" name="disp" value="manana"> Mañanas
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="disp" value="tarde"> Tardes
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" name="disp" value="fin"> Fines de semana
+                        </label>
+                    </div>
+                </div>
+
+                <div class="step" data-step="7">
+                    <h2>¿Algún comentario adicional?</h2>
+                    <textarea id="comentarios" rows="4" placeholder="Cuéntanos un poco sobre ti..."></textarea>
+                </div>
+
+                <button type="button" class="btn-next" id="nextBtn">Siguiente →</button>
+            </form>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html> 
+
+
