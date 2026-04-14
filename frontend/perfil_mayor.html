@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Usuario</title>
+    <link rel="stylesheet" href="perfil_mayor.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="paginainiciousuario.css" class="nav-back-btn">← Volver</a>
+        <div class="nav-title">Mi Perfil</div>
+    </nav>
+
+    <main class="container">
+        <section class="profile-card" id="profileView">
+            <div class="profile-header">
+                <div class="avatar-circle">
+                    <img src="https://via.placeholder.com/150" alt="Foto de la persona mayor" id="displayPhoto">
+                </div>
+                <h1>¡Hola, Carmen!</h1>
+                <p>Tu cuenta de usuario</p>
+                <button class="main-edit-btn" onclick="toggleEdit()">
+                    Editar mi Perfil
+                </button>
+            </div>
+
+            <div class="tasks-container">
+                <div class="tasks-column">
+                    <h3> Próximas Visitas</h3>
+                    <div class="task-list">
+                        <div class="task-box-mayor">
+                            <img src="https://via.placeholder.com/50" class="mini-avatar">
+                            <div class="task-info">
+                                <strong>Carlos vendrá a las 10:00</strong>
+                                <p>Acompañamiento a pie</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tasks-column">
+                    <h3> Visitas Completadas</h3>
+                    <div class="task-list">
+                        <div class="task-box-mayor completed">
+                            <div class="task-info"><strong>Paseo por el parque</strong></div>
+                            <span class="star-rating">⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="edit-card" id="editForm" style="display: none;">
+            <h2>Editar mi información</h2>
+            <p class="edit-subtitle">Modifica tus datos aquí abajo</p>
+
+            <form>
+                <div class="input-group-mayor">
+                    <label>Mi Foto</label>
+                    <input type="file" accept="image/*" class="file-input">
+                </div>
+
+                <div class="input-group-mayor">
+                    <label>Nombre y Apellidos</label>
+                    <input type="text" value="Carmen García">
+                </div>
+
+                <div class="input-group-mayor">
+                    <label>Mi Teléfono</label>
+                    <input type="tel" value="600 11 22 33">
+                </div>
+
+                <div class="input-group-mayor">
+                    <label>Correo Electrónico</label>
+                    <input type="email" value="carmen.garcia@email.com">
+                </div>
+
+                <div class="input-group-mayor doc-box">
+                    <label>Subir Documentos (Carnet, etc.)</label>
+                    <input type="file" multiple>
+                </div>
+
+                <div class="button-group-mayor">
+                    <button type="button" class="btn-cancel" onclick="toggleEdit()">Volver sin guardar</button>
+                    <button type="submit" class="btn-save">Guardar cambios</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        function toggleEdit() {
+            const view = document.getElementById('profileView');
+            const form = document.getElementById('editForm');
+            if (view.style.display === 'none') {
+                view.style.display = 'block';
+                form.style.display = 'none';
+            } else {
+                view.style.display = 'none';
+                form.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>

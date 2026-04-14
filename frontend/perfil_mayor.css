@@ -1,0 +1,232 @@
+:root {
+    --primary-blue: #7fa9ff;
+    --dark-blue: #3b82f6;
+    --task-blue-light: #eef4ff;
+    --bg-light: #f0f7ff;
+    --text-dark: #1e293b;
+    --white: #ffffff;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-dark);
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--dark-blue);
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.nav-back-btn {
+    position: absolute; left: 20px; color: white; text-decoration: none; font-weight: bold;
+}
+
+/* Contenedor */
+.container { display: flex; justify-content: center; padding: 40px 20px; }
+
+.profile-card {
+    background: var(--white);
+    width: 100%;
+    max-width: 850px;
+    padding: 40px;
+    border-radius: 40px; /* Más redondeado, más amable */
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    text-align: center;
+}
+
+/* Foto de la Persona Mayor */
+.avatar-circle {
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 15px;
+    border: 6px solid var(--bg-light);
+}
+.avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+
+.profile-header h1 { font-size: 2.5rem; margin-bottom: 5px; color: var(--dark-blue); }
+.profile-header p { font-size: 1.2rem; color: #64748b; margin-bottom: 25px; }
+
+
+/* BOTÓN EDITAR ESTILO IMAGEN 2 */
+.main-edit-btn {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(127, 169, 255, 0.3);
+    margin-top: 10px;
+}
+
+.main-edit-btn:hover {
+    background: var(--dark-blue);
+    transform: translateY(-2px);
+}
+
+/* BOTÓN SOLICITAR AYUDA (Muy grande y llamativo) */
+
+.request-help-btn:hover { transform: scale(1.02); background: #2563eb; }
+
+/* Columnas de Ayuda */
+.tasks-container {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
+    margin-top: 20px; border-top: 2px solid var(--bg-light); padding-top: 30px;
+}
+
+.tasks-column h3 { font-size: 1.5rem; margin-bottom: 20px; text-align: left; }
+
+/* Boxes de Tareas Especiales para Mayores */
+.task-box-mayor {
+    background-color: var(--task-blue-light);
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    text-align: left;
+    border: 1px solid rgba(127, 169, 255, 0.2);
+}
+
+.mini-avatar {
+    width: 60px; height: 60px; border-radius: 50%; object-fit: cover;
+}
+
+.task-info strong { display: block; font-size: 1.2rem; margin-bottom: 4px; }
+.task-info p { margin: 0; color: #64748b; font-size: 1rem; }
+
+.task-box-mayor.completed { background-color: #f8fafc; border-color: #e2e8f0; }
+.star-rating { display: block; margin-top: 5px; font-size: 1rem; }
+
+/* Adaptación */
+@media (max-width: 768px) {
+    .tasks-container { grid-template-columns: 1fr; }
+    .profile-header h1 { font-size: 2rem; }
+}
+
+/* ... (Mantener el código anterior y añadir esto) ... */
+
+/* Estilos para la tarjeta de edición */
+.edit-card h2 {
+    font-size: 2rem;
+    color: var(--dark-blue);
+    margin-bottom: 5px;
+}
+
+.edit-subtitle {
+    margin-bottom: 30px;
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.input-group-mayor {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.input-group-mayor label {
+    display: block;
+    font-size: 1.2rem; /* Letra grande */
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+}
+
+.input-group-mayor input {
+    width: 100%;
+    padding: 18px; /* Recuadro grande para fácil clic */
+    border: 2px solid #e2e8f0;
+    border-radius: 15px;
+    font-size: 1.2rem;
+    box-sizing: border-box;
+    background-color: #f8fafc;
+}
+
+.input-group-mayor input:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+    background-color: #ffffff;
+}
+
+/* Caja de documentos */
+.doc-box {
+    background: #f0f7ff;
+    padding: 20px;
+    border: 2px dashed var(--primary-blue);
+    border-radius: 20px;
+}
+
+/* Botones del formulario */
+.button-group-mayor {
+    display: flex;
+    flex-direction: column; /* En móvil y para mayor facilidad, uno sobre otro */
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-save {
+    background: var(--dark-blue);
+    color: white;
+    border: none;
+    padding: 20px;
+    border-radius: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+}
+
+.btn-cancel {
+    background: #f1f5f9;
+    color: #64748b;
+    border: none;
+    padding: 15px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.btn-save:hover { background: #2563eb; }
+.btn-cancel:hover { background: #e2e8f0; }
+
+/* En pantallas grandes, botones de lado a lado */
+@media (min-width: 600px) {
+    .button-group-mayor {
+        flex-direction: row;
+    }
+    .btn-save { flex: 2; }
+    .btn-cancel { flex: 1; }
+}
+
+
+/* BOTÓN EDITAR ESTILO IMAGEN 2 */
+.main-edit-btn {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(127, 169, 255, 0.3);
+    margin-top: 10px;
+}
+
+.main-edit-btn:hover {
+    background: var(--dark-blue);
+    transform: translateY(-2px);
+}
