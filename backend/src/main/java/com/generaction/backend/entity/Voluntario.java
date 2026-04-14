@@ -1,12 +1,17 @@
 package com.generaction.backend.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "voluntarios")
@@ -17,43 +22,6 @@ public class Voluntario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<<<<<<< HEAD
-    private Long idVoluntario;
-
-    @Column(nullable = false, length = 80)
-    private String nombre;
-
-    @Column(nullable = false, length = 120)
-    private String apellidos;
-
-    @Column(nullable = false, unique = true, length = 150)
-    private String email;
-
-    @Column(nullable = false, length = 20)
-    private String telefono;
-
-    @Column(nullable = false, length = 200)
-    private String direccion;
-
-    @Column(nullable = false, length = 100)
-    private String municipio;
-
-    @Column(nullable = false)
-    private LocalDate fechaNacimiento;
-
-    // Disponibilidad horaria (ej: "mañana,tarde")
-    @Column(length = 100)
-    private String disponibilidad;
-
-    // Wallet de puntos (HU2)
-    @Column(nullable = false)
-    private Integer puntosWallet = 0;
-
-    @Column(nullable = false)
-    private LocalDateTime fechaRegistro = LocalDateTime.now();
-
-    @Column(nullable = false)
-=======
     @Column(name = "id_voluntario")
     private Long idVoluntario;
 
@@ -90,6 +58,5 @@ public class Voluntario {
     private LocalDateTime fechaRegistro = LocalDateTime.now();
 
     @Column(name = "activo", nullable = false)
->>>>>>> mirepo/main
     private Boolean activo = true;
 }

@@ -1,12 +1,22 @@
 package com.generaction.backend.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "solicitudes")
@@ -15,8 +25,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Solicitud {
 
-<<<<<<< HEAD
-=======
     // Enum interno — los estados posibles de una solicitud
     public enum EstadoSolicitud {
         PENDIENTE,
@@ -26,7 +34,6 @@ public class Solicitud {
         CANCELADA
     }
 
->>>>>>> mirepo/main
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSolicitud;
@@ -37,30 +44,16 @@ public class Solicitud {
     private Mayor mayor;
 
     // Tipo de actividad: paseo, medico, compras, conversacion
-<<<<<<< HEAD
     @Column(nullable = false, length = 50)
     private String tipoActividad;
-
-    @Column(nullable = false)
-    private LocalDate fechaSolicitada;
-
-    // "manana" o "tarde"
-    @Column(nullable = false, length = 20)
-=======
-    @Column(name = "tipo_actividad", nullable = false, length = 50)
-    private String tipoActividad;
-
     @Column(name = "fecha_solicitada", nullable = false)
     private LocalDate fechaSolicitada;
 
     // "manana" o "tarde"
     @Column(name = "franja_horaria", nullable = false, length = 20)
->>>>>>> mirepo/main
     private String horario;
 
-    // PENDIENTE → ASIGNADA → COMPLETADA (o CANCELADA)
     @Enumerated(EnumType.STRING)
-<<<<<<< HEAD
     @Column(nullable = false, length = 20)
     private EstadoSolicitud estado = EstadoSolicitud.PENDIENTE;
 
@@ -70,19 +63,4 @@ public class Solicitud {
     @Column(nullable = false)
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 
-    // Enum interno — los estados posibles de una solicitud
-    public enum EstadoSolicitud {
-        PENDIENTE, ASIGNADA, COMPLETADA, CANCELADA
-    }
-=======
-    @Column(name = "estado", nullable = false, length = 20)
-    private EstadoSolicitud estado = EstadoSolicitud.PENDIENTE;
-
-    @Column(name = "descripcion", length = 300)
-    private String descripcion;
-
-    @Column(name = "fecha_creacion", nullable = false)
-    private LocalDateTime fechaCreacion = LocalDateTime.now();
-
->>>>>>> mirepo/main
 }

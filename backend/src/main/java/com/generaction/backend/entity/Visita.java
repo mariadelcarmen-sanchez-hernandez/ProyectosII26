@@ -1,12 +1,22 @@
 package com.generaction.backend.entity;
 
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "visitas")
@@ -15,17 +25,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Visita {
 
-<<<<<<< HEAD
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idVisita;
-
-    // Una visita cubre una solicitud concreta
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_solicitud", nullable = false, unique = true)
-    private Solicitud solicitud;
-
-=======
     public enum EstadoVisita {
         PENDIENTE,
         ASIGNADA,
@@ -51,13 +50,11 @@ public class Visita {
     @JoinColumn(name = "id_mayor", nullable = false)
     private Mayor mayor;
 
->>>>>>> mirepo/main
     // El voluntario que acepta y realiza la visita
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_voluntario", nullable = false)
     private Voluntario voluntario;
 
-<<<<<<< HEAD
     @Column(nullable = false)
     private LocalDateTime fechaAsignacion = LocalDateTime.now();
 
@@ -69,21 +66,4 @@ public class Visita {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private EstadoVisita estado = EstadoVisita.PENDIENTE;
-
-    public enum EstadoVisita {
-        PENDIENTE, REALIZADA, CANCELADA
-    }
-=======
-    @Column(name = "fecha_asignacion", nullable = false)
-    private LocalDateTime fechaAsignacion = LocalDateTime.now();
-
-    // Se rellena cuando el voluntario confirma que realizó la visita (HU5)
-    @Column(name = "duracion_minutos")
-    private Integer duracionMinutos;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "estado", nullable = false, length = 20)
-    private EstadoVisita estado = EstadoVisita.PENDIENTE;
-
->>>>>>> mirepo/main
 }
