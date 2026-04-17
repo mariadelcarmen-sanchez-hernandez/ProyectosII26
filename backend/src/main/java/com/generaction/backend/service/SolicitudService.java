@@ -45,6 +45,10 @@ public class SolicitudService {
         return solicitudRepository.save(solicitud);
     }
 
+    public List<Solicitud> obtenerPorMayor(Long idMayor) {
+        return solicitudRepository.findByMayor_IdMayor(idMayor);
+    }
+
     // Ver todas las solicitudes pendientes (las que puede aceptar un voluntario)
     public List<Solicitud> obtenerPendientes() {
         return solicitudRepository.findByEstado(EstadoSolicitud.PENDIENTE);
@@ -83,4 +87,5 @@ public class SolicitudService {
 
         return visitaRepository.save(visita);
     }
+
 }

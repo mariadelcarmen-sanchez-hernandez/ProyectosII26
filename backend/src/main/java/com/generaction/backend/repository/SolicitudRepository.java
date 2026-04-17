@@ -1,11 +1,12 @@
 package com.generaction.backend.repository;
 
-import com.generaction.backend.entity.Solicitud;
-import com.generaction.backend.entity.Solicitud.EstadoSolicitud;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.generaction.backend.entity.Solicitud;
+import com.generaction.backend.entity.Solicitud.EstadoSolicitud;
 
 @Repository
 public interface SolicitudRepository extends JpaRepository<Solicitud, Long> {
