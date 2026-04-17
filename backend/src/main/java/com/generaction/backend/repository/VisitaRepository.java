@@ -1,15 +1,19 @@
 package com.generaction.backend.repository;
 
-import com.generaction.backend.entity.Visita;
-import com.generaction.backend.entity.Visita.EstadoVisita;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.generaction.backend.entity.Visita;
+import com.generaction.backend.entity.Visita.EstadoVisita;
 
 @Repository
 public interface VisitaRepository extends JpaRepository<Visita, Long> {
 
+    // Visitas de un mayor concreto
+    List<Visita> findByMayor_IdMayor(Long idMayor);
+    
     // Visitas de un voluntario concreto
     List<Visita> findByVoluntario_IdVoluntario(Long idVoluntario);
 

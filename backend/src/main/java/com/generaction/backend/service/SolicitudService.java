@@ -1,16 +1,24 @@
 package com.generaction.backend.service;
 
-import com.generaction.backend.dto.AsignacionDTO;
-import com.generaction.backend.dto.SolicitudDTO;
-import com.generaction.backend.entity.*;
-import com.generaction.backend.entity.Solicitud.EstadoSolicitud;
-import com.generaction.backend.repository.*;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.util.List;
+import com.generaction.backend.dto.AsignacionDTO;
+import com.generaction.backend.dto.SolicitudDTO;
+import com.generaction.backend.entity.Mayor;
+import com.generaction.backend.entity.Solicitud;
+import com.generaction.backend.entity.Solicitud.EstadoSolicitud;
+import com.generaction.backend.entity.Visita;
+import com.generaction.backend.entity.Voluntario;
+import com.generaction.backend.repository.MayorRepository;
+import com.generaction.backend.repository.SolicitudRepository;
+import com.generaction.backend.repository.VisitaRepository;
+import com.generaction.backend.repository.VoluntarioRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -53,30 +61,26 @@ public class SolicitudService {
     @Transactional
     public Visita asignarVisita(AsignacionDTO dto) {
         Solicitud solicitud = solicitudRepository.findById(dto.getIdSolicitud())
-            .orElseThrow(() -> new RuntimeException("Solicitud no encontrada: " + dto.getIdSolicitud()));
+                .orElseThrow(() -> new RuntimeException("Solicitud no encontrada: " + dto.getIdSolicitud()));
 
         if (solicitud.getEstado() != EstadoSolicitud.PENDIENTE) {
             throw new RuntimeException("Esta solicitud ya no está disponible.");
         }
 
         Voluntario voluntario = voluntarioRepository.findById(dto.getIdVoluntario())
-            .orElseThrow(() -> new RuntimeException("Voluntario no encontrado: " + dto.getIdVoluntario()));
+                .orElseThrow(() -> new RuntimeException("Voluntario no encontrado: " + dto.getIdVoluntario()));
 
-        // Marcar solicitud como asignada
         solicitud.setEstado(EstadoSolicitud.ASIGNADA);
         solicitudRepository.save(solicitud);
 
-        // Crear la visita
         Visita visita = new Visita();
         visita.setSolicitud(solicitud);
+        visita.setMayor(solicitud.getMayor());
         visita.setVoluntario(voluntario);
-        visita.setEstado(Visita.EstadoVisita.PENDIENTE);
+        visita.setFechaVisita(solicitud.getFechaSolicitada().atStartOfDay());
+        visita.setDuracionMinutos(null);
+        visita.setEstado(Visita.EstadoVisita.PROGRAMADA);
 
         return visitaRepository.save(visita);
-    }
-
-    // Ver todas las solicitudes de un mayor
-    public List<Solicitud> obtenerPorMayor(Long idMayor) {
-        return solicitudRepository.findByMayor_IdMayor(idMayor);
     }
 }

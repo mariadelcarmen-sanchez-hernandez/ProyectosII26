@@ -1,6 +1,5 @@
 package com.generaction.backend.entity;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -26,13 +25,9 @@ import lombok.NoArgsConstructor;
 public class Visita {
 
     public enum EstadoVisita {
-        PENDIENTE,
-        ASIGNADA,
-        EN_TRAMITE,
+        PROGRAMADA,
         REALIZADA,
-        COMPLETADA,
-        NO_REALIZADA,
-        CANCELADA
+        NO_REALIZADA
     }
 
     @Id
@@ -40,30 +35,25 @@ public class Visita {
     @Column(name = "id_visita")
     private Long idVisita;
 
-    // Una visita cubre una solicitud concreta
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_solicitud", nullable = false)
     private Solicitud solicitud;
 
-    // El mayor que recibe la visita
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_mayor", nullable = false)
     private Mayor mayor;
 
-    // El voluntario que acepta y realiza la visita
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_voluntario", nullable = false)
     private Voluntario voluntario;
 
-    @Column(nullable = false)
-    private LocalDateTime fechaAsignacion = LocalDateTime.now();
+    @Column(name = "fecha_visita", nullable = false)
+    private LocalDateTime fechaVisita;
 
-    // Se rellena cuando el voluntario confirma que realizó la visita (HU5)
-    private LocalDate fechaRealizacion;
-
+    @Column(name = "duracion_minutos")
     private Integer duracionMinutos;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private EstadoVisita estado = EstadoVisita.PENDIENTE;
+    @Column(name = "estado", nullable = false, length = 20)
+    private EstadoVisita estado = EstadoVisita.PROGRAMADA;
 }
