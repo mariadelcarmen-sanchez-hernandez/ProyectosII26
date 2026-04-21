@@ -203,6 +203,7 @@ h2 {
 input[type="text"],
 input[type="email"],
 input[type="tel"],
+input[type="password"],
 textarea {
     width: 100%;
     padding: 15px;
