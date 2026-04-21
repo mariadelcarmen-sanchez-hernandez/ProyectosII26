@@ -42,4 +42,11 @@ public class MayorController {
         mayorService.darDeBaja(id);
         return ResponseEntity.noContent().build();
     }
+
+    // PATCH /api/mayores/{id} → Actualizar datos del mayor
+    @PutMapping("/{id}")
+    public ResponseEntity<Mayor> actualizar(@PathVariable Long id, @RequestBody MayorDTO dto) {
+        Mayor actualizado = mayorService.actualizarMayor(id, dto);
+        return ResponseEntity.ok(actualizado);
+    }
 }

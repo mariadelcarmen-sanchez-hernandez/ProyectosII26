@@ -7,10 +7,7 @@ public class VoluntarioDTO {
     private String nombre;
     private String apellidos;
     private String email;
-<<<<<<< HEAD
-=======
     private String password;
->>>>>>> 68d22c3b88f54e86832ea9064627a9ed650ba773
     private String telefono;
     private String direccion;
     private String municipio;

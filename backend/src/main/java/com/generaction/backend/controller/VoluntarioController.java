@@ -6,15 +6,6 @@ import com.generaction.backend.service.VoluntarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-<<<<<<< HEAD
-=======
-import org.springframework.web.multipart.MultipartFile;
-
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
->>>>>>> 68d22c3b88f54e86832ea9064627a9ed650ba773
 
 import java.util.List;
 
@@ -44,19 +35,4 @@ public class VoluntarioController {
     public ResponseEntity<Voluntario> obtener(@PathVariable Long id) {
         return ResponseEntity.ok(voluntarioService.obtenerPorId(id));
     }
-<<<<<<< HEAD
-=======
-
-    @PostMapping(value = "/{id}/documento", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> subirDocumentoVoluntario(
-            @PathVariable Long id,
-            @RequestParam("archivo") MultipartFile archivo) {
-        try {
-            voluntarioService.guardarDocumento(id, archivo);
-            return ResponseEntity.ok("Documento del voluntario guardado correctamente");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al guardar el documento del voluntario: " + e.getMessage());
-        }
-    }
->>>>>>> 68d22c3b88f54e86832ea9064627a9ed650ba773
 }
