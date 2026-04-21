@@ -59,6 +59,43 @@ public class MayorService {
                 .orElseThrow(() -> new RuntimeException("Mayor no encontrado con id: " + id));
     }
 
+    // Actualizar datos del mayor
+    public Mayor actualizarMayor(Long id, MayorDTO dto) {
+        Mayor mayor = obtenerPorId(id);
+
+        if (dto.getNombre() != null) mayor.setNombre(dto.getNombre());
+        if (dto.getApellidos() != null) mayor.setApellidos(dto.getApellidos());
+        if (dto.getTelefono() != null) mayor.setTelefono(dto.getTelefono());
+        if (dto.getDireccion() != null) mayor.setDireccion(dto.getDireccion());
+        if (dto.getMunicipio() != null) mayor.setMunicipio(dto.getMunicipio());
+
+        if (dto.getFechaNacimiento() != null && !dto.getFechaNacimiento().isBlank()) {
+            mayor.setFechaNacimiento(LocalDate.parse(dto.getFechaNacimiento()));
+        }
+
+        if (dto.getNivelAutonomia() != null && !dto.getNivelAutonomia().isBlank()) {
+            String nivelAutonomia = dto.getNivelAutonomia().trim().toLowerCase();
+            if (!NIVELES_VALIDOS.contains(nivelAutonomia)) {
+                throw new RuntimeException("Nivel de autonomía no válido.");
+            }
+            mayor.setNivelAutonomia(nivelAutonomia);
+        }
+
+        if (dto.getPreferenciasActividad() != null) {
+            mayor.setPreferenciasActividad(dto.getPreferenciasActividad());
+        }
+
+        if (dto.getContactoFamiliarNombre() != null) {
+            mayor.setContactoFamiliarNombre(dto.getContactoFamiliarNombre());
+        }
+
+        if (dto.getContactoFamiliarTelefono() != null) {
+            mayor.setContactoFamiliarTelefono(dto.getContactoFamiliarTelefono());
+        }
+
+        return mayorRepository.save(mayor);
+    }
+
     // Dar de baja (no borrar, solo marcar inactivo)
     public void darDeBaja(Long id) {
         Mayor mayor = obtenerPorId(id);
