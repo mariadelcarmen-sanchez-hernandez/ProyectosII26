@@ -1,154 +1,94 @@
-<<<<<<< HEAD
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tareas Disponibles</title>
-  <link rel="stylesheet" href="paginainiciovoluntario.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenerAction - Voluntariado</title>
+    <link rel="stylesheet" href="paginainiciovoluntario.css">
 </head>
 <body>
 
-  <!-- Banner verde -->
-  <div class="banner">
-    <div class="user-info">
-      <div class="avatar">👤</div>
-      <div>
-        <p></p>
-        <strong></strong>
-      </div>
+    <div class="topbar-vol">
+        <a href="index.html" class="back-link">← Salir</a>
+        <div class="title">GenerAction</div>
+        <div style="width: 60px;"></div> 
     </div>
 
-    <div class="top-icons">
-      📄 ⤴️
+    <div class="banner-vol">
+        <div class="user-info">
+            <div class="avatar-vol">🌟</div>
+            <h2>Panel de Voluntario</h2>
+            <p>¡Gracias por tu tiempo, Juan!</p>
+        </div>
     </div>
 
-    <div class="tabs">
-      <div class="tab active">Disponibles (0)</div>
-      <div class="tab">Mis Tareas (0)</div>
-    </div>
-  </div>
+    <div class="main-container">
+        
+        <div class="filter-bar">
+            <span class="filter-tag active-vol">Todas</span>
+            <span class="filter-tag">🛒 Compras</span>
+            <span class="filter-tag">📱 Digital</span>
+            <span class="filter-tag">💬 Charla</span>
+        </div>
 
-  <!-- Card vacía -->
-  <div class="card">
-    <div class="icon">♡</div>
-    <h2>No hay tareas disponibles en este momento</h2>
-    <p>Vuelve más tarde para ver nuevas tareas</p>
-  </div>
+        <h3 class="section-title-vol">Tareas cerca de ti</h3>
 
-  <!-- Footer -->
-  <div class="footer">
-    <div class="active">
-      ⌂<br>Inicio
+        <div id="availableTasks">
+            
+            <div class="volunteer-card">
+                <div class="task-header">
+                    <span class="category-pill errands">🛒 Recados</span>
+                    <span class="task-distance">📍 a 300m</span>
+                </div>
+                <h4>Compra de farmacia</h4>
+                <p class="task-author">Para: <strong>Sra. Carmen</strong></p>
+                <p class="task-desc">Necesito recoger una receta y traerla a casa. No pesa nada, pero no puedo caminar mucho hoy.</p>
+                <button class="accept-btn-vol" onclick="acceptTask(this)">Aceptar Solicitud</button>
+            </div>
+
+            <div class="volunteer-card">
+                <div class="task-header">
+                    <span class="category-pill tech">📱 Tecnología</span>
+                    <span class="task-distance">📍 a 1.2km</span>
+                </div>
+                <h4>Ayuda con el Correo</h4>
+                <p class="task-author">Para: <strong>Sr. Manuel</strong></p>
+                <p class="task-desc">Mi cuenta de Gmail no entra en el móvil. Necesito a alguien que me ayude a poner la clave.</p>
+                <button class="accept-btn-vol" onclick="acceptTask(this)">Aceptar Solicitud</button>
+            </div>
+
+        </div>
     </div>
-    <div>
-      📍<br>Mapa
+
+    <div class="footer-nav">
+        <a href="inicio_voluntario.html" class="nav-item active-vol">
+            <span class="nav-icon">🔍</span>
+            <span>Explorar</span>
+        </a>
+        <a href="mis_tareas_vol.html" class="nav-item">
+            <span class="nav-icon">📋</span>
+            <span>Mi Agenda</span>
+        </a>
+        <a href="perfil_vol.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Perfil</span>
+        </a>
     </div>
-    <div>
-      ♡<br>Mis tareas
-    </div>
-    <div>
-      👤<br>Perfil
-    </div>
-  </div>
+
     <script>
-    const tabs = document.querySelectorAll('.tab');
-    const cardTitle = document.querySelector('.card h2');
-    const cardText = document.querySelector('.card p');
-
-    tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-
-        if(index === 0){
-          cardTitle.textContent = 'No hay tareas disponibles en este momento';
-          cardText.textContent = 'Vuelve más tarde para ver nuevas tareas';
-        } else {
-          cardTitle.textContent = 'No tienes tareas asignadas';
-          cardText.textContent = 'Cuando aceptes tareas aparecerán aquí';
+        function acceptTask(btn) {
+            if(confirm("¿Deseas comprometerte con esta tarea?")) {
+                btn.innerHTML = "✔️ ¡Tarea Asignada!";
+                btn.style.background = "#27ae60";
+                btn.disabled = true;
+                btn.closest('.volunteer-card').style.borderLeftColor = "#27ae60";
+                
+                // Simulación de guardado
+                setTimeout(() => {
+                    alert("Se ha enviado una notificación al solicitante.");
+                }, 500);
+            }
         }
-      });
-    });
-  </script>
-
+    </script>
 </body>
-=======
-<!-- index.html -->
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tareas Disponibles</title>
-  <link rel="stylesheet" href="paginainiciovoluntario.css">
-</head>
-<body>
-
-  <!-- Banner verde -->
-  <div class="banner">
-    <div class="user-info">
-      <div class="avatar">👤</div>
-      <div>
-        <p></p>
-        <strong></strong>
-      </div>
-    </div>
-
-    <div class="top-icons">
-      📄 ⤴️
-    </div>
-
-    <div class="tabs">
-      <div class="tab active">Disponibles (0)</div>
-      <div class="tab">Mis Tareas (0)</div>
-    </div>
-  </div>
-
-  <!-- Card vacía -->
-  <div class="card">
-    <div class="icon">♡</div>
-    <h2>No hay tareas disponibles en este momento</h2>
-    <p>Vuelve más tarde para ver nuevas tareas</p>
-  </div>
-
-  <!-- Footer -->
-  <div class="footer">
-    <div class="active">
-      ⌂<br>Inicio
-    </div>
-    <div>
-      📍<br>Mapa
-    </div>
-    <div>
-      ♡<br>Mis tareas
-    </div>
-    <div>
-      👤<br>Perfil
-    </div>
-  </div>
-    <script>
-    const tabs = document.querySelectorAll('.tab');
-    const cardTitle = document.querySelector('.card h2');
-    const cardText = document.querySelector('.card p');
-
-    tabs.forEach((tab, index) => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-
-        if(index === 0){
-          cardTitle.textContent = 'No hay tareas disponibles en este momento';
-          cardText.textContent = 'Vuelve más tarde para ver nuevas tareas';
-        } else {
-          cardTitle.textContent = 'No tienes tareas asignadas';
-          cardText.textContent = 'Cuando aceptes tareas aparecerán aquí';
-        }
-      });
-    });
-  </script>
-
-</body>
->>>>>>> mirepo/main
 </html>
