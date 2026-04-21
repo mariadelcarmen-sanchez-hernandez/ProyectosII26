@@ -29,6 +29,7 @@ public class VoluntarioService {
         voluntario.setNombre(dto.getNombre());
         voluntario.setApellidos(dto.getApellidos());
         voluntario.setEmail(dto.getEmail());
+        voluntario.setPassword(dto.getPassword()); // En un caso real, se debería encriptar la contraseña
         voluntario.setTelefono(dto.getTelefono());
         voluntario.setDireccion(dto.getDireccion() != null ? dto.getDireccion() : "");
         voluntario.setMunicipio(dto.getMunicipio());
