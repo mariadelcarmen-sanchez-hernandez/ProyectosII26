@@ -60,4 +60,10 @@ public class MayorController {
         return ResponseEntity.ok(actualizado);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody MayorDTO dto) {
+        Mayor mayor = mayorService.loginMayor(dto.getEmail(), dto.getPassword());
+        return ResponseEntity.ok(mayor);
+    }
+
 }

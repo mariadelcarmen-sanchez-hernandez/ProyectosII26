@@ -32,6 +32,12 @@ public class Mayor {
     @Column(name = "apellidos", nullable = false, length = 120)
     private String apellidos;
 
+    @Column(name = "email", nullable = false, length = 120, unique = true)
+    private String email;
+
+    @Column(name = "password", nullable = false, length = 255)
+    private String passwordHash;
+    
     @Column(name = "telefono", nullable = false, length = 20)
     private String telefono;
 

@@ -2,6 +2,7 @@ package com.generaction.backend.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -24,28 +25,38 @@ public class MayorService {
 
     // HU1 — Registrar un mayor
     public Mayor registrarMayor(MayorDTO dto) {
-        if (mayorRepository.existsByTelefono(dto.getTelefono())) {
-            throw new RuntimeException("Ya existe un mayor con ese teléfono.");
-        }
-        
-        String nivelAutonomia = dto.getNivelAutonomia() == null ? "" : dto.getNivelAutonomia().trim().toLowerCase();
-        if (!NIVELES_VALIDOS.contains(nivelAutonomia)) {
-            throw new RuntimeException("Nivel de autonomía no válido.");
+        if (mayorRepository.existsByEmail(dto.getEmail())) {
+            throw new RuntimeException("Ya existe una persona mayor con ese email.");
         }
 
         Mayor mayor = new Mayor();
         mayor.setNombre(dto.getNombre());
         mayor.setApellidos(dto.getApellidos());
+        mayor.setEmail(dto.getEmail());
+        mayor.setPasswordHash(dto.getPassword());
         mayor.setTelefono(dto.getTelefono());
-        mayor.setDireccion(dto.getDireccion());
+        mayor.setDireccion(dto.getDireccion() != null ? dto.getDireccion() : "");
         mayor.setMunicipio(dto.getMunicipio());
         mayor.setFechaNacimiento(LocalDate.parse(dto.getFechaNacimiento()));
-        mayor.setNivelAutonomia(nivelAutonomia);
+        mayor.setNivelAutonomia(dto.getNivelAutonomia());
         mayor.setPreferenciasActividad(dto.getPreferenciasActividad());
         mayor.setContactoFamiliarNombre(dto.getContactoFamiliarNombre());
         mayor.setContactoFamiliarTelefono(dto.getContactoFamiliarTelefono());
+        mayor.setActivo(true);
+        mayor.setFechaAlta(LocalDateTime.now());
 
         return mayorRepository.save(mayor);
+    }
+
+    public Mayor loginMayor(String email, String password) {
+        Mayor mayor = mayorRepository.findByEmail(email)
+            .orElseThrow(() -> new RuntimeException("No existe una cuenta de mayor con ese correo."));
+
+        if (!mayor.getPasswordHash().equals(password)) {
+            throw new RuntimeException("Contraseña incorrecta.");
+        }
+
+        return mayor;
     }
 
     // Obtener todos los mayores activos

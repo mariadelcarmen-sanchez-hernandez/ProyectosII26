@@ -11,6 +11,8 @@ function construirPayloadMayor() {
   return {
     nombre: document.getElementById('nombre').value.trim(),
     apellidos: document.getElementById('apellidos').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    password: document.getElementById('contrasena').value.trim(),
     telefono: document.getElementById('telefono').value.trim(),
     direccion: 'No indicada',
     municipio: document.getElementById('ciudad').value.trim() || 'Sin municipio',
