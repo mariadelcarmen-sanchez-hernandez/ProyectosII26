@@ -22,13 +22,11 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
     );
 
     if (voluntario) {
-      window.location.href = "paginainiciovoluntario-5.html";
+      window.location.href = "paginainiciovoluntario.html";
       return;
     }
 
-    // Si no es voluntario, entra como usuario mayor en modo demo
-    window.location.href = "paginainiciousuario-7.html";
-
+    window.location.href = "paginainiciousuario.html";
   } catch (err) {
     alert("No se pudo conectar con el servidor.");
     console.error(err);
