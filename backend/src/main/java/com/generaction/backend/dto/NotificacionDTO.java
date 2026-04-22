@@ -2,6 +2,8 @@ package com.generaction.backend.dto;
 
 import java.time.LocalDateTime;
 
+import com.generaction.backend.entity.Notificacion;
+
 public class NotificacionDTO {
 
     private Long id;
@@ -79,5 +81,17 @@ public class NotificacionDTO {
 
     public void setLeida(Boolean leida) {
         this.leida = leida;
+    }
+
+    private NotificacionDTO toDTO(Notificacion notificacion) {
+        NotificacionDTO dto = new NotificacionDTO();
+        dto.setId(notificacion.getId());
+        dto.setIdMayor(notificacion.getIdMayor());
+        dto.setIdFamiliar(notificacion.getIdFamiliar());
+        dto.setIdVisita(notificacion.getIdVisita());
+        dto.setMensaje(notificacion.getMensaje());
+        dto.setFecha(notificacion.getFecha());
+        dto.setLeida(notificacion.getLeida());
+        return dto;
     }
 }

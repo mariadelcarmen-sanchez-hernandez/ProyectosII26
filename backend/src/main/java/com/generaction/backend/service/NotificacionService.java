@@ -21,6 +21,7 @@ public class NotificacionService {
     public NotificacionDTO crearNotificacion(NotificacionDTO dto) {
         Notificacion notificacion = new Notificacion();
         notificacion.setIdMayor(dto.getIdMayor());
+        notificacion.setIdFamiliar(dto.getIdFamiliar());
         notificacion.setIdVisita(dto.getIdVisita());
         notificacion.setMensaje(dto.getMensaje());
         notificacion.setFecha(dto.getFecha() != null ? dto.getFecha() : LocalDateTime.now());
@@ -63,6 +64,7 @@ public class NotificacionService {
         NotificacionDTO dto = new NotificacionDTO();
         dto.setId(notificacion.getId());
         dto.setIdMayor(notificacion.getIdMayor());
+        dto.setIdFamiliar(notificacion.getIdFamiliar());
         dto.setIdVisita(notificacion.getIdVisita());
         dto.setMensaje(notificacion.getMensaje());
         dto.setFecha(notificacion.getFecha());
