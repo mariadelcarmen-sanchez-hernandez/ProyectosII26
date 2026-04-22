@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.generaction.backend.dto.NotificacionDTO;
 import com.generaction.backend.dto.RegistroVisitaDTO;
+import com.generaction.backend.entity.Mayor;
 import com.generaction.backend.entity.Visita;
 import com.generaction.backend.repository.VisitaRepository;
 
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class VisitaService {
 
     private final VisitaRepository visitaRepository;
+    private final NotificacionService notificacionService;
 
     public List<Visita> obtenerTodas() {
         return visitaRepository.findAll();
@@ -49,7 +52,24 @@ public class VisitaService {
         visita.setDuracionMinutos(dto.getDuracionMinutos());
         visita.setEstado(Visita.EstadoVisita.REALIZADA);
 
-        return visitaRepository.save(visita);
+        Visita visitaGuardada = visitaRepository.save(visita);
+
+        Mayor mayor = visitaGuardada.getMayor();
+
+        if (mayor != null && mayor.getContactoFamiliarTelefono() != null
+                && !mayor.getContactoFamiliarTelefono().isBlank()) {
+
+            NotificacionDTO notificacionDTO = new NotificacionDTO();
+            notificacionDTO.setIdMayor(mayor.getIdMayor());
+            notificacionDTO.setIdVisita(visitaGuardada.getIdVisita());
+            notificacionDTO.setMensaje("El voluntario ha llegado a la visita.");
+            notificacionDTO.setFecha(LocalDateTime.now());
+            notificacionDTO.setLeida(false);
+
+            notificacionService.crearNotificacion(notificacionDTO);
+        }
+
+        return visitaGuardada;
     }
 
     public Visita marcarNoRealizada(Long idVisita) {
