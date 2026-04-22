@@ -1,15 +1,17 @@
 package com.generaction.backend.service;
 
-import com.generaction.backend.dto.VoluntarioDTO;
-import com.generaction.backend.entity.Voluntario;
-import com.generaction.backend.repository.VoluntarioRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.generaction.backend.dto.VoluntarioDTO;
+import com.generaction.backend.entity.Voluntario;
+import com.generaction.backend.repository.VoluntarioRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -27,13 +29,13 @@ public class VoluntarioService {
         voluntario.setNombre(dto.getNombre());
         voluntario.setApellidos(dto.getApellidos());
         voluntario.setEmail(dto.getEmail());
-        voluntario.setPasswordHash(dto.getPassword()); // En un caso real, se debería encriptar la contraseña
         voluntario.setTelefono(dto.getTelefono());
         voluntario.setDireccion(dto.getDireccion() != null ? dto.getDireccion() : "");
         voluntario.setMunicipio(dto.getMunicipio());
         voluntario.setFechaNacimiento(LocalDate.parse(dto.getFechaNacimiento()));
         voluntario.setDisponibilidad(dto.getDisponibilidad());
         voluntario.setPuntosWallet(0);
+        voluntario.setPasswordHash(dto.getPassword());
 
         return voluntarioRepository.save(voluntario);
     }
