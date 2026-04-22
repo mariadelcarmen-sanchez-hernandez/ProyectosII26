@@ -1,10 +1,10 @@
-// 1. Crear la base de datos
+-- 1. Crear la base de datos
 CREATE DATABASE IF NOT EXISTS generaction;
 
-// 2. seleccionar la base de datos para usarla
+-- 2. seleccionar la base de datos para usarla
 USE generaction;
 
-// 3. Tabla de personas mayores 
+-- 3. Tabla de personas mayores 
 CREATE TABLE IF NOT EXISTS mayores (
     id_mayor               INT AUTO_INCREMENT PRIMARY KEY,
     nombre                 VARCHAR(80)      NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS mayores (
     activo                 BOOLEAN         NOT NULL DEFAULT TRUE
 );
 
-// 4. Tabla de voluntarios
+-- 4. Tabla de voluntarios
 CREATE TABLE IF NOT EXISTS voluntarios (
     id_voluntario       INT AUTO_INCREMENT PRIMARY KEY,
     nombre              VARCHAR(80)      NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS voluntarios (
     activo              BOOLEAN          NOT NULL DEFAULT TRUE
 );
 
-// 5. Tabla de solicitudes de ayuda
+-- 5. Tabla de solicitudes de ayuda
 CREATE TABLE IF NOT EXISTS solicitudes (
     id_solicitud       INT AUTO_INCREMENT PRIMARY KEY,
     id_mayor           INT          NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS solicitudes (
         ON DELETE RESTRICT
 );
 
-// 6. Tabla de visitas (empareja mayor + voluntario a una solicitud) 
+-- 6. Tabla de visitas (empareja mayor + voluntario a una solicitud) 
 CREATE TABLE IF NOT EXISTS visitas (
     id_visita        INT AUTO_INCREMENT PRIMARY KEY,
     id_solicitud     INT          NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS visitas (
         ON DELETE RESTRICT
 );
 
-// 7. Tabla de valoraciones (satisfacción de mayores y voluntarios)
+-- 7. Tabla de valoraciones (satisfacción de mayores y voluntarios)
 CREATE TABLE IF NOT EXISTS valoraciones (
     id_valoracion    INT AUTO_INCREMENT PRIMARY KEY,
     id_visita        INT          NOT NULL,
@@ -334,3 +334,39 @@ INSERT INTO valoraciones (
 );
 
 SELECT * FROM valoraciones;
+
+-- Tabla de notificaciones al familiar del usuario en necesidad 
+CREATE TABLE IF NOT EXISTS notificaciones (
+    id_notificacion BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_mayor BIGINT NOT NULL,
+    id_visita BIGINT,
+    mensaje VARCHAR(500) NOT NULL,
+    fecha DATETIME NOT NULL,
+    leida BOOLEAN NOT NULL DEFAULT FALSE,
+
+    CONSTRAINT fk_notificacion_mayor
+        FOREIGN KEY (id_mayor) REFERENCES mayores(id_mayor)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_notificacion_visita
+        FOREIGN KEY (id_visita) REFERENCES visitas(id_visita)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+);
+
+INSERT INTO notificaciones (
+    id_mayor,
+    id_visita,
+    mensaje,
+    fecha,
+    leida
+) VALUES (
+    1,
+    1,
+    'El voluntario ha llegado a la visita.',
+    NOW(),
+    FALSE
+);
+
+SELECT * FROM notificaciones;
