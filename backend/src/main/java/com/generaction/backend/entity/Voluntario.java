@@ -21,6 +21,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Voluntario {
 
+    
+    public byte[] getDocumentoPdf() {
+        return documentoPdf;
+    }
+
+    public void setDocumentoPdf(byte[] documentoPdf) {
+        this.documentoPdf = documentoPdf;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_voluntario")
@@ -68,4 +77,5 @@ public class Voluntario {
 
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
+
 }

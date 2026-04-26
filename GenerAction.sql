@@ -30,17 +30,20 @@ CREATE TABLE mayores (
 -- TABLA: voluntarios
 -- =========================================================
 CREATE TABLE voluntarios (
-    id_voluntario INT AUTO_INCREMENT PRIMARY KEY,
+    id_voluntario BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(80) NOT NULL,
     apellidos VARCHAR(120) NOT NULL,
-    telefono VARCHAR(20) NOT NULL,
-    email VARCHAR(120) NOT NULL UNIQUE,
+    email VARCHAR(150) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
-    universidad VARCHAR(120),
-    estudios VARCHAR(120),
-    barrio VARCHAR(100),
+    telefono VARCHAR(20) NOT NULL,
+    direccion VARCHAR(200) NOT NULL,
+    municipio VARCHAR(100) NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
+    disponibilidad VARCHAR(100),
+    puntos_wallet INT NOT NULL DEFAULT 0,
+    documento_pdf LONGBLOB,
+    fecha_registro DATETIME NOT NULL,
     estado_verificacion VARCHAR(15) NOT NULL DEFAULT 'pendiente',
-    fecha_alta TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     activo BOOLEAN NOT NULL DEFAULT TRUE
 );
 
@@ -69,7 +72,7 @@ CREATE TABLE visitas (
     id_visita INT AUTO_INCREMENT PRIMARY KEY,
     id_solicitud INT NOT NULL,
     id_mayor INT NOT NULL,
-    id_voluntario INT NOT NULL,
+    id_voluntario BIGINT NOT NULL,
     fecha_visita DATETIME NOT NULL,
     duracion_minutos INT,
     estado VARCHAR(20) NOT NULL DEFAULT 'programada',

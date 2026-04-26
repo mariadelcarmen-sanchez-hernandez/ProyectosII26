@@ -53,4 +53,18 @@ public class VoluntarioController {
             throw new RuntimeException("No se pudo procesar el archivo PDF.");
         }
     }
+
+    @GetMapping("/{id}/documento")
+    public ResponseEntity<byte[]> obtenerDocumento(@PathVariable Long id) {
+        Voluntario v = voluntarioService.obtenerPorId(id);
+
+        if (v.getDocumentoPdf() == null || v.getDocumentoPdf().length == 0) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok()
+                .header("Content-Type", "application/pdf")
+                .header("Content-Disposition", "inline; filename=documento.pdf")
+                .body(v.getDocumentoPdf());
+    }
 }
