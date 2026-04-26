@@ -6,8 +6,11 @@ import com.generaction.backend.service.VoluntarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/voluntarios")
@@ -34,5 +37,20 @@ public class VoluntarioController {
     @GetMapping("/{id}")
     public ResponseEntity<Voluntario> obtener(@PathVariable Long id) {
         return ResponseEntity.ok(voluntarioService.obtenerPorId(id));
+    }
+    
+    // POST /api/voluntarios/{id}/documento -> guarda PDF validando DNI
+    @PostMapping("/{id}/documento")
+    public ResponseEntity<?> subirDocumento(
+            @PathVariable Long id,
+            @RequestParam("dni") String dni,
+            @RequestParam("archivo") MultipartFile archivo
+    ) {
+        try {
+            voluntarioService.guardarDocumento(id, dni, archivo);
+            return ResponseEntity.ok(Map.of("mensaje", "Documento guardado correctamente."));
+        } catch (IOException ex) {
+            throw new RuntimeException("No se pudo procesar el archivo PDF.");
+        }
     }
 }

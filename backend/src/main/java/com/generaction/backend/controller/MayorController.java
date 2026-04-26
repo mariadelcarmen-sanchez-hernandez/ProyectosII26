@@ -1,6 +1,8 @@
 package com.generaction.backend.controller;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.generaction.backend.dto.MayorDTO;
 import com.generaction.backend.entity.Mayor;
@@ -64,6 +68,21 @@ public class MayorController {
     public ResponseEntity<?> login(@RequestBody MayorDTO dto) {
         Mayor mayor = mayorService.loginMayor(dto.getEmail(), dto.getPassword());
         return ResponseEntity.ok(mayor);
+    }
+
+    // POST /api/mayores/{id}/documento -> guarda PDF validando DNI
+    @PostMapping("/{id}/documento")
+    public ResponseEntity<?> subirDocumento(
+            @PathVariable Long id,
+            @RequestParam("dni") String dni,
+            @RequestParam("archivo") MultipartFile archivo
+    ) {
+        try {
+            mayorService.guardarDocumento(id, dni, archivo);
+            return ResponseEntity.ok(Map.of("mensaje", "Documento guardado correctamente."));
+        } catch (IOException ex) {
+            throw new RuntimeException("No se pudo procesar el archivo PDF.");
+        }
     }
 
 }

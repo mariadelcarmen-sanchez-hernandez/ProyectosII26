@@ -22,6 +22,7 @@ public class MayorService {
     private static final Set<String> NIVELES_VALIDOS = Set.of("alto", "medio", "bajo");
     
     private final MayorRepository mayorRepository;
+    private final DniValidationService dniValidationService;
 
     // HU1 — Registrar un mayor
     public Mayor registrarMayor(MayorDTO dto) {
@@ -115,7 +116,20 @@ public class MayorService {
     }
 
     // Guardar documento PDF del mayor (HU2)
-    public void guardarDocumento(Long id, MultipartFile archivo) throws IOException {
+    public void guardarDocumento(Long id, String dni, MultipartFile archivo) throws IOException {
+        var resultadoDni = dniValidationService.validar(dni);
+        if (!resultadoDni.valido()) {
+            throw new RuntimeException("DNI invalido: " + resultadoDni.error());
+        }
+        if (archivo == null || archivo.isEmpty()) {
+            throw new RuntimeException("Debe adjuntar un archivo PDF.");
+        }
+        String fileName = archivo.getOriginalFilename() != null ? archivo.getOriginalFilename().toLowerCase() : "";
+        String contentType = archivo.getContentType() != null ? archivo.getContentType().toLowerCase() : "";
+        if (!fileName.endsWith(".pdf") && !"application/pdf".equals(contentType)) {
+            throw new RuntimeException("El documento debe ser un PDF.");
+        }
+
         Mayor mayor = mayorRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Mayor no encontrado"));
 
