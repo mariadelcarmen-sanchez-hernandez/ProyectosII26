@@ -1,6 +1,7 @@
 package com.generaction.backend.controller;
 
 import com.generaction.backend.dto.VoluntarioDTO;
+import com.generaction.backend.entity.MovimientoWallet;
 import com.generaction.backend.entity.Voluntario;
 import com.generaction.backend.service.VoluntarioService;
 import lombok.RequiredArgsConstructor;
@@ -67,4 +68,45 @@ public class VoluntarioController {
                 .header("Content-Disposition", "inline; filename=documento.pdf")
                 .body(v.getDocumentoPdf());
     }
+
+    @GetMapping("/{id}/wallet")
+    public ResponseEntity<Map<String, Object>> obtenerWallet(@PathVariable Long id) {
+        Voluntario voluntario = voluntarioService.obtenerPorId(id);
+        return ResponseEntity.ok(Map.of(
+                "idVoluntario", voluntario.getIdVoluntario(),
+                "puntosWallet", voluntario.getPuntosWallet()
+        ));
+    }
+
+    @PostMapping("/{id}/wallet/sumar")
+    public ResponseEntity<Map<String, Object>> sumarPuntos(
+            @PathVariable Long id,
+            @RequestBody Map<String, Integer> body
+    ) {
+        Integer puntos = body.get("puntos");
+        Voluntario actualizado = voluntarioService.sumarPuntos(id, puntos);
+        return ResponseEntity.ok(Map.of(
+                "mensaje", "Puntos sumados correctamente",
+                "puntosWallet", actualizado.getPuntosWallet()
+        ));
+    }
+
+    @PostMapping("/{id}/wallet/restar")
+    public ResponseEntity<Map<String, Object>> restarPuntos(
+            @PathVariable Long id,
+            @RequestBody Map<String, Integer> body
+    ) {
+        Integer puntos = body.get("puntos");
+        Voluntario actualizado = voluntarioService.restarPuntos(id, puntos);
+        return ResponseEntity.ok(Map.of(
+                "mensaje", "Puntos restados correctamente",
+                "puntosWallet", actualizado.getPuntosWallet()
+        ));
+    }
+
+    @GetMapping("/{id}/wallet/movimientos")
+    public ResponseEntity<List<MovimientoWallet>> obtenerMovimientosWallet(@PathVariable Long id) {
+        return ResponseEntity.ok(voluntarioService.obtenerMovimientosWallet(id));
+    }
+
 }

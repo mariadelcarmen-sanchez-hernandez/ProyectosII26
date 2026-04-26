@@ -2,13 +2,16 @@ package com.generaction.backend.service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.generaction.backend.dto.VoluntarioDTO;
+import com.generaction.backend.entity.MovimientoWallet;
 import com.generaction.backend.entity.Voluntario;
+import com.generaction.backend.repository.MovimientoWalletRepository;
 import com.generaction.backend.repository.VoluntarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class VoluntarioService {
 
     private final VoluntarioRepository voluntarioRepository;
+    private final MovimientoWalletRepository movimientoWalletRepository;
     private final DniValidationService dniValidationService;
 
     // HU2 — Registrar un voluntario
@@ -59,8 +63,10 @@ public class VoluntarioService {
         if (archivo == null || archivo.isEmpty()) {
             throw new RuntimeException("Debe adjuntar un archivo PDF.");
         }
+
         String fileName = archivo.getOriginalFilename() != null ? archivo.getOriginalFilename().toLowerCase() : "";
         String contentType = archivo.getContentType() != null ? archivo.getContentType().toLowerCase() : "";
+
         if (!fileName.endsWith(".pdf") && !"application/pdf".equals(contentType)) {
             throw new RuntimeException("El documento debe ser un PDF.");
         }
@@ -70,5 +76,58 @@ public class VoluntarioService {
 
         voluntario.setDocumentoPdf(archivo.getBytes());
         voluntarioRepository.save(voluntario);
+    }
+
+    public Voluntario sumarPuntos(Long id, Integer puntos) {
+        if (puntos == null || puntos <= 0) {
+            throw new RuntimeException("La cantidad de puntos debe ser mayor que 0.");
+        }
+
+        Voluntario voluntario = obtenerPorId(id);
+        int saldoActual = voluntario.getPuntosWallet() != null ? voluntario.getPuntosWallet() : 0;
+        voluntario.setPuntosWallet(saldoActual + puntos);
+
+        Voluntario actualizado = voluntarioRepository.save(voluntario);
+
+        guardarMovimiento(actualizado.getIdVoluntario(), puntos, "SUMA", "Carga de puntos");
+
+        return actualizado;
+    }
+
+    public Voluntario restarPuntos(Long id, Integer puntos) {
+        if (puntos == null || puntos <= 0) {
+            throw new RuntimeException("La cantidad de puntos debe ser mayor que 0.");
+        }
+
+        Voluntario voluntario = obtenerPorId(id);
+        int saldoActual = voluntario.getPuntosWallet() != null ? voluntario.getPuntosWallet() : 0;
+
+        if (saldoActual < puntos) {
+            throw new RuntimeException("Saldo insuficiente en la wallet.");
+        }
+
+        voluntario.setPuntosWallet(saldoActual - puntos);
+
+        Voluntario actualizado = voluntarioRepository.save(voluntario);
+
+        guardarMovimiento(actualizado.getIdVoluntario(), puntos, "RESTA", "Descuento de puntos");
+
+        return actualizado;
+    }
+
+    public List<MovimientoWallet> obtenerMovimientosWallet(Long idVoluntario) {
+        obtenerPorId(idVoluntario);
+        return movimientoWalletRepository.findByVoluntarioIdOrderByFechaDesc(idVoluntario);
+    }
+
+    private void guardarMovimiento(Long voluntarioId, Integer puntos, String tipo, String motivo) {
+        MovimientoWallet movimiento = new MovimientoWallet();
+        movimiento.setVoluntarioId(voluntarioId);
+        movimiento.setPuntos(puntos);
+        movimiento.setTipo(tipo);
+        movimiento.setMotivo(motivo);
+        movimiento.setFecha(LocalDateTime.now());
+
+        movimientoWalletRepository.save(movimiento);
     }
 }
