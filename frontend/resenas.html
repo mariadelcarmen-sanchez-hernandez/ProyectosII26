@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenerAction - Reseñas</title>
+    <link rel="stylesheet" href="resenas.css">
+</head>
+<body>
+
+    <div class="topbar">
+        <a href="perfil.html" class="back-link">← Volver</a>
+        <div class="title">GenerAction</div>
+        <div style="width: 60px;"></div>
+    </div>
+
+    <div class="banner">
+        <div class="user-info">
+            <div class="avatar">⭐</div>
+            <h2>Mis Reseñas</h2>
+            <p>Opiniones de las personas a las que has ayudado</p>
+        </div>
+    </div>
+
+    <div class="main-container">
+
+        <!-- Resumen de puntuación -->
+        <div class="rating-summary-card">
+            <div class="rating-big">4.8</div>
+            <div class="stars-big">★★★★★</div>
+            <p class="rating-label">Basado en <strong>12 reseñas</strong></p>
+
+            <div class="rating-bars">
+                <div class="bar-row">
+                    <span class="bar-label">5 ★</span>
+                    <div class="bar-track"><div class="bar-fill" style="width: 75%;"></div></div>
+                    <span class="bar-count">9</span>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">4 ★</span>
+                    <div class="bar-track"><div class="bar-fill" style="width: 17%;"></div></div>
+                    <span class="bar-count">2</span>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">3 ★</span>
+                    <div class="bar-track"><div class="bar-fill" style="width: 8%;"></div></div>
+                    <span class="bar-count">1</span>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">2 ★</span>
+                    <div class="bar-track"><div class="bar-fill" style="width: 0%;"></div></div>
+                    <span class="bar-count">0</span>
+                </div>
+                <div class="bar-row">
+                    <span class="bar-label">1 ★</span>
+                    <div class="bar-track"><div class="bar-fill" style="width: 0%;"></div></div>
+                    <span class="bar-count">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón dejar reseña -->
+        <div class="cta">
+            <button onclick="openModal()">✍️ Dejar una Reseña</button>
+        </div>
+
+        <!-- Lista de reseñas -->
+        <h3 class="section-title">Últimas reseñas</h3>
+
+        <div id="reviewList">
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-avatar">👩</div>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">Sra. Carmen</span>
+                        <span class="review-date">Hace 2 días</span>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">Juan fue puntual y muy amable. Me ayudó a recoger la medicación y además me acompañó hasta la puerta. ¡Un chico encantador!</p>
+                <div class="review-tag">💊 Medicamentos</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-avatar">👴</div>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">Sr. Manuel</span>
+                        <span class="review-date">Hace 5 días</span>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">Me explicó cómo usar el correo electrónico con mucha paciencia. Gracias a él ahora puedo hablar con mis hijos por videollamada.</p>
+                <div class="review-tag">📱 Tecnología</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-avatar">👵</div>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">Sra. Rosa</span>
+                        <span class="review-date">Hace 1 semana</span>
+                    </div>
+                    <div class="review-stars four">★★★★☆</div>
+                </div>
+                <p class="review-text">Muy buena actitud, llegó a tiempo. La compra salió perfecta. Solo le faltó revisar la fecha de caducidad de un yogur, pero en general genial.</p>
+                <div class="review-tag">🛒 Compra</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-header">
+                    <div class="reviewer-avatar">👩</div>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">Sra. Pilar</span>
+                        <span class="review-date">Hace 2 semanas</span>
+                    </div>
+                    <div class="review-stars">★★★★★</div>
+                </div>
+                <p class="review-text">Nos acompañó a dar un paseo por el parque. Muy animado y entretenido, volvería a pedir su ayuda sin dudarlo.</p>
+                <div class="review-tag">🚶 Paseo</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal nueva reseña -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+
+            <h2>Nueva Reseña</h2>
+            <p class="subtitle">Cuéntanos cómo fue la experiencia.</p>
+
+            <div class="star-selector" id="starSelector">
+                <span class="star-opt" data-val="1" onclick="selectStars(1)">★</span>
+                <span class="star-opt" data-val="2" onclick="selectStars(2)">★</span>
+                <span class="star-opt" data-val="3" onclick="selectStars(3)">★</span>
+                <span class="star-opt" data-val="4" onclick="selectStars(4)">★</span>
+                <span class="star-opt" data-val="5" onclick="selectStars(5)">★</span>
+            </div>
+            <p class="star-hint" id="starHint">Toca para puntuar</p>
+
+            <input type="text" id="reviewerName" placeholder="Tu nombre (ej. Sra. Carmen)">
+            <textarea id="reviewText" placeholder="Escribe tu opinión aquí..."></textarea>
+
+            <div class="suggestions">
+                <div class="suggestion-tag" onclick="appendText('Muy puntual y amable.')">🕐 Puntual</div>
+                <div class="suggestion-tag" onclick="appendText('Muy paciente.')">🤝 Paciente</div>
+                <div class="suggestion-tag" onclick="appendText('Excelente trabajo.')">👏 Excelente</div>
+                <div class="suggestion-tag" onclick="appendText('Lo recomiendo.')">💯 Recomendable</div>
+            </div>
+
+            <button class="save-btn" onclick="submitReview()">Publicar Reseña</button>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <a href="paginainiciousuario.html" class="nav-item">
+            <span class="nav-icon">🏠</span>
+            <span>Inicio</span>
+        </a>
+        <a href="resenas.html" class="nav-item active">
+            <span class="nav-icon">⭐</span>
+            <span>Reseñas</span>
+        </a>
+        <a href="perfil.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Perfil</span>
+        </a>
+    </div>
+
+    <script>
+        const modal = document.getElementById('modal');
+        let selectedStars = 0;
+
+        function openModal() { modal.style.display = 'flex'; }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            selectedStars = 0;
+            updateStarUI();
+            document.getElementById('reviewerName').value = '';
+            document.getElementById('reviewText').value = '';
+            document.getElementById('starHint').textContent = 'Toca para puntuar';
+        }
+
+        window.onclick = function(e) {
+            if (e.target === modal) closeModal();
+        };
+
+        function appendText(text) {
+            const ta = document.getElementById('reviewText');
+            ta.value = ta.value ? ta.value + ' ' + text : text;
+        }
+
+        function selectStars(val) {
+            selectedStars = val;
+            updateStarUI();
+            const labels = ['', 'Muy malo', 'Malo', 'Regular', 'Bueno', 'Excelente'];
+            document.getElementById('starHint').textContent = labels[val];
+        }
+
+        function updateStarUI() {
+            document.querySelectorAll('.star-opt').forEach(s => {
+                s.classList.toggle('active', parseInt(s.dataset.val) <= selectedStars);
+            });
+        }
+
+        function submitReview() {
+            const name = document.getElementById('reviewerName').value.trim();
+            const text = document.getElementById('reviewText').value.trim();
+
+            if (!name || !text || selectedStars === 0) {
+                alert('Por favor completa tu nombre, puntuación y comentario.');
+                return;
+            }
+
+            const stars = '★'.repeat(selectedStars) + '☆'.repeat(5 - selectedStars);
+            const starClass = selectedStars < 5 ? 'four' : '';
+
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.innerHTML = `
+                <div class="review-header">
+                    <div class="reviewer-avatar">🙂</div>
+                    <div class="reviewer-info">
+                        <span class="reviewer-name">${name}</span>
+                        <span class="review-date">Ahora mismo</span>
+                    </div>
+                    <div class="review-stars ${starClass}">${stars}</div>
+                </div>
+                <p class="review-text">${text}</p>
+            `;
+
+            document.getElementById('reviewList').insertBefore(card, document.getElementById('reviewList').firstChild);
+            closeModal();
+        }
+    </script>
+</body>
+</html>
