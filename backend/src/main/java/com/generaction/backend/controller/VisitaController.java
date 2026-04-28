@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.generaction.backend.dto.EstadoVisitaDTO;
 import com.generaction.backend.dto.RegistroVisitaDTO;
+import com.generaction.backend.dto.VisitaResponseDTO;
 import com.generaction.backend.entity.Visita;
 import com.generaction.backend.service.VisitaService;
 
@@ -42,8 +43,8 @@ public class VisitaController {
     }
 
     @GetMapping("/voluntario/{idVoluntario}")
-    public ResponseEntity<List<Visita>> listarPorVoluntario(@PathVariable Long idVoluntario) {
-        return ResponseEntity.ok(visitaService.obtenerPorVoluntario(idVoluntario));
+    public ResponseEntity<List<VisitaResponseDTO>> listarPorVoluntario(@PathVariable Long idVoluntario) {
+        return ResponseEntity.ok(visitaService.obtenerPorVoluntarioDTO(idVoluntario));
     }
 
     @PutMapping("/{id}/realizar")
@@ -64,9 +65,10 @@ public class VisitaController {
     }
 
     @PutMapping("/{idVisita}/estado")
-    public ResponseEntity<Visita> cambiarEstado(
+    public ResponseEntity<VisitaResponseDTO> cambiarEstado(
             @PathVariable Long idVisita,
             @RequestBody EstadoVisitaDTO dto) {
-        return ResponseEntity.ok(visitaService.actualizarEstado(idVisita, dto));
+        return ResponseEntity.ok(visitaService.actualizarEstadoDTO(idVisita, dto));
     }
+    
 }

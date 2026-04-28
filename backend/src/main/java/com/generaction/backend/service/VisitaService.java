@@ -2,12 +2,17 @@ package com.generaction.backend.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
 import com.generaction.backend.dto.EstadoVisitaDTO;
+import com.generaction.backend.dto.MayorResumenDTO;
 import com.generaction.backend.dto.NotificacionDTO;
 import com.generaction.backend.dto.RegistroVisitaDTO;
+import com.generaction.backend.dto.SolicitudResumenDTO;
+import com.generaction.backend.dto.VisitaResponseDTO;
+import com.generaction.backend.dto.VoluntarioResumenDTO;
 import com.generaction.backend.entity.Mayor;
 import com.generaction.backend.entity.Visita;
 import com.generaction.backend.repository.VisitaRepository;
@@ -88,6 +93,55 @@ public class VisitaService {
 
         visita.setEstado(dto.getEstado());
         return visitaRepository.save(visita);
+    }
+
+    public VisitaResponseDTO convertirADTO(Visita visita) {
+        SolicitudResumenDTO solicitudDTO = new SolicitudResumenDTO(
+                visita.getSolicitud().getIdSolicitud(),
+                visita.getSolicitud().getTipoActividad(),
+                visita.getSolicitud().getDescripcion(),
+                visita.getSolicitud().getFechaSolicitada(),
+                visita.getSolicitud().getHorario(),
+                visita.getSolicitud().getEstado().name(),
+                visita.getSolicitud().getFechaCreacion()
+        );
+
+        MayorResumenDTO mayorDTO = new MayorResumenDTO(
+                visita.getMayor().getIdMayor(),
+                visita.getMayor().getNombre(),
+                visita.getMayor().getApellidos(),
+                visita.getMayor().getMunicipio()
+        );
+
+        VoluntarioResumenDTO voluntarioDTO = new VoluntarioResumenDTO(
+                visita.getVoluntario().getIdVoluntario(),
+                visita.getVoluntario().getNombre(),
+                visita.getVoluntario().getApellidos(),
+                visita.getVoluntario().getMunicipio(),
+                visita.getVoluntario().getPuntosWallet()
+        );
+
+        return new VisitaResponseDTO(
+                visita.getIdVisita(),
+                solicitudDTO,
+                mayorDTO,
+                voluntarioDTO,
+                visita.getFechaVisita(),
+                visita.getDuracionMinutos(),
+                visita.getEstado().name()
+        );
+    }
+
+    public List<VisitaResponseDTO> obtenerPorVoluntarioDTO(Long idVoluntario) {
+        return obtenerPorVoluntario(idVoluntario)
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
+    }
+
+    public VisitaResponseDTO actualizarEstadoDTO(Long idVisita, EstadoVisitaDTO dto) {
+        Visita visita = actualizarEstado(idVisita, dto);
+        return convertirADTO(visita);
     }
 
 }
