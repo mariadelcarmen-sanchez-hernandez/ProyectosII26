@@ -3,6 +3,8 @@ package com.generaction.backend.entity;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -40,6 +42,7 @@ public class Solicitud {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_mayor", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Mayor mayor;
 
     @Column(name = "tipo_actividad", nullable = false, length = 50)

@@ -45,17 +45,14 @@ public class SolicitudService {
         return solicitudRepository.save(solicitud);
     }
 
-    // Ver todas las solicitudes de un mayor
     public List<Solicitud> obtenerPorMayor(Long idMayor) {
         return solicitudRepository.findByMayor_IdMayor(idMayor);
     }
 
-    // Ver todas las solicitudes pendientes
     public List<Solicitud> obtenerPendientes() {
         return solicitudRepository.findByEstado(EstadoSolicitud.PENDIENTE);
     }
 
-    // Ver solicitudes pendientes por municipio
     public List<Solicitud> obtenerPendientesPorMunicipio(String municipio) {
         return solicitudRepository.findByEstadoAndMayor_Municipio(
                 EstadoSolicitud.PENDIENTE, municipio

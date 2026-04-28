@@ -2,6 +2,8 @@ package com.generaction.backend.entity;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -37,14 +39,17 @@ public class Visita {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_solicitud", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Solicitud solicitud;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_mayor", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Mayor mayor;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_voluntario", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Voluntario voluntario;
 
     @Column(name = "fecha_visita", nullable = false)

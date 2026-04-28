@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class SolicitudDTO {
-    private Long idMayor;           // quién pide la ayuda
-    private String tipoActividad;   // "paseo", "medico", "compras", "conversacion"
-    private String fechaSolicitada; // "2026-05-10"
-    private String horario;         // "manana" o "tarde"
+    private Long idMayor;
+    private String tipoActividad;
+    private String fechaSolicitada;
+    private String horario;
     private String descripcion;
 }

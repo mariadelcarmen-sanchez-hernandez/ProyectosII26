@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.generaction.backend.dto.EstadoVisitaDTO;
 import com.generaction.backend.dto.NotificacionDTO;
 import com.generaction.backend.dto.RegistroVisitaDTO;
 import com.generaction.backend.entity.Mayor;
@@ -18,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class VisitaService {
 
     private final VisitaRepository visitaRepository;
+    
     private final NotificacionService notificacionService;
 
     public List<Visita> obtenerTodas() {
@@ -79,4 +81,13 @@ public class VisitaService {
         visita.setEstado(Visita.EstadoVisita.NO_REALIZADA);
         return visitaRepository.save(visita);
     }
+
+    public Visita actualizarEstado(Long idVisita, EstadoVisitaDTO dto) {
+        Visita visita = visitaRepository.findById(idVisita)
+                .orElseThrow(() -> new RuntimeException("Visita no encontrada: " + idVisita));
+
+        visita.setEstado(dto.getEstado());
+        return visitaRepository.save(visita);
+    }
+
 }

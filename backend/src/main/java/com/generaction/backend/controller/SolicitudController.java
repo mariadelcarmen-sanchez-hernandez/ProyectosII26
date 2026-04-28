@@ -1,15 +1,23 @@
 package com.generaction.backend.controller;
 
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.generaction.backend.dto.AsignacionDTO;
 import com.generaction.backend.dto.SolicitudDTO;
 import com.generaction.backend.entity.Solicitud;
 import com.generaction.backend.entity.Visita;
 import com.generaction.backend.service.SolicitudService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/solicitudes")
@@ -31,13 +39,10 @@ public class SolicitudController {
         return ResponseEntity.ok(solicitudService.obtenerPendientes());
     }
 
-    // GET /api/solicitudes/pendientes?municipio=Madrid → filtradas por zona
+    // GET /api/solicitudes/pendientes/municipio/{municipio}
     @GetMapping("/pendientes/municipio/{municipio}")
-    public ResponseEntity<List<Solicitud>> pendientesPorMunicipio(
-            @PathVariable String municipio) {
-        return ResponseEntity.ok(
-            solicitudService.obtenerPendientesPorMunicipio(municipio)
-        );
+    public ResponseEntity<List<Solicitud>> pendientesPorMunicipio(@PathVariable String municipio) {
+        return ResponseEntity.ok(solicitudService.obtenerPendientesPorMunicipio(municipio));
     }
 
     // GET /api/solicitudes/mayor/{id} → historial de un mayor

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.generaction.backend.dto.EstadoVisitaDTO;
 import com.generaction.backend.dto.RegistroVisitaDTO;
 import com.generaction.backend.entity.Visita;
 import com.generaction.backend.service.VisitaService;
@@ -57,9 +58,15 @@ public class VisitaController {
         return ResponseEntity.ok(visitaService.marcarNoRealizada(id));
     }
 
-    // Endpoint para listar solo las visitas programadas de un voluntario
     @GetMapping("/voluntario/{idVoluntario}/programadas")
     public ResponseEntity<List<Visita>> listarProgramadasPorVoluntario(@PathVariable Long idVoluntario) {
         return ResponseEntity.ok(visitaService.obtenerProgramadasPorVoluntario(idVoluntario));
+    }
+
+    @PutMapping("/{idVisita}/estado")
+    public ResponseEntity<Visita> cambiarEstado(
+            @PathVariable Long idVisita,
+            @RequestBody EstadoVisitaDTO dto) {
+        return ResponseEntity.ok(visitaService.actualizarEstado(idVisita, dto));
     }
 }
