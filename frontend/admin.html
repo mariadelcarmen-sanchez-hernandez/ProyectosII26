@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenerAction — Panel Admin</title>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <!-- ═══════════════════════════════ TOPBAR ═══════════════════════════════ -->
+    <header class="admin-topbar">
+        <div class="topbar-left">
+            <span class="brand">GenerAction</span>
+            <span class="admin-badge">Admin</span>
+        </div>
+        <div class="topbar-right">
+            <span class="admin-avatar" title="Administrador">🛡️</span>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════ TAB NAV ══════════════════════════════ -->
+    <nav class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('overview')">
+            <span class="tab-icon">📊</span> Resumen
+        </button>
+        <button class="tab-btn" onclick="switchTab('usuarios')">
+            <span class="tab-icon">👥</span> Usuarios
+        </button>
+        <button class="tab-btn" onclick="switchTab('solicitudes')">
+            <span class="tab-icon">📋</span> Solicitudes
+        </button>
+        <button class="tab-btn" onclick="switchTab('resenas')">
+            <span class="tab-icon">⭐</span> Reseñas
+        </button>
+        <button class="tab-btn" onclick="switchTab('feedback')">
+            <span class="tab-icon">💬</span> Feedback
+        </button>
+    </nav>
+
+    <!-- ═══════════════════════════════ MAIN ════════════════════════════════ -->
+    <main class="main-content">
+
+        <!-- ─────────────────── OVERVIEW ─────────────────── -->
+        <section id="tab-overview" class="tab-section active">
+
+            <div class="stat-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-body">
+                        <span class="stat-value">14</span>
+                        <span class="stat-label">Usuarios totales</span>
+                    </div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-body">
+                        <span class="stat-value">8</span>
+                        <span class="stat-label">Voluntarios activos</span>
+                    </div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">📋</div>
+                    <div class="stat-body">
+                        <span class="stat-value">23</span>
+                        <span class="stat-label">Solicitudes totales</span>
+                    </div>
+                </div>
+                <div class="stat-card gold">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-body">
+                        <span class="stat-value">4.8</span>
+                        <span class="stat-label">Valoración media</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── Fila 1: Donut + Barras semanales ── -->
+            <div class="charts-row">
+
+                <div class="widget chart-widget">
+                    <div class="widget-header">
+                        <h3>Estado de solicitudes</h3>
+                        <button class="link-btn" onclick="switchTab('solicitudes')">Ver →</button>
+                    </div>
+                    <div class="donut-wrap">
+                        <div class="donut-container">
+                            <svg class="donut-svg" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="35" fill="none" stroke="#f1f5f9" stroke-width="10"/>
+                                <!-- Completadas 47.8% = 105.2 -->
+                                <circle cx="50" cy="50" r="35" fill="none" stroke="#2ecc71" stroke-width="10"
+                                        stroke-dasharray="105.2 220" stroke-dashoffset="0"/>
+                                <!-- En curso 21.7% = 47.8 -->
+                                <circle cx="50" cy="50" r="35" fill="none" stroke="#4a90e2" stroke-width="10"
+                                        stroke-dasharray="47.8 220" stroke-dashoffset="-105.2"/>
+                                <!-- Pendientes 30.4% = 66.9 -->
+                                <circle cx="50" cy="50" r="35" fill="none" stroke="#f59e0b" stroke-width="10"
+                                        stroke-dasharray="66.9 220" stroke-dashoffset="-153.0"/>
+                            </svg>
+                            <div class="donut-center">
+                                <span class="donut-num">23</span>
+                                <span class="donut-lbl">total</span>
+                            </div>
+                        </div>
+                        <div class="donut-legend">
+                            <div class="legend-item"><span class="legend-dot" style="background:#2ecc71"></span><span>Completadas</span><strong>11</strong></div>
+                            <div class="legend-item"><span class="legend-dot" style="background:#4a90e2"></span><span>En curso</span><strong>5</strong></div>
+                            <div class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span><span>Pendientes</span><strong>7</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget chart-widget">
+                    <div class="widget-header">
+                        <h3>Actividad semanal</h3>
+                        <span class="widget-sub">solicitudes / día</span>
+                    </div>
+                    <div class="week-chart">
+                        <div class="week-bars">
+                            <div class="week-col">
+                                <span class="week-val">4</span>
+                                <div class="week-bar-outer"><div class="week-bar-inner" style="--h:53%"></div></div>
+                                <span class="week-day">L</span>
+                            </div>
+                            <div class="week-col">
+                                <span class="week-val">2</span>
+                                <div class="week-bar-outer"><div class="week-bar-inner" style="--h:27%"></div></div>
+                                <span class="week-day">M</span>
+                            </div>
+                            <div class="week-col">
+                                <span class="week-val">5</span>
+                                <div class="week-bar-outer"><div class="week-bar-inner" style="--h:67%"></div></div>
+                                <span class="week-day">X</span>
+                            </div>
+                            <div class="week-col">
+                                <span class="week-val">3</span>
+                                <div class="week-bar-outer"><div class="week-bar-inner" style="--h:40%"></div></div>
+                                <span class="week-day">J</span>
+                            </div>
+                            <div class="week-col today">
+                                <span class="week-val">6</span>
+                                <div class="week-bar-outer"><div class="week-bar-inner" style="--h:80%"></div></div>
+                                <span class="week-day">V</span>
+                            </div>
+                            <div class="week-col">
+                                <span class="week-val">2</span>
+                                <div class="week-bar-outer"><div class="week-bar-inner" style="--h:27%"></div></div>
+                                <span class="week-day">S</span>
+                            </div>
+                            <div class="week-col">
+                                <span class="week-val">1</span>
+                                <div class="week-bar-outer"><div class="week-bar-inner" style="--h:13%"></div></div>
+                                <span class="week-day">D</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ── Fila 2: Categorías + Mini reseñas ── -->
+            <div class="section-row">
+
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>Categorías más solicitadas</h3>
+                    </div>
+                    <div class="cat-bars">
+                        <div class="cat-row">
+                            <span class="cat-label">🛒 Recados</span>
+                            <div class="cat-track"><div class="cat-fill" style="width:80%;background:#2ecc71"></div></div>
+                            <span class="cat-count">8</span>
+                        </div>
+                        <div class="cat-row">
+                            <span class="cat-label">💊 Medicamentos</span>
+                            <div class="cat-track"><div class="cat-fill" style="width:60%;background:#f59e0b"></div></div>
+                            <span class="cat-count">6</span>
+                        </div>
+                        <div class="cat-row">
+                            <span class="cat-label">📱 Tecnología</span>
+                            <div class="cat-track"><div class="cat-fill" style="width:50%;background:#4a90e2"></div></div>
+                            <span class="cat-count">5</span>
+                        </div>
+                        <div class="cat-row">
+                            <span class="cat-label">🚶 Paseos</span>
+                            <div class="cat-track"><div class="cat-fill" style="width:40%;background:#a78bfa"></div></div>
+                            <span class="cat-count">4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="widget">
+                    <div class="widget-header">
+                        <h3>Últimas reseñas</h3>
+                        <button class="link-btn" onclick="switchTab('resenas')">Ver todas →</button>
+                    </div>
+                    <div class="mini-review-list">
+                        <div class="mini-review">
+                            <div class="mini-review-top">
+                                <span class="mini-name">Sra. Carmen</span>
+                                <span class="mini-stars">★★★★★</span>
+                            </div>
+                            <p class="mini-text">"Muy puntual y amable, lo recomiendo."</p>
+                        </div>
+                        <div class="mini-review">
+                            <div class="mini-review-top">
+                                <span class="mini-name">Sr. Manuel</span>
+                                <span class="mini-stars">★★★★★</span>
+                            </div>
+                            <p class="mini-text">"Me explicó todo con mucha paciencia."</p>
+                        </div>
+                        <div class="mini-review">
+                            <div class="mini-review-top">
+                                <span class="mini-name">Sra. Rosa</span>
+                                <span class="mini-stars four">★★★★☆</span>
+                            </div>
+                            <p class="mini-text">"Muy buena actitud, llegó a tiempo."</p>
+                        </div>
+                        <div class="mini-review">
+                            <div class="mini-review-top">
+                                <span class="mini-name">Sra. Pilar</span>
+                                <span class="mini-stars">★★★★★</span>
+                            </div>
+                            <p class="mini-text">"Volvería a pedir su ayuda sin dudarlo."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ─────────────────── USUARIOS ─────────────────── -->
+        <section id="tab-usuarios" class="tab-section">
+
+            <div class="sub-tabs">
+                <button class="sub-tab active" onclick="switchSubTab(this, 'personas')">👵 Personas Mayores</button>
+                <button class="sub-tab" onclick="switchSubTab(this, 'voluntarios')">🌟 Voluntarios</button>
+            </div>
+
+            <!-- Personas Mayores -->
+            <div id="subtab-personas" class="subtab-content active">
+                <div class="table-header">
+                    <span class="table-count">6 personas registradas</span>
+                    <input type="text" class="search-input" placeholder="🔍 Buscar..." oninput="filterTable('personas-table', this.value)">
+                </div>
+                <div class="table-wrap">
+                    <table id="personas-table">
+                        <thead>
+                            <tr>
+                                <th>Usuario</th>
+                                <th>Ciudad</th>
+                                <th>Solicitudes</th>
+                                <th>Estado</th>
+                                <th>Registro</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">👩</span><div><strong>Sra. Carmen López</strong><small>carmen.lopez@email.com</small></div></div></td>
+                                <td>Madrid</td>
+                                <td><span class="count-pill blue">4</span></td>
+                                <td><span class="status-badge active">Activa</span></td>
+                                <td>12 ene 2026</td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">👴</span><div><strong>Sr. Manuel García</strong><small>manuel.garcia@email.com</small></div></div></td>
+                                <td>Madrid</td>
+                                <td><span class="count-pill blue">2</span></td>
+                                <td><span class="status-badge active">Activo</span></td>
+                                <td>15 ene 2026</td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">👵</span><div><strong>Sra. Rosa Martínez</strong><small>rosa.martinez@email.com</small></div></div></td>
+                                <td>Alcobendas</td>
+                                <td><span class="count-pill blue">3</span></td>
+                                <td><span class="status-badge active">Activa</span></td>
+                                <td>20 ene 2026</td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">👴</span><div><strong>Sr. Luis Fernández</strong><small>luis.fernandez@email.com</small></div></div></td>
+                                <td>Pozuelo</td>
+                                <td><span class="count-pill blue">5</span></td>
+                                <td><span class="status-badge active">Activo</span></td>
+                                <td>3 feb 2026</td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">👩</span><div><strong>Sra. Pilar Ruiz</strong><small>pilar.ruiz@email.com</small></div></div></td>
+                                <td>Madrid</td>
+                                <td><span class="count-pill blue">1</span></td>
+                                <td><span class="status-badge active">Activa</span></td>
+                                <td>10 feb 2026</td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">👴</span><div><strong>Sr. Ricardo Blanco</strong><small>ricardo.blanco@email.com</small></div></div></td>
+                                <td>Getafe</td>
+                                <td><span class="count-pill blue">3</span></td>
+                                <td><span class="status-badge inactive">Inactivo</span></td>
+                                <td>18 feb 2026</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Voluntarios -->
+            <div id="subtab-voluntarios" class="subtab-content">
+                <div class="table-header">
+                    <span class="table-count">8 voluntarios registrados</span>
+                    <input type="text" class="search-input" placeholder="🔍 Buscar..." oninput="filterTable('vol-table', this.value)">
+                </div>
+                <div class="table-wrap">
+                    <table id="vol-table">
+                        <thead>
+                            <tr>
+                                <th>Voluntario</th>
+                                <th>Ciudad</th>
+                                <th>Tareas</th>
+                                <th>Valoración</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">🌟</span><div><strong>Juan Pérez</strong><small>juan.perez@email.com</small></div></div></td>
+                                <td>Madrid</td>
+                                <td><span class="count-pill green">12</span></td>
+                                <td><span class="stars-cell">★★★★★ <em>4.8</em></span></td>
+                                <td><span class="status-badge active">Activo</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">🌟</span><div><strong>Ana Sánchez</strong><small>ana.sanchez@email.com</small></div></div></td>
+                                <td>Madrid</td>
+                                <td><span class="count-pill green">8</span></td>
+                                <td><span class="stars-cell">★★★★★ <em>5.0</em></span></td>
+                                <td><span class="status-badge active">Activa</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">🌟</span><div><strong>Carlos Mora</strong><small>carlos.mora@email.com</small></div></div></td>
+                                <td>Alcobendas</td>
+                                <td><span class="count-pill green">5</span></td>
+                                <td><span class="stars-cell four">★★★★☆ <em>4.2</em></span></td>
+                                <td><span class="status-badge active">Activo</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">🌟</span><div><strong>Laura Díaz</strong><small>laura.diaz@email.com</small></div></div></td>
+                                <td>Pozuelo</td>
+                                <td><span class="count-pill green">6</span></td>
+                                <td><span class="stars-cell">★★★★★ <em>4.9</em></span></td>
+                                <td><span class="status-badge active">Activa</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">🌟</span><div><strong>Marcos Gil</strong><small>marcos.gil@email.com</small></div></div></td>
+                                <td>Madrid</td>
+                                <td><span class="count-pill green">3</span></td>
+                                <td><span class="stars-cell four">★★★★☆ <em>4.0</em></span></td>
+                                <td><span class="status-badge pending">En revisión</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">🌟</span><div><strong>Sofía Vega</strong><small>sofia.vega@email.com</small></div></div></td>
+                                <td>Getafe</td>
+                                <td><span class="count-pill green">9</span></td>
+                                <td><span class="stars-cell">★★★★★ <em>4.7</em></span></td>
+                                <td><span class="status-badge active">Activa</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">🌟</span><div><strong>Pablo Nieto</strong><small>pablo.nieto@email.com</small></div></div></td>
+                                <td>Madrid</td>
+                                <td><span class="count-pill green">4</span></td>
+                                <td><span class="stars-cell four">★★★★☆ <em>4.3</em></span></td>
+                                <td><span class="status-badge active">Activo</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="user-cell"><span class="user-emoji">🌟</span><div><strong>Elena Torres</strong><small>elena.torres@email.com</small></div></div></td>
+                                <td>Alcobendas</td>
+                                <td><span class="count-pill green">2</span></td>
+                                <td><span class="stars-cell low">★★★☆☆ <em>3.5</em></span></td>
+                                <td><span class="status-badge inactive">Inactiva</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ─────────────────── SOLICITUDES ─────────────────── -->
+        <section id="tab-solicitudes" class="tab-section">
+
+            <div class="filter-row">
+                <button class="filter-chip active" onclick="filterStatus(this, 'all')">Todas <span class="chip-count">23</span></button>
+                <button class="filter-chip" onclick="filterStatus(this, 'pending')">Pendientes <span class="chip-count">7</span></button>
+                <button class="filter-chip" onclick="filterStatus(this, 'active')">En curso <span class="chip-count">5</span></button>
+                <button class="filter-chip" onclick="filterStatus(this, 'done')">Completadas <span class="chip-count">11</span></button>
+            </div>
+
+            <div id="solicitudes-list">
+
+                <div class="solicitud-card" data-status="pending">
+                    <div class="solicitud-header">
+                        <span class="solicitud-category errands">🛒 Recados</span>
+                        <span class="status-badge pending">Pendiente</span>
+                    </div>
+                    <h4 class="solicitud-title">Compra de farmacia</h4>
+                    <div class="solicitud-meta-row">
+                        <span>👵 Sra. Carmen López</span>
+                        <span>📍 Madrid · 300m</span>
+                        <span>🕐 Hace 1h</span>
+                    </div>
+                    <p class="solicitud-desc">Necesita recoger una receta y traerla a casa. No pesa nada.</p>
+                    <div class="solicitud-footer">
+                        <span class="unassigned">Sin voluntario asignado</span>
+                    </div>
+                </div>
+
+                <div class="solicitud-card" data-status="active">
+                    <div class="solicitud-header">
+                        <span class="solicitud-category tech">📱 Tecnología</span>
+                        <span class="status-badge active">En curso</span>
+                    </div>
+                    <h4 class="solicitud-title">Ayuda con el correo</h4>
+                    <div class="solicitud-meta-row">
+                        <span>👴 Sr. Manuel García</span>
+                        <span>📍 Madrid · 1.2km</span>
+                        <span>🕐 Hace 3h</span>
+                    </div>
+                    <p class="solicitud-desc">Su cuenta de Gmail no entra en el móvil. Necesita ayuda con la clave.</p>
+                    <div class="solicitud-footer">
+                        <span class="assigned">🌟 Juan Pérez</span>
+                    </div>
+                </div>
+
+                <div class="solicitud-card" data-status="done">
+                    <div class="solicitud-header">
+                        <span class="solicitud-category walks">🚶 Paseo</span>
+                        <span class="status-badge done">Completada</span>
+                    </div>
+                    <h4 class="solicitud-title">Paseo matutino por el parque</h4>
+                    <div class="solicitud-meta-row">
+                        <span>👵 Sra. Rosa Martínez</span>
+                        <span>📍 Alcobendas · 800m</span>
+                        <span>🕐 Ayer</span>
+                    </div>
+                    <p class="solicitud-desc">Acompañamiento a dar un paseo por el parque del barrio.</p>
+                    <div class="solicitud-footer">
+                        <span class="assigned">🌟 Ana Sánchez</span>
+                        <span class="rating-mini">★★★★★</span>
+                    </div>
+                </div>
+
+                <div class="solicitud-card" data-status="pending">
+                    <div class="solicitud-header">
+                        <span class="solicitud-category meds">💊 Medicamentos</span>
+                        <span class="status-badge pending">Pendiente</span>
+                    </div>
+                    <h4 class="solicitud-title">Recoger medicinas en farmacia</h4>
+                    <div class="solicitud-meta-row">
+                        <span>👴 Sr. Luis Fernández</span>
+                        <span>📍 Pozuelo · 600m</span>
+                        <span>🕐 Hace 2h</span>
+                    </div>
+                    <p class="solicitud-desc">Medicación mensual. La farmacia está a 10 minutos caminando.</p>
+                    <div class="solicitud-footer">
+                        <span class="unassigned">Sin voluntario asignado</span>
+                    </div>
+                </div>
+
+                <div class="solicitud-card" data-status="done">
+                    <div class="solicitud-header">
+                        <span class="solicitud-category errands">🛒 Recados</span>
+                        <span class="status-badge done">Completada</span>
+                    </div>
+                    <h4 class="solicitud-title">Compra semanal en el supermercado</h4>
+                    <div class="solicitud-meta-row">
+                        <span>👴 Sr. Ricardo Blanco</span>
+                        <span>📍 Getafe · 400m</span>
+                        <span>🕐 Hace 2 días</span>
+                    </div>
+                    <p class="solicitud-desc">Lista de la compra semanal. Peso moderado, necesita transporte.</p>
+                    <div class="solicitud-footer">
+                        <span class="assigned">🌟 Laura Díaz</span>
+                        <span class="rating-mini four">★★★★☆</span>
+                    </div>
+                </div>
+
+                <div class="solicitud-card" data-status="active">
+                    <div class="solicitud-header">
+                        <span class="solicitud-category walks">🐕 Paseo</span>
+                        <span class="status-badge active">En curso</span>
+                    </div>
+                    <h4 class="solicitud-title">Pasear al perro esta tarde</h4>
+                    <div class="solicitud-meta-row">
+                        <span>👩 Sra. Pilar Ruiz</span>
+                        <span>📍 Madrid · 200m</span>
+                        <span>🕐 Hoy 17:00</span>
+                    </div>
+                    <p class="solicitud-desc">Paseo de 30 minutos por el barrio con el perro. Es muy tranquilo.</p>
+                    <div class="solicitud-footer">
+                        <span class="assigned">🌟 Carlos Mora</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ─────────────────── RESEÑAS ─────────────────── -->
+        <section id="tab-resenas" class="tab-section">
+
+            <div class="rating-header-card">
+                <div class="rating-col-big">
+                    <span class="big-number">4.8</span>
+                    <span class="big-stars">★★★★★</span>
+                    <span class="big-label">12 reseñas totales</span>
+                </div>
+                <div class="rating-col-bars">
+                    <div class="bar-row"><span class="bl">5★</span><div class="bt"><div class="bf" style="width:75%"></div></div><span class="bc">9</span></div>
+                    <div class="bar-row"><span class="bl">4★</span><div class="bt"><div class="bf" style="width:17%"></div></div><span class="bc">2</span></div>
+                    <div class="bar-row"><span class="bl">3★</span><div class="bt"><div class="bf" style="width:8%"></div></div><span class="bc">1</span></div>
+                    <div class="bar-row"><span class="bl">2★</span><div class="bt"><div class="bf" style="width:0%"></div></div><span class="bc">0</span></div>
+                    <div class="bar-row"><span class="bl">1★</span><div class="bt"><div class="bf" style="width:0%"></div></div><span class="bc">0</span></div>
+                </div>
+            </div>
+
+            <div class="reviews-grid">
+
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="rev-avatar">👩</div>
+                        <div class="rev-info">
+                            <span class="rev-name">Sra. Carmen López</span>
+                            <span class="rev-date">Hace 2 días · 💊 Medicamentos</span>
+                        </div>
+                        <span class="rev-stars">★★★★★</span>
+                    </div>
+                    <p class="rev-text">"Juan fue puntual y muy amable. Me ayudó a recoger la medicación y me acompañó hasta la puerta."</p>
+                    <span class="rev-volunteer">→ Juan Pérez</span>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="rev-avatar">👴</div>
+                        <div class="rev-info">
+                            <span class="rev-name">Sr. Manuel García</span>
+                            <span class="rev-date">Hace 5 días · 📱 Tecnología</span>
+                        </div>
+                        <span class="rev-stars">★★★★★</span>
+                    </div>
+                    <p class="rev-text">"Me explicó cómo usar el correo con mucha paciencia. Ahora puedo hablar con mis hijos por videollamada."</p>
+                    <span class="rev-volunteer">→ Juan Pérez</span>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="rev-avatar">👵</div>
+                        <div class="rev-info">
+                            <span class="rev-name">Sra. Rosa Martínez</span>
+                            <span class="rev-date">Hace 1 semana · 🛒 Compra</span>
+                        </div>
+                        <span class="rev-stars four">★★★★☆</span>
+                    </div>
+                    <p class="rev-text">"Muy buena actitud, llegó a tiempo. Solo le faltó revisar la fecha de caducidad de un yogur."</p>
+                    <span class="rev-volunteer">→ Ana Sánchez</span>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="rev-avatar">👩</div>
+                        <div class="rev-info">
+                            <span class="rev-name">Sra. Pilar Ruiz</span>
+                            <span class="rev-date">Hace 2 semanas · 🚶 Paseo</span>
+                        </div>
+                        <span class="rev-stars">★★★★★</span>
+                    </div>
+                    <p class="rev-text">"Nos acompañó a dar un paseo por el parque. Muy animado y entretenido, volvería a pedirlo."</p>
+                    <span class="rev-volunteer">→ Carlos Mora</span>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="rev-avatar">👴</div>
+                        <div class="rev-info">
+                            <span class="rev-name">Sr. Luis Fernández</span>
+                            <span class="rev-date">Hace 3 semanas · 💊 Medicamentos</span>
+                        </div>
+                        <span class="rev-stars">★★★★★</span>
+                    </div>
+                    <p class="rev-text">"Puntualísima y muy responsable. Trajo todo lo que necesitaba sin ningún error."</p>
+                    <span class="rev-volunteer">→ Sofía Vega</span>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-top">
+                        <div class="rev-avatar">👴</div>
+                        <div class="rev-info">
+                            <span class="rev-name">Sr. Ricardo Blanco</span>
+                            <span class="rev-date">Hace 1 mes · 🛒 Compra</span>
+                        </div>
+                        <span class="rev-stars low">★★★☆☆</span>
+                    </div>
+                    <p class="rev-text">"Llegó tarde pero al final lo hizo bien. Me gustaría que avise si se retrasa la próxima vez."</p>
+                    <span class="rev-volunteer">→ Elena Torres</span>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ─────────────────── FEEDBACK ─────────────────── -->
+        <section id="tab-feedback" class="tab-section">
+
+            <div class="feedback-summary">
+                <div class="feedback-stat">
+                    <span class="fb-num">9</span>
+                    <span class="fb-lbl">Mensajes totales</span>
+                </div>
+                <div class="feedback-stat">
+                    <span class="fb-num resolved-col">5</span>
+                    <span class="fb-lbl">Resueltos</span>
+                </div>
+                <div class="feedback-stat">
+                    <span class="fb-num pending-col">4</span>
+                    <span class="fb-lbl">Sin responder</span>
+                </div>
+            </div>
+
+            <div class="feedback-list">
+
+                <div class="feedback-card unread">
+                    <div class="feedback-header">
+                        <div class="fb-sender">
+                            <span class="fb-avatar">👩</span>
+                            <div>
+                                <span class="fb-name">Carmen López</span>
+                                <span class="fb-email">carmen.lopez@email.com</span>
+                            </div>
+                        </div>
+                        <div class="fb-right">
+                            <span class="fb-time">Hace 30 min</span>
+                            <span class="unread-dot"></span>
+                        </div>
+                    </div>
+                    <p class="fb-message">Me gustaría que hubiera más voluntarios disponibles por las tardes. A veces tengo que esperar mucho.</p>
+                    <div class="fb-tags">
+                        <span class="fb-tag suggest">💡 Sugerencia</span>
+                    </div>
+                </div>
+
+                <div class="feedback-card unread">
+                    <div class="feedback-header">
+                        <div class="fb-sender">
+                            <span class="fb-avatar">👴</span>
+                            <div>
+                                <span class="fb-name">Manuel García</span>
+                                <span class="fb-email">manuel.garcia@email.com</span>
+                            </div>
+                        </div>
+                        <div class="fb-right">
+                            <span class="fb-time">Hace 2h</span>
+                            <span class="unread-dot"></span>
+                        </div>
+                    </div>
+                    <p class="fb-message">La aplicación es muy fácil de usar, pero no entiendo cómo ver el historial de mis solicitudes. ¿Hay algún manual?</p>
+                    <div class="fb-tags">
+                        <span class="fb-tag question">❓ Consulta</span>
+                    </div>
+                </div>
+
+                <div class="feedback-card unread">
+                    <div class="feedback-header">
+                        <div class="fb-sender">
+                            <span class="fb-avatar">🌟</span>
+                            <div>
+                                <span class="fb-name">Juan Pérez <small>(Voluntario)</small></span>
+                                <span class="fb-email">juan.perez@email.com</span>
+                            </div>
+                        </div>
+                        <div class="fb-right">
+                            <span class="fb-time">Hace 4h</span>
+                            <span class="unread-dot"></span>
+                        </div>
+                    </div>
+                    <p class="fb-message">Sería genial poder ver la ruta en el mapa hasta donde vive la persona mayor antes de aceptar la tarea.</p>
+                    <div class="fb-tags">
+                        <span class="fb-tag suggest">💡 Sugerencia</span>
+                        <span class="fb-tag volunteer">🌟 Voluntario</span>
+                    </div>
+                </div>
+
+                <div class="feedback-card unread">
+                    <div class="feedback-header">
+                        <div class="fb-sender">
+                            <span class="fb-avatar">👩</span>
+                            <div>
+                                <span class="fb-name">Pilar Ruiz</span>
+                                <span class="fb-email">pilar.ruiz@email.com</span>
+                            </div>
+                        </div>
+                        <div class="fb-right">
+                            <span class="fb-time">Ayer</span>
+                            <span class="unread-dot"></span>
+                        </div>
+                    </div>
+                    <p class="fb-message">Tuve un problema al registrarme, la app no enviaba el SMS de verificación. Tuve que intentarlo tres veces.</p>
+                    <div class="fb-tags">
+                        <span class="fb-tag bug">🐛 Error</span>
+                    </div>
+                </div>
+
+                <div class="feedback-card read">
+                    <div class="feedback-header">
+                        <div class="fb-sender">
+                            <span class="fb-avatar">🌟</span>
+                            <div>
+                                <span class="fb-name">Ana Sánchez <small>(Voluntaria)</small></span>
+                                <span class="fb-email">ana.sanchez@email.com</span>
+                            </div>
+                        </div>
+                        <div class="fb-right">
+                            <span class="fb-time">Hace 3 días</span>
+                            <span class="resolved-chip">Resuelto ✓</span>
+                        </div>
+                    </div>
+                    <p class="fb-message">¡Me encanta la plataforma! Sería bonito tener un sistema de insignias para motivar más a los voluntarios.</p>
+                    <div class="fb-tags">
+                        <span class="fb-tag suggest">💡 Sugerencia</span>
+                        <span class="fb-tag volunteer">🌟 Voluntario</span>
+                    </div>
+                </div>
+
+                <div class="feedback-card read">
+                    <div class="feedback-header">
+                        <div class="fb-sender">
+                            <span class="fb-avatar">👴</span>
+                            <div>
+                                <span class="fb-name">Luis Fernández</span>
+                                <span class="fb-email">luis.fernandez@email.com</span>
+                            </div>
+                        </div>
+                        <div class="fb-right">
+                            <span class="fb-time">Hace 5 días</span>
+                            <span class="resolved-chip">Resuelto ✓</span>
+                        </div>
+                    </div>
+                    <p class="fb-message">Muchas gracias por el servicio. Mi voluntaria Sofía es extraordinaria. ¿Puedo pedir siempre a la misma persona?</p>
+                    <div class="fb-tags">
+                        <span class="fb-tag question">❓ Consulta</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function switchTab(name) {
+            document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + name).classList.add('active');
+            document.querySelector(`.tab-btn[onclick="switchTab('${name}')"]`).classList.add('active');
+        }
+
+        function switchSubTab(btn, name) {
+            document.querySelectorAll('.subtab-content').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+            document.getElementById('subtab-' + name).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        function filterStatus(btn, status) {
+            document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.solicitud-card').forEach(card => {
+                card.style.display = (status === 'all' || card.dataset.status === status) ? 'block' : 'none';
+            });
+        }
+
+        function filterTable(tableId, query) {
+            const rows = document.querySelectorAll('#' + tableId + ' tbody tr');
+            const q = query.toLowerCase();
+            rows.forEach(row => {
+                row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
