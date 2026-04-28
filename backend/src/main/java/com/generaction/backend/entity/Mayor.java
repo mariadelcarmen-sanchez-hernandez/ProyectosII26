@@ -75,4 +75,7 @@ public class Mayor {
     @Lob
     @Column(name = "foto_perfil_mayor")
     private byte[] fotoPerfilMayor;
+
+    @Column(name = "rol", nullable = false, length = 20)
+    private String rol = "MAYOR";
 }

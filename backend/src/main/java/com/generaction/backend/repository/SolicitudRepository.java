@@ -3,6 +3,7 @@ package com.generaction.backend.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.generaction.backend.entity.Solicitud;
@@ -16,5 +17,10 @@ public interface SolicitudRepository extends JpaRepository<Solicitud, Long> {
     List<Solicitud> findByMayor_IdMayor(Long idMayor);
 
     List<Solicitud> findByEstadoAndMayor_Municipio(EstadoSolicitud estado, String municipio);
+
+    @Query("SELECT s FROM Solicitud s JOIN FETCH s.mayor")
+    List<Solicitud> findAllWithMayor();
+
+    long countByEstado(EstadoSolicitud estado);
 
 }

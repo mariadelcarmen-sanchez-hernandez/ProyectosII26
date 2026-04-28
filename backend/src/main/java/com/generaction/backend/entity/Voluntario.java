@@ -78,4 +78,6 @@ public class Voluntario {
     @Column(name = "activo", nullable = false)
     private Boolean activo = true;
 
+    @Column(name = "rol", nullable = false, length = 20)
+    private String rol = "VOLUNTARIO";
 }

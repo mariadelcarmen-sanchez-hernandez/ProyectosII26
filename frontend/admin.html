@@ -752,13 +752,143 @@
     </main>
 
     <script>
+        // Auth guard
+        (function () {
+            var token = localStorage.getItem('token');
+            var rol   = localStorage.getItem('rol');
+            if (!token || rol !== 'ADMIN') window.location.replace('login.html');
+        })();
+
+        const API = 'http://localhost:8080';
+
+        function authFetch(path) {
+            return fetch(API + path, {
+                headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') }
+            }).then(function (res) {
+                if (res.status === 403) { localStorage.clear(); window.location.replace('login.html'); }
+                return res.json();
+            });
+        }
+
+        // Tab switching with lazy-load
+        const tabLoaded = {};
+
         function switchTab(name) {
             document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('tab-' + name).classList.add('active');
             document.querySelector(`.tab-btn[onclick="switchTab('${name}')"]`).classList.add('active');
+            if (!tabLoaded[name]) { tabLoaded[name] = true; loadTab(name); }
         }
 
+        function loadTab(name) {
+            if (name === 'overview')         loadStats();
+            else if (name === 'usuarios')    { loadMayores(); loadVoluntarios(); }
+            else if (name === 'solicitudes') loadSolicitudes();
+            else if (name === 'resenas')     loadResenas();
+        }
+
+        // Overview stats
+        function loadStats() {
+            authFetch('/api/admin/stats').then(function (d) {
+                var total = (d.totalMayores || 0) + (d.totalVoluntarios || 0);
+                document.querySelector('.stat-card.blue .stat-value').textContent   = total;
+                document.querySelector('.stat-card.green .stat-value').textContent  = d.totalVoluntarios || 0;
+                document.querySelector('.stat-card.orange .stat-value').textContent = d.totalSolicitudes || 0;
+                document.querySelector('.stat-card.gold .stat-value').textContent   = d.totalResenas || 0;
+                var est   = d.solicitudesPorEstado || {};
+                var chips = document.querySelectorAll('.filter-chip .chip-count');
+                if (chips[0]) chips[0].textContent = d.totalSolicitudes || 0;
+                if (chips[1]) chips[1].textContent = est.PENDIENTE || 0;
+                if (chips[2]) chips[2].textContent = (est.ASIGNADA || 0) + (est.EN_TRAMITE || 0);
+                if (chips[3]) chips[3].textContent = (est.COMPLETADA || 0) + (est.CANCELADA || 0);
+            }).catch(console.error);
+        }
+
+        // Usuarios — Personas Mayores
+        function loadMayores() {
+            authFetch('/api/admin/usuarios/mayores').then(function (list) {
+                document.querySelector('#subtab-personas .table-count').textContent = list.length + ' personas registradas';
+                document.querySelector('#personas-table tbody').innerHTML = list.map(function (m) {
+                    var badge = m.activo
+                        ? '<span class="status-badge active">Activo/a</span>'
+                        : '<span class="status-badge inactive">Inactivo/a</span>';
+                    return '<tr><td><div class="user-cell"><span class="user-emoji">👵</span>' +
+                        '<div><strong>' + m.nombre + '</strong><small>' + m.email + '</small></div></div></td>' +
+                        '<td>' + m.municipio + '</td><td>—</td><td>' + badge + '</td><td>—</td></tr>';
+                }).join('');
+            }).catch(console.error);
+        }
+
+        // Usuarios — Voluntarios
+        function loadVoluntarios() {
+            authFetch('/api/admin/usuarios/voluntarios').then(function (list) {
+                document.querySelector('#subtab-voluntarios .table-count').textContent = list.length + ' voluntarios registrados';
+                document.querySelector('#vol-table tbody').innerHTML = list.map(function (v) {
+                    var badge = v.verificado === 'aprobado'
+                        ? '<span class="status-badge active">Activo</span>'
+                        : '<span class="status-badge pending">Pendiente</span>';
+                    return '<tr><td><div class="user-cell"><span class="user-emoji">🌟</span>' +
+                        '<div><strong>' + v.nombre + '</strong><small>' + v.email + '</small></div></div></td>' +
+                        '<td>' + v.municipio + '</td>' +
+                        '<td><span class="count-pill green">' + v.puntos + ' pts</span></td>' +
+                        '<td>—</td><td>' + badge + '</td></tr>';
+                }).join('');
+            }).catch(console.error);
+        }
+
+        // Solicitudes
+        var ESTADO_MAP = {
+            PENDIENTE:  { css: 'pending', label: 'Pendiente',  ds: 'pending' },
+            ASIGNADA:   { css: 'active',  label: 'En curso',   ds: 'active'  },
+            EN_TRAMITE: { css: 'active',  label: 'En trámite', ds: 'active'  },
+            COMPLETADA: { css: 'done',    label: 'Completada', ds: 'done'    },
+            CANCELADA:  { css: 'done',    label: 'Cancelada',  ds: 'done'    }
+        };
+
+        function loadSolicitudes() {
+            authFetch('/api/admin/solicitudes').then(function (list) {
+                document.getElementById('solicitudes-list').innerHTML = list.map(function (s) {
+                    var em = ESTADO_MAP[s.estado] || { css: 'pending', label: s.estado, ds: 'pending' };
+                    return '<div class="solicitud-card" data-status="' + em.ds + '">' +
+                        '<div class="solicitud-header">' +
+                        '<span class="solicitud-category errands">📋 ' + s.tipoActividad + '</span>' +
+                        '<span class="status-badge ' + em.css + '">' + em.label + '</span></div>' +
+                        '<h4 class="solicitud-title">' + s.tipoActividad + '</h4>' +
+                        '<div class="solicitud-meta-row">' +
+                        '<span>👵 ' + s.mayor + '</span>' +
+                        '<span>🕐 ' + s.fechaSolicitada + '</span>' +
+                        '<span>⏰ ' + s.horario + '</span></div>' +
+                        '<p class="solicitud-desc">' + (s.descripcion || '') + '</p></div>';
+                }).join('') || '<p style="padding:1rem;color:#64748b">Sin solicitudes todavía.</p>';
+            }).catch(console.error);
+        }
+
+        // Reseñas
+        function starsHtml(n) { return '★'.repeat(n) + '☆'.repeat(5 - n); }
+
+        function loadResenas() {
+            authFetch('/api/admin/resenas').then(function (list) {
+                var grid = document.querySelector('#tab-resenas .reviews-grid');
+                if (!list.length) { grid.innerHTML = '<p style="padding:1rem;color:#64748b">Sin reseñas todavía.</p>'; return; }
+                var avg = (list.reduce(function (s, r) { return s + r.puntuacion; }, 0) / list.length).toFixed(1);
+                document.querySelector('.big-number').textContent = avg;
+                document.querySelector('.big-label').textContent  = list.length + ' reseñas totales';
+                grid.innerHTML = list.map(function (r) {
+                    var emoji     = r.rol === 'MAYOR' ? '👵' : '🌟';
+                    var starClass = r.puntuacion >= 5 ? '' : r.puntuacion === 4 ? ' four' : ' low';
+                    return '<div class="review-card">' +
+                        '<div class="review-top">' +
+                        '<div class="rev-avatar">' + emoji + '</div>' +
+                        '<div class="rev-info"><span class="rev-name">' + r.autor + '</span>' +
+                        '<span class="rev-date">' + r.fecha.substring(0, 10) + '</span></div>' +
+                        '<span class="rev-stars' + starClass + '">' + starsHtml(r.puntuacion) + '</span></div>' +
+                        '<p class="rev-text">"' + r.comentario + '"</p></div>';
+                }).join('');
+            }).catch(console.error);
+        }
+
+        // Helpers sin cambios
         function switchSubTab(btn, name) {
             document.querySelectorAll('.subtab-content').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
@@ -781,6 +911,11 @@
                 row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
             });
         }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            tabLoaded['overview'] = true;
+            loadStats();
+        });
     </script>
 </body>
 </html>

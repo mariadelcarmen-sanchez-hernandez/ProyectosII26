@@ -14,31 +14,31 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
   btn.style.opacity = "0.7";
 
   try {
-    const resVol = await fetch("http://localhost:8080/api/voluntarios");
-    const voluntarios = await resVol.json();
-
-    const voluntario = voluntarios.find(v =>
-      v.email && v.email.toLowerCase() === email
-    );
-
-    if (voluntario) {
-      window.location.href = "paginainiciovoluntario.html";
-      return;
-    }
-
-    const resMayor = await fetch("http://localhost:8080/api/mayores/login", {
+    const res = await fetch("http://localhost:8080/api/auth/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password })
     });
 
-    if (resMayor.ok) {
-      window.location.href = "paginainiciousuario.html";
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      alert(err.error || "Credenciales incorrectas.");
       return;
     }
 
-    const error = await resMayor.text();
-    alert(error || "Cuenta no encontrada.");
+    const data = await res.json();
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("rol", data.rol);
+    localStorage.setItem("nombre", data.nombre);
+    localStorage.setItem("id", data.id);
+
+    if (data.rol === "ADMIN") {
+      window.location.href = "admin.html";
+    } else if (data.rol === "VOLUNTARIO") {
+      window.location.href = "paginainiciovoluntario.html";
+    } else if (data.rol === "MAYOR") {
+      window.location.href = "paginainiciousuario.html";
+    }
   } catch (err) {
     alert("No se pudo conectar con el servidor.");
     console.error(err);
