@@ -1,58 +1,40 @@
-document.getElementById('loginForm').addEventListener('submit', async function (e) {
+document.getElementById("loginForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const email = document.getElementById('email').value.trim().toLowerCase();
-    const password = document.getElementById('password').value.trim();
-    const btn = document.getElementById('loginBtn');
-
-    if (!email || !password) {
-        alert('Rellena correo y contraseña.');
-        return;
-    }
-
-    btn.innerText = "Verificando...";
-    btn.style.opacity = "0.7";
-    btn.disabled = true;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
     try {
-        const res = await fetch("http://localhost:8080/api/auth/login", {
+        const response = await fetch("http://localhost:8080/api/auth/login", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({ email, password })
         });
 
-        if (!res.ok) {
-            const err = await res.json().catch(() => ({}));
-            alert(err.error || "Credenciales incorrectas.");
-            return;
+        if (!response.ok) {
+            throw new Error("Credenciales incorrectas");
         }
 
-        const data = await res.json();
+        const data = await response.json();
 
-        const userId = data.id || data.idMayor || data.idVoluntario || "";
-
-        localStorage.setItem("token", data.token || "");
-        localStorage.setItem("rol", data.rol || "");
-        localStorage.setItem("nombre", data.nombre || "");
-        localStorage.setItem("email", data.email || email);
-        localStorage.setItem("id", userId);
-        localStorage.setItem("userId", userId);
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("rol", data.rol);
+        localStorage.setItem("userId", data.id);
+        localStorage.setItem("nombre", data.nombre);
 
         if (data.rol === "ADMIN") {
             window.location.href = "admin.html";
-        } else if (data.rol === "VOLUNTARIO") {
-            window.location.href = "paginainiciovoluntario.html";
         } else if (data.rol === "MAYOR") {
             window.location.href = "paginainiciousuario.html";
+        } else if (data.rol === "VOLUNTARIO") {
+            window.location.href = "paginainiciovoluntario.html";
         } else {
-            alert("Rol no reconocido.");
+            alert("Rol no reconocido");
         }
-    } catch (err) {
-        alert("No se pudo conectar con el servidor.");
-        console.error(err);
-    } finally {
-        btn.innerText = "Entrar";
-        btn.style.opacity = "1";
-        btn.disabled = false;
+    } catch (error) {
+        console.error(error);
+        alert("Error al iniciar sesión");
     }
 });

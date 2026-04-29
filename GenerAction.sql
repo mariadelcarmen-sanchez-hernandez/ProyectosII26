@@ -126,7 +126,24 @@ CREATE TABLE notificaciones (
         ON DELETE SET NULL
 );
 
+-- =========================================================
+-- TABLA: admin
+-- =========================================================
+CREATE TABLE admin (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
+    rol VARCHAR(20) NOT NULL DEFAULT 'ADMIN'
+);
+
 SELECT * FROM mayores WHERE ID_MAYOR = 1;
 SELECT * FROM mayores ORDER BY ID_MAYOR DESC LIMIT 1;
 
 SELECT * FROM mayores;
+
+INSERT INTO admin (nombre, email, password_hash, activo, rol)
+VALUES ('Administrador', 'admin@generaction.com', 'admin123', true, 'ADMIN');
+
+SELECT * FROM admin;
