@@ -2,7 +2,6 @@ const API_BASE = "http://localhost:8080/api";
 const modal = document.getElementById("modal");
 const taskInput = document.getElementById("taskInput");
 const taskContainer = document.getElementById("taskContainer");
-const fechaSolicitadaInput = document.getElementById("fechaSolicitada");
 const horarioInput = document.getElementById("horario");
 const tipoActividadInput = document.getElementById("tipoActividad");
 
@@ -36,6 +35,10 @@ window.onclick = function(event) {
         closeModal();
     }
 };
+
+function fechaHoy() {
+    return new Date().toISOString().split("T")[0];
+}
 
 function formatearEstado(estado) {
     switch (estado) {
@@ -77,7 +80,6 @@ function renderSolicitudes(solicitudes) {
                 <span class="task-text">${solicitud.descripcion || "Sin descripción"}</span>
                 <div class="task-meta">
                     <span><strong>Tipo:</strong> ${solicitud.tipoActividad || "-"}</span>
-                    <span><strong>Fecha:</strong> ${solicitud.fechaSolicitada || "-"}</span>
                     <span><strong>Horario:</strong> ${solicitud.horario || "-"}</span>
                     <span><strong>Estado:</strong> ${formatearEstado(solicitud.estado)}</span>
                 </div>
@@ -112,11 +114,10 @@ async function cargarSolicitudesMayor() {
 
 async function addTask() {
     const descripcion = taskInput.value.trim();
-    const fechaSolicitada = fechaSolicitadaInput.value;
     const horario = horarioInput.value;
     const tipoActividad = tipoActividadInput.value;
 
-    if (!descripcion || !fechaSolicitada || !horario || !tipoActividad) {
+    if (!descripcion || !horario || !tipoActividad) {
         alert("Completa todos los campos de la solicitud.");
         return;
     }
@@ -131,7 +132,7 @@ async function addTask() {
                 idMayor: Number(mayorId),
                 tipoActividad: tipoActividad,
                 descripcion: descripcion,
-                fechaSolicitada: fechaSolicitada,
+                fechaSolicitada: fechaHoy(),
                 horario: horario
             })
         });
@@ -142,7 +143,6 @@ async function addTask() {
         }
 
         taskInput.value = "";
-        fechaSolicitadaInput.value = "";
         horarioInput.value = "";
         tipoActividadInput.value = "";
 

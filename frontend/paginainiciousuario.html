@@ -52,23 +52,23 @@
 
             <input type="text" id="taskInput" placeholder="Describe brevemente la ayuda que necesitas...">
 
-            <input type="date" id="fechaSolicitada">
-            
-            <select id="horario">
-                <option value="">Selecciona horario</option>
-                <option value="MANANA">Mañana</option>
-                <option value="TARDE">Tarde</option>
-                <option value="NOCHE">Noche</option>
-            </select>
+            <div class="modal-select-row">
+                <select id="horario">
+                    <option value="">Selecciona horario</option>
+                    <option value="MANANA">Mañana</option>
+                    <option value="TARDE">Tarde</option>
+                    <option value="NOCHE">Noche</option>
+                </select>
 
-            <select id="tipoActividad">
-                <option value="">Selecciona tipo de actividad</option>
-                <option value="COMPRA">Compra</option>
-                <option value="PASEO">Paseo</option>
-                <option value="TECNOLOGIA">Tecnología</option>
-                <option value="MEDICINAS">Medicinas</option>
-                <option value="OTROS">Otros</option>
-            </select>
+                <select id="tipoActividad">
+                    <option value="">Selecciona tipo de actividad</option>
+                    <option value="COMPRA">Compra</option>
+                    <option value="PASEO">Paseo</option>
+                    <option value="TECNOLOGIA">Tecnología</option>
+                    <option value="MEDICINAS">Medicinas</option>
+                    <option value="OTROS">Otros</option>
+                </select>
+            </div>
 
             <button class="save-btn" onclick="addTask()">Guardar Solicitud</button>
         </div>
