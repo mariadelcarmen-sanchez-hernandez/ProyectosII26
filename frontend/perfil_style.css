@@ -4,7 +4,9 @@
     --task-blue-light: #e0ebff;
     --bg-light: #f0f7ff;
     --text-dark: #334155;
+    --text-muted: #64748b;
     --white: #ffffff;
+    --green: #10b981;
 }
 
 body {
@@ -13,7 +15,6 @@ body {
     background-color: var(--bg-light);
 }
 
- /*Navbar */
 .navbar {
     background-color: var(--dark-blue);
     height: 60px;
@@ -24,10 +25,7 @@ body {
     font-size: 1.2rem;
     position: relative;
 }
-/*
-.nav-back-btn {
-    position: absolute; left: 20px; color: white; text-decoration: none; font-weight: bold;
-}*/
+
 .back-btn {
     position: absolute;
     left: 20px;
@@ -46,28 +44,38 @@ body {
     transform: translateX(-3px);
 }
 
+.container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
 
-/* Contenedores */
-.container { display: flex; justify-content: center; padding: 40px 20px; }
-
-.profile-card, .edit-card {
+.profile-card,
+.edit-card {
     background: var(--white);
     width: 100%;
     max-width: 800px;
     padding: 40px;
     border-radius: 30px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
-/* Foto Redonda */
 .avatar-circle {
-    width: 130px; height: 130px; border-radius: 50%; overflow: hidden;
-    margin: 0 auto 20px; border: 5px solid var(--bg-light);
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    border: 5px solid var(--bg-light);
 }
-.avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
 
-/* BOTÓN EDITAR ESTILO IMAGEN 2 */
+.avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .main-edit-btn {
     background: var(--primary-blue);
     color: white;
@@ -86,34 +94,164 @@ body {
     transform: translateY(-2px);
 }
 
-/* Tareas en Dos Columnas con Boxes Azules */
 .tasks-container {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 30px;
-    text-align: left; margin-top: 40px; border-top: 2px solid var(--bg-light); padding-top: 30px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    text-align: left;
+    margin-top: 40px;
+    border-top: 2px solid var(--bg-light);
+    padding-top: 30px;
+}
+
+.tasks-column h3 {
+    margin-bottom: 16px;
+    color: var(--text-dark);
+}
+
+.task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .task-box {
     background-color: var(--task-blue-light);
-    padding: 15px; border-radius: 15px; display: flex; align-items: center;
-    gap: 12px; margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 15px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
 }
 
-.task-box .dot { width: 10px; height: 10px; background: var(--primary-blue); border-radius: 50%; }
-.task-box .check { color: #10b981; font-weight: bold; }
+.task-box.completed {
+    background: #ecfdf5;
+}
 
-/* Formulario de Edición */
-.edit-card h2 { margin-bottom: 30px; color: var(--text-dark); }
-.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.input-group { margin-bottom: 20px; text-align: left; }
-.input-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 1.1rem; }
-.input-group input { width: 100%; padding: 14px; border: 1.5px solid #eef2f6; border-radius: 12px; font-size: 1rem; box-sizing: border-box; }
+.task-content {
+    flex: 1;
+}
+
+.task-content p {
+    margin: 0 0 8px 0;
+    color: var(--text-dark);
+}
+
+.task-content p:last-child {
+    margin-bottom: 0;
+}
+
+.task-box .dot {
+    width: 10px;
+    height: 10px;
+    background: var(--primary-blue);
+    border-radius: 50%;
+    margin-top: 8px;
+    flex-shrink: 0;
+}
+
+.task-box .check {
+    color: var(--green);
+    font-weight: bold;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.task-action-btn {
+    background: var(--dark-blue);
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.task-action-btn:hover {
+    opacity: 0.92;
+}
+
+.edit-card h2 {
+    margin-bottom: 30px;
+    color: var(--text-dark);
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 1.1rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px;
+    border: 1.5px solid #eef2f6;
+    border-radius: 12px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
 
 .certificate-box {
-    background: #f8fafc; padding: 20px; border: 2px dashed var(--primary-blue); border-radius: 15px;
+    background: #f8fafc;
+    padding: 20px;
+    border: 2px dashed var(--primary-blue);
+    border-radius: 15px;
 }
 
-.button-group { display: flex; gap: 15px; margin-top: 30px; }
-.save-btn { background: var(--primary-blue); color: white; border: none; padding: 15px; border-radius: 12px; font-weight: bold; flex: 2; cursor: pointer; }
-.cancel-btn { background: #f1f5f9; color: #64748b; border: none; padding: 15px; border-radius: 12px; flex: 1; cursor: pointer; }
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
 
-@media (max-width: 768px) { .tasks-container, .input-grid { grid-template-columns: 1fr; } }
+.save-btn {
+    background: var(--primary-blue);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    font-weight: bold;
+    flex: 2;
+    cursor: pointer;
+}
+
+.cancel-btn {
+    background: #f1f5f9;
+    color: var(--text-muted);
+    border: none;
+    padding: 15px;
+    border-radius: 12px;
+    flex: 1;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .tasks-container,
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-card,
+    .edit-card {
+        padding: 24px;
+    }
+
+    .back-btn {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+}

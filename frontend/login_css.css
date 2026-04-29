@@ -12,7 +12,6 @@ body {
     background-color: var(--bg-light);
 }
 
-/* Navbar idéntica a la anterior */
 .navbar {
     background-color: var(--dark-blue);
     height: 60px;
@@ -22,26 +21,12 @@ body {
     position: relative;
     color: white;
 }
-/*
-.back-btn {
-    position: absolute;
-    left: 20px;
-    background: rgba(255, 255, 255, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: white;
-    padding: 6px 14px;
-    border-radius: 10px;
-    text-decoration: none;
-    font-size: 14px;
-    transition: all 0.3s ease;
+
+.nav-title {
+    font-weight: 700;
+    letter-spacing: 0.3px;
 }
 
-.back-btn:hover {
-    background: rgba(255, 255, 255, 0.3);
-    transform: translateX(-3px);
-}*/
-
-/* Tarjeta de Login */
 .login-container {
     display: flex;
     justify-content: center;
@@ -56,7 +41,7 @@ body {
     max-width: 400px;
     padding: 40px;
     border-radius: 30px;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
@@ -72,10 +57,17 @@ body {
     font-size: 30px;
 }
 
-h2 { color: var(--text-dark); margin: 10px 0; }
-.subtitle { color: #64748b; font-size: 0.9rem; margin-bottom: 30px; }
+h2 {
+    color: var(--text-dark);
+    margin: 10px 0;
+}
 
-/* Formulario */
+.subtitle {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
 .input-group {
     text-align: left;
     margin-bottom: 20px;
@@ -116,7 +108,6 @@ h2 { color: var(--text-dark); margin: 10px 0; }
     text-decoration: none;
 }
 
-/* BOTÓN LOGIN CON HOVER */
 .login-btn {
     width: 100%;
     padding: 16px;
@@ -141,9 +132,15 @@ h2 { color: var(--text-dark); margin: 10px 0; }
     transform: scale(0.98);
 }
 
+.login-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+    transform: none;
+}
+
 .register-footer {
     margin-top: 25px;
-    font-size: 1.1rem; 
+    font-size: 1.05rem;
     color: #64748b;
     font-weight: 500;
 }
@@ -154,7 +151,15 @@ h2 { color: var(--text-dark); margin: 10px 0; }
     text-decoration: none;
     transition: color 0.3s;
 }
+
 .register-footer a:hover {
     text-decoration: underline;
     color: var(--primary-blue);
+}
+
+@media (max-width: 480px) {
+    .login-card {
+        padding: 28px 20px;
+        border-radius: 24px;
+    }
 }
