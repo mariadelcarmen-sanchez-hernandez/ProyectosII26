@@ -18,9 +18,11 @@ public interface SolicitudRepository extends JpaRepository<Solicitud, Long> {
 
     List<Solicitud> findByEstadoAndMayor_Municipio(EstadoSolicitud estado, String municipio);
 
+    @Query("SELECT s FROM Solicitud s JOIN FETCH s.mayor WHERE s.estado = :estado")
+    List<Solicitud> findPendientesConMayor(EstadoSolicitud estado);
+
     @Query("SELECT s FROM Solicitud s JOIN FETCH s.mayor")
     List<Solicitud> findAllWithMayor();
 
     long countByEstado(EstadoSolicitud estado);
-
 }

@@ -29,11 +29,14 @@ document.getElementById('loginForm').addEventListener('submit', async function (
 
         const data = await res.json();
 
+        const userId = data.id || data.idMayor || data.idVoluntario || "";
+
         localStorage.setItem("token", data.token || "");
         localStorage.setItem("rol", data.rol || "");
         localStorage.setItem("nombre", data.nombre || "");
-        localStorage.setItem("id", data.id || "");
-        localStorage.setItem("userId", data.id || "");
+        localStorage.setItem("email", data.email || email);
+        localStorage.setItem("id", userId);
+        localStorage.setItem("userId", userId);
 
         if (data.rol === "ADMIN") {
             window.location.href = "admin.html";

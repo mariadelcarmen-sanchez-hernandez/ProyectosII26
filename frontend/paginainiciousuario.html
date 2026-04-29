@@ -11,18 +11,18 @@
     <div class="topbar">
         <a href="login.html" class="back-link">← Cerrar Sesión</a>
         <div class="title">GenerAction</div>
-        <div style="width: 60px;"></div> </div>
+        <div style="width: 60px;"></div>
+    </div>
 
     <div class="banner">
         <div class="user-info">
             <div class="avatar">👤</div>
-            <h2></h2>
-            <p></p>
+            <h2 id="panelTitle">Panel de Usuario</h2>
+            <p id="welcomeText">Cargando...</p>
         </div>
     </div>
 
     <div class="main-container">
-        
         <div class="cta">
             <button onclick="openModal()">+ Solicitar Ayuda</button>
         </div>
@@ -39,96 +39,53 @@
     <div class="modal" id="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            
+
             <h2>Nueva solicitud</h2>
             <p class="subtitle">Selecciona una sugerencia o escribe lo que necesites.</p>
 
             <div class="suggestions">
-                <div class="suggestion-tag" onclick="fillInput('Ir a la compra')">🛒 Ir a la compra</div>
-                <div class="suggestion-tag" onclick="fillInput('Pasear al perro')">🐕 Pasear al perro</div>
-                <div class="suggestion-tag" onclick="fillInput('Ayuda con el móvil')">📱 Ayuda con el móvil</div>
-                <div class="suggestion-tag" onclick="fillInput('Recoger medicinas')">💊 Medicinas</div>
+                <div class="suggestion-tag" onclick="fillForm('COMPRA', 'Ir a la compra')">🛒 Ir a la compra</div>
+                <div class="suggestion-tag" onclick="fillForm('PASEO', 'Pasear al perro')">🐕 Pasear al perro</div>
+                <div class="suggestion-tag" onclick="fillForm('TECNOLOGIA', 'Ayuda con el móvil')">📱 Ayuda con el móvil</div>
+                <div class="suggestion-tag" onclick="fillForm('MEDICINAS', 'Recoger medicinas')">💊 Medicinas</div>
             </div>
 
             <input type="text" id="taskInput" placeholder="Describe brevemente la ayuda que necesitas...">
+
+            <input type="date" id="fechaSolicitada">
             
+            <select id="horario">
+                <option value="">Selecciona horario</option>
+                <option value="MANANA">Mañana</option>
+                <option value="TARDE">Tarde</option>
+                <option value="NOCHE">Noche</option>
+            </select>
+
+            <select id="tipoActividad">
+                <option value="">Selecciona tipo de actividad</option>
+                <option value="COMPRA">Compra</option>
+                <option value="PASEO">Paseo</option>
+                <option value="TECNOLOGIA">Tecnología</option>
+                <option value="MEDICINAS">Medicinas</option>
+                <option value="OTROS">Otros</option>
+            </select>
+
             <button class="save-btn" onclick="addTask()">Guardar Solicitud</button>
         </div>
     </div>
 
     <div class="footer-nav">
-        <a href="inicio.html" class="nav-item">
+        <a href="inicio.html" class="nav-item active">
             <span class="nav-icon">🏠</span>
             <span>Inicio</span>
         </a>
 
-        <a href="perfil.html" class="nav-item active">
+        <a href="perfil.html" class="nav-item">
             <span class="nav-icon">👤</span>
             <span>Perfil</span>
         </a>
     </div>
 
-    <script>
-        const modal = document.getElementById('modal');
-        const taskInput = document.getElementById('taskInput');
-        const taskContainer = document.getElementById('taskContainer');
-        let tareas = [];
-
-        function openModal() { modal.style.display = 'flex'; }
-        function closeModal() { modal.style.display = 'none'; }
-        function fillInput(text) { taskInput.value = text; }
-
-        function addTask() {
-            const texto = taskInput.value.trim();
-            if (texto === '') return;
-            
-            tareas.push(texto);
-            renderTareas();
-            taskInput.value = '';
-            closeModal();
-        }
-
-        function renderTareas() {
-            taskContainer.innerHTML = '';
-
-            if (tareas.length === 0) {
-                taskContainer.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon-house">🏠</div>
-                        <h2>No tienes solicitudes</h2>
-                        <p>Presiona el botón de arriba para solicitar ayuda</p>
-                    </div>`;
-                return;
-            }
-
-            tareas.forEach((tarea, index) => {
-                const div = document.createElement('div');
-                div.className = 'task-item';
-                div.innerHTML = `
-                    <span class="task-text">${tarea}</span>
-                    <div class="task-actions">
-                        <button class="btn-complete" onclick="completeTask(${index})" title="Completar">✔️</button>
-                        <button class="btn-cancel" onclick="deleteTask(${index})" title="Eliminar">🗑️</button>
-                    </div>
-                `;
-                taskContainer.appendChild(div);
-            });
-        }
-
-        function deleteTask(index) {
-            tareas.splice(index, 1);
-            renderTareas();
-        }
-
-        function completeTask(index) {
-            alert("¡Tarea marcada como completada!");
-            deleteTask(index);
-        }
-
-        // Cerrar modal si se hace clic fuera de la caja blanca
-        window.onclick = function(event) {
-            if (event.target == modal) closeModal();
-        }
-    </script>
+    <script src="paginainiciousuario.js"></script>
 </body>
 </html>

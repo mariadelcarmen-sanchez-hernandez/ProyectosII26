@@ -1,25 +1,22 @@
 const API_BASE = "http://localhost:8080/api";
+const voluntarioId = localStorage.getItem("userId");
 const nombre = localStorage.getItem("nombre") || "Voluntario";
-const token = localStorage.getItem("token");
 
-document.addEventListener("DOMContentLoaded", () => {
-    const welcome = document.getElementById("welcomeText");
-    if (welcome) {
-        welcome.textContent = `¡Gracias por tu tiempo, ${nombre}!`;
+document.addEventListener("DOMContentLoaded", async () => {
+    const welcomeText = document.getElementById("welcomeText");
+    if (welcomeText) {
+        welcomeText.textContent = `¡Gracias por tu tiempo, ${nombre}!`;
     }
 
-    cargarSolicitudes();
+    if (!voluntarioId) {
+        mostrarEstadoVacio("No hay sesión iniciada.");
+        return;
+    }
+
+    await cargarSolicitudes();
 });
 
-function getAuthHeaders() {
-    const headers = {};
-    if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-    }
-    return headers;
-}
-
-function mostrarEstadoVacio(mensaje = "Las tareas disponibles aparecerán aquí cuando se carguen desde el sistema.") {
+function mostrarEstadoVacio(mensaje = "No hay solicitudes pendientes ahora mismo.") {
     const container = document.getElementById("availableTasks");
     container.innerHTML = `
         <div class="empty-state-card">
@@ -30,36 +27,46 @@ function mostrarEstadoVacio(mensaje = "Las tareas disponibles aparecerán aquí 
     `;
 }
 
-function renderSolicitud(s) {
+function renderSolicitud(solicitud) {
+    const nombreMayor = solicitud.mayor
+        ? `${solicitud.mayor.nombre || ""} ${solicitud.mayor.apellidos || ""}`.trim()
+        : "Mayor no disponible";
+
     return `
-        <div class="volunteer-card" data-id="${s.idSolicitud}">
+        <div class="volunteer-card">
             <div class="task-header">
-                <span class="category-pill">${s.tipoActividad || "Ayuda"}</span>
-                <span class="task-distance">${s.distancia || ""}</span>
+                <span class="category-pill">${solicitud.tipoActividad || "Actividad"}</span>
+                <span class="task-distance">${solicitud.mayor?.municipio || ""}</span>
             </div>
-            <h4>${s.titulo || "Solicitud"}</h4>
-            <p class="task-author">Para: <strong>${s.mayorNombre || "Persona en necesidad"}</strong></p>
-            <p class="task-desc">${s.descripcion || ""}</p>
-            <button class="accept-btn-vol" onclick="acceptTask(${s.idSolicitud}, this)">Aceptar Solicitud</button>
+
+            <h4>${nombreMayor}</h4>
+            <p class="task-author">
+                <strong>Fecha:</strong> ${solicitud.fechaSolicitada || "Sin fecha"}
+            </p>
+            <p class="task-author">
+                <strong>Horario:</strong> ${solicitud.horario || "Sin horario"}
+            </p>
+            <p class="task-desc">${solicitud.descripcion || "Sin descripción"}</p>
+
+            <button class="accept-btn-vol" onclick="aceptarSolicitud(${solicitud.idSolicitud})">
+                Aceptar solicitud
+            </button>
         </div>
     `;
 }
 
 async function cargarSolicitudes() {
     try {
-        const res = await fetch(`${API_BASE}/solicitudes/disponibles`, {
-            headers: getAuthHeaders()
-        });
+        const response = await fetch(`${API_BASE}/solicitudes/disponibles`);
 
-        if (!res.ok) {
-            mostrarEstadoVacio("Todavía no se han podido cargar las solicitudes disponibles.");
-            return;
+        if (!response.ok) {
+            throw new Error("No se pudieron cargar las solicitudes");
         }
 
-        const solicitudes = await res.json();
+        const solicitudes = await response.json();
         const container = document.getElementById("availableTasks");
 
-        if (!solicitudes || !solicitudes.length) {
+        if (!Array.isArray(solicitudes) || solicitudes.length === 0) {
             mostrarEstadoVacio();
             return;
         }
@@ -67,31 +74,32 @@ async function cargarSolicitudes() {
         container.innerHTML = solicitudes.map(renderSolicitud).join("");
     } catch (error) {
         console.error("Error cargando solicitudes:", error);
-        mostrarEstadoVacio("No se pudo conectar con las solicitudes del servidor.");
+        mostrarEstadoVacio("Error al cargar solicitudes.");
     }
 }
 
-async function acceptTask(idSolicitud, btn) {
-    if (!confirm("¿Deseas comprometerte con esta tarea?")) return;
-
+async function aceptarSolicitud(idSolicitud) {
     try {
-        const res = await fetch(`${API_BASE}/solicitudes/${idSolicitud}/aceptar`, {
-            method: "PUT",
+        const response = await fetch(`${API_BASE}/solicitudes/asignar`, {
+            method: "POST",
             headers: {
-                ...getAuthHeaders(),
                 "Content-Type": "application/json"
-            }
+            },
+            body: JSON.stringify({
+                idSolicitud: Number(idSolicitud),
+                idVoluntario: Number(voluntarioId)
+            })
         });
 
-        if (!res.ok) {
-            throw new Error("No se pudo aceptar la solicitud");
+        if (!response.ok) {
+            const errorTexto = await response.text();
+            throw new Error(errorTexto || "No se pudo aceptar la solicitud");
         }
 
-        btn.innerHTML = "✔️ ¡Tarea Asignada!";
-        btn.disabled = true;
+        alert("Solicitud aceptada correctamente");
         await cargarSolicitudes();
     } catch (error) {
-        console.error(error);
-        alert("No se pudo asignar la solicitud.");
+        console.error("Error aceptando solicitud:", error);
+        alert("No se pudo aceptar la solicitud.");
     }
 }

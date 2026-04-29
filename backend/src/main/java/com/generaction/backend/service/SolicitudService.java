@@ -29,7 +29,6 @@ public class SolicitudService {
     private final MayorRepository mayorRepository;
     private final VoluntarioRepository voluntarioRepository;
 
-    // HU3 — Crear solicitud de acompañamiento
     public Solicitud crearSolicitud(SolicitudDTO dto) {
         Mayor mayor = mayorRepository.findById(dto.getIdMayor())
                 .orElseThrow(() -> new RuntimeException("Mayor no encontrado: " + dto.getIdMayor()));
@@ -50,7 +49,7 @@ public class SolicitudService {
     }
 
     public List<Solicitud> obtenerPendientes() {
-        return solicitudRepository.findByEstado(EstadoSolicitud.PENDIENTE);
+        return solicitudRepository.findPendientesConMayor(EstadoSolicitud.PENDIENTE);
     }
 
     public List<Solicitud> obtenerPendientesPorMunicipio(String municipio) {
@@ -59,7 +58,6 @@ public class SolicitudService {
         );
     }
 
-    // HU4 — Voluntario acepta una solicitud y se crea la visita
     @Transactional
     public Visita asignarVisita(AsignacionDTO dto) {
         Solicitud solicitud = solicitudRepository.findById(dto.getIdSolicitud())
