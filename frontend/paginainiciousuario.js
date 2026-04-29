@@ -1,14 +1,19 @@
 const API_BASE = "http://localhost:8080/api";
-const modal = document.getElementById("modal");
-const taskInput = document.getElementById("taskInput");
-const taskContainer = document.getElementById("taskContainer");
-const horarioInput = document.getElementById("horario");
-const tipoActividadInput = document.getElementById("tipoActividad");
+
+let modal;
+let taskInput;
+let taskContainer;
 
 const mayorId = localStorage.getItem("userId");
 const nombre = localStorage.getItem("nombre") || "Usuario";
 
+let tipoActividadSeleccionada = "OTROS";
+
 document.addEventListener("DOMContentLoaded", async () => {
+    modal = document.getElementById("modal");
+    taskInput = document.getElementById("taskInput");
+    taskContainer = document.getElementById("taskContainer");
+
     const welcomeText = document.getElementById("welcomeText");
     if (welcomeText) {
         welcomeText.textContent = `Hola, ${nombre}`;
@@ -26,11 +31,27 @@ function closeModal() {
 }
 
 function fillForm(tipo, texto) {
-    tipoActividadInput.value = tipo;
-    taskInput.value = texto;
+    tipoActividadSeleccionada = tipo;
+
+    const input = document.getElementById("taskInput");
+    if (input) {
+        input.value = texto;
+        input.focus();
+    }
+
+    document.querySelectorAll(".suggestion-tag").forEach(tag => {
+        tag.classList.remove("selected");
+    });
+
+    const tags = document.querySelectorAll(".suggestion-tag");
+    tags.forEach(tag => {
+        if (tag.textContent.includes(texto)) {
+            tag.classList.add("selected");
+        }
+    });
 }
 
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target === modal) {
         closeModal();
     }
@@ -80,7 +101,6 @@ function renderSolicitudes(solicitudes) {
                 <span class="task-text">${solicitud.descripcion || "Sin descripción"}</span>
                 <div class="task-meta">
                     <span><strong>Tipo:</strong> ${solicitud.tipoActividad || "-"}</span>
-                    <span><strong>Horario:</strong> ${solicitud.horario || "-"}</span>
                     <span><strong>Estado:</strong> ${formatearEstado(solicitud.estado)}</span>
                 </div>
             </div>
@@ -114,11 +134,9 @@ async function cargarSolicitudesMayor() {
 
 async function addTask() {
     const descripcion = taskInput.value.trim();
-    const horario = horarioInput.value;
-    const tipoActividad = tipoActividadInput.value;
 
-    if (!descripcion || !horario || !tipoActividad) {
-        alert("Completa todos los campos de la solicitud.");
+    if (!descripcion) {
+        alert("Escribe una solicitud.");
         return;
     }
 
@@ -130,10 +148,10 @@ async function addTask() {
             },
             body: JSON.stringify({
                 idMayor: Number(mayorId),
-                tipoActividad: tipoActividad,
+                tipoActividad: tipoActividadSeleccionada,
                 descripcion: descripcion,
                 fechaSolicitada: fechaHoy(),
-                horario: horario
+                horario: "MANANA"
             })
         });
 
@@ -143,8 +161,11 @@ async function addTask() {
         }
 
         taskInput.value = "";
-        horarioInput.value = "";
-        tipoActividadInput.value = "";
+        tipoActividadSeleccionada = "OTROS";
+
+        document.querySelectorAll(".suggestion-tag").forEach(tag => {
+            tag.classList.remove("selected");
+        });
 
         closeModal();
         await cargarSolicitudesMayor();
