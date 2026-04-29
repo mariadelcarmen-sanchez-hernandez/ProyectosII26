@@ -1,41 +1,33 @@
 const API_BASE = "http://localhost:8080/api";
 const nombre = localStorage.getItem("nombre") || "Voluntario";
-const rol = localStorage.getItem("rol");
 const token = localStorage.getItem("token");
 
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("welcomeText").textContent = `¡Gracias por tu tiempo, ${nombre}!`;
+    const welcome = document.getElementById("welcomeText");
+    if (welcome) {
+        welcome.textContent = `¡Gracias por tu tiempo, ${nombre}!`;
+    }
+
     cargarSolicitudes();
 });
 
 function getAuthHeaders() {
     const headers = {};
-    if (token) headers["Authorization"] = `Bearer ${token}`;
+    if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+    }
     return headers;
 }
 
-async function cargarSolicitudes() {
-    try {
-        const res = await fetch(`${API_BASE}/solicitudes/disponibles`, {
-            headers: getAuthHeaders()
-        });
-
-        if (!res.ok) throw new Error("No se pudieron cargar las solicitudes");
-
-        const solicitudes = await res.json();
-        const container = document.getElementById("availableTasks");
-
-        if (!solicitudes.length) {
-            container.innerHTML = "<p>No hay solicitudes disponibles ahora mismo.</p>";
-            return;
-        }
-
-        container.innerHTML = solicitudes.map(renderSolicitud).join("");
-    } catch (error) {
-        console.error(error);
-        document.getElementById("availableTasks").innerHTML =
-            "<p>Error al cargar solicitudes.</p>";
-    }
+function mostrarEstadoVacio(mensaje = "Las tareas disponibles aparecerán aquí cuando se carguen desde el sistema.") {
+    const container = document.getElementById("availableTasks");
+    container.innerHTML = `
+        <div class="empty-state-card">
+            <div class="empty-icon">🏠</div>
+            <h3>No tienes solicitudes</h3>
+            <p>${mensaje}</p>
+        </div>
+    `;
 }
 
 function renderSolicitud(s) {
@@ -53,6 +45,32 @@ function renderSolicitud(s) {
     `;
 }
 
+async function cargarSolicitudes() {
+    try {
+        const res = await fetch(`${API_BASE}/solicitudes/disponibles`, {
+            headers: getAuthHeaders()
+        });
+
+        if (!res.ok) {
+            mostrarEstadoVacio("Todavía no se han podido cargar las solicitudes disponibles.");
+            return;
+        }
+
+        const solicitudes = await res.json();
+        const container = document.getElementById("availableTasks");
+
+        if (!solicitudes || !solicitudes.length) {
+            mostrarEstadoVacio();
+            return;
+        }
+
+        container.innerHTML = solicitudes.map(renderSolicitud).join("");
+    } catch (error) {
+        console.error("Error cargando solicitudes:", error);
+        mostrarEstadoVacio("No se pudo conectar con las solicitudes del servidor.");
+    }
+}
+
 async function acceptTask(idSolicitud, btn) {
     if (!confirm("¿Deseas comprometerte con esta tarea?")) return;
 
@@ -65,12 +83,12 @@ async function acceptTask(idSolicitud, btn) {
             }
         });
 
-        if (!res.ok) throw new Error("No se pudo aceptar la solicitud");
+        if (!res.ok) {
+            throw new Error("No se pudo aceptar la solicitud");
+        }
 
         btn.innerHTML = "✔️ ¡Tarea Asignada!";
-        btn.style.background = "#27ae60";
         btn.disabled = true;
-
         await cargarSolicitudes();
     } catch (error) {
         console.error(error);
