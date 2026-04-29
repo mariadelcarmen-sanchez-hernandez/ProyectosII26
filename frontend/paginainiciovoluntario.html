@@ -4,56 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GenerAction - Voluntariado</title>
-    <link rel="stylesheet" href="paginainiciovoluntario.css">
+    >
 </head>
 <body>
 
     <div class="topbar-vol">
         <a href="login.html" class="back-link">← Salir</a>
         <div class="title">GenerAction</div>
-        <div style="width: 60px;"></div> 
+        <div style="width: 60px;"></div>
     </div>
 
     <div class="banner-vol">
         <div class="user-info">
             <div class="avatar-vol">🌟</div>
             <h2>Panel de Voluntario</h2>
-            <p>¡Gracias por tu tiempo, Juan!</p>
+            <p id="welcomeText">Cargando nombre...</p>
         </div>
     </div>
 
     <div class="main-container">
-        
-        <div class="filter-bar">
-
-        </div>
+        <div class="filter-bar"></div>
 
         <h3 class="section-title-vol">Tareas cerca de ti</h3>
-
         <div id="availableTasks">
-            
-            <div class="volunteer-card">
-                <div class="task-header">
-                    <span class="category-pill errands">🛒 Recados</span>
-                    <span class="task-distance">📍 a 300m</span>
-                </div>
-                <h4>Compra de farmacia</h4>
-                <p class="task-author">Para: <strong>Sra. Carmen</strong></p>
-                <p class="task-desc">Necesito recoger una receta y traerla a casa. No pesa nada, pero no puedo caminar mucho hoy.</p>
-                <button class="accept-btn-vol" onclick="acceptTask(this)">Aceptar Solicitud</button>
-            </div>
-
-            <div class="volunteer-card">
-                <div class="task-header">
-                    <span class="category-pill tech">📱 Tecnología</span>
-                    <span class="task-distance">📍 a 1.2km</span>
-                </div>
-                <h4>Ayuda con el Correo</h4>
-                <p class="task-author">Para: <strong>Sr. Manuel</strong></p>
-                <p class="task-desc">Mi cuenta de Gmail no entra en el móvil. Necesito a alguien que me ayude a poner la clave.</p>
-                <button class="accept-btn-vol" onclick="acceptTask(this)">Aceptar Solicitud</button>
-            </div>
-
+            <p>Cargando solicitudes...</p>
         </div>
     </div>
 
@@ -68,20 +42,6 @@
         </a>
     </div>
 
-    <script>
-        function acceptTask(btn) {
-            if(confirm("¿Deseas comprometerte con esta tarea?")) {
-                btn.innerHTML = "✔️ ¡Tarea Asignada!";
-                btn.style.background = "#27ae60";
-                btn.disabled = true;
-                btn.closest('.volunteer-card').style.borderLeftColor = "#27ae60";
-                
-                // Simulación de guardado
-                setTimeout(() => {
-                    alert("Se ha enviado una notificación al solicitante.");
-                }, 500);
-            }
-        }
-    </script>
+    <script src="paginainiciovoluntario.js"></script>
 </body>
 </html>
