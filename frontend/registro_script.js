@@ -26,8 +26,25 @@ document.getElementById('voluntarioForm').addEventListener('submit', async funct
 
     if (response.ok) {
       const voluntario = await response.json();
-      alert(`¡Registro exitoso! Bienvenido/a, ${voluntario.nombre} 🎉`);
-      this.reset();
+
+      const loginResponse = await fetch("http://localhost:8080/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: datos.email, password: datos.password })
+      });
+
+      if (loginResponse.ok) {
+        const loginData = await loginResponse.json();
+        localStorage.setItem("token", loginData.token);
+        localStorage.setItem("rol", loginData.rol);
+        localStorage.setItem("userId", loginData.id);
+        localStorage.setItem("nombre", loginData.nombre);
+        alert(`¡Enhorabuena, ${voluntario.nombre}! Tu registro ha sido completado con éxito.`);
+        window.location.href = "paginainiciovoluntario.html";
+      } else {
+        alert(`¡Registro exitoso! Bienvenido/a, ${voluntario.nombre}. Por favor, inicia sesión.`);
+        window.location.href = "login.html";
+      }
     } else {
       const error = await response.text();
       alert("Error al registrar: " + error);

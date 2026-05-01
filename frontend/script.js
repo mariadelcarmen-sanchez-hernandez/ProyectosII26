@@ -70,9 +70,29 @@ nextBtn.addEventListener('click', () => {
     currentStep++;
     updateDisplay();
   } else {
+    const emailMayor = document.getElementById('email').value.trim();
+    const passwordMayor = document.getElementById('contrasena').value.trim();
+
     registrarMayor()
-      .then((mayor) => {
-        alert(`Registro completado para ${mayor.nombre}.`);
+      .then(async (mayor) => {
+        const loginResponse = await fetch("http://localhost:8080/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: emailMayor, password: passwordMayor })
+        });
+
+        if (loginResponse.ok) {
+          const loginData = await loginResponse.json();
+          localStorage.setItem("token", loginData.token);
+          localStorage.setItem("rol", loginData.rol);
+          localStorage.setItem("userId", loginData.id);
+          localStorage.setItem("nombre", loginData.nombre);
+          alert(`¡Enhorabuena, ${mayor.nombre}! Tu registro ha sido completado con éxito.`);
+          window.location.href = "paginainiciousuario.html";
+        } else {
+          alert(`Registro completado para ${mayor.nombre}. Por favor, inicia sesión.`);
+          window.location.href = "login.html";
+        }
       })
       .catch((err) => {
         alert(`Error al registrar: ${err.message}`);
@@ -85,10 +105,8 @@ prevBtn.addEventListener('click', () => {
   if (currentStep > 1) {
     currentStep--;
     updateDisplay();
-  } else {
-    if (confirm('¿Deseas salir del registro?')) {
-      window.history.back();
-    }
+  } else if (confirm('¿Deseas salir del registro?')) {
+    window.history.back();
   }
 });
 
