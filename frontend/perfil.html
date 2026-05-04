@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Perfil - Voluntariado</title>
+    <title>Mi Perfil - GenerAction</title>
     <link rel="stylesheet" href="perfil_style.css">
 </head>
 <body>
 
     <nav class="navbar">
-        <a href="paginainiciovoluntario.html" class="back-btn">← Volver</a>
+        <a href="#" id="backBtn" class="back-btn">← Volver</a>
         <div class="nav-title">Mi Perfil</div>
     </nav>
 
@@ -17,7 +17,7 @@
         <section class="profile-card" id="profileView">
             <div class="profile-header">
                 <div class="avatar-circle">
-                    <img src="https://via.placeholder.com/150" alt="Foto de perfil" id="displayPhoto">
+                    <span style="font-size:3rem;">👤</span>
                 </div>
                 <h1 id="displayName">Cargando...</h1>
                 <p id="displayEmail">Cargando email...</p>
@@ -26,16 +26,16 @@
 
             <div class="tasks-container">
                 <div class="tasks-column">
-                    <h3>📋 Tareas En Curso</h3>
+                    <h3 id="tituloCurso">📋 Tareas En Curso</h3>
                     <div class="task-list" id="tareasCurso">
-                        <p>Cargando tareas...</p>
+                        <p>Cargando...</p>
                     </div>
                 </div>
 
                 <div class="tasks-column">
-                    <h3>✅ Tareas Finalizadas</h3>
+                    <h3 id="tituloFinalizadas">✅ Tareas Finalizadas</h3>
                     <div class="task-list" id="tareasFinalizadas">
-                        <p>Cargando tareas...</p>
+                        <p>Cargando...</p>
                     </div>
                 </div>
             </div>
@@ -43,12 +43,7 @@
 
         <section class="edit-card" id="editForm" style="display: none;">
             <h2>Editar Información</h2>
-            <form id="updateForm">
-                <div class="input-group">
-                    <label for="profilePhoto">Foto de Perfil</label>
-                    <input type="file" id="profilePhoto" accept="image/*">
-                </div>
-
+            <form id="updateForm" onsubmit="return false;">
                 <div class="input-grid">
                     <div class="input-group">
                         <label for="editName">Nombre Completo</label>
@@ -66,18 +61,14 @@
                     <input type="email" id="editEmail" value="">
                 </div>
 
-                <div class="input-group certificate-box">
-                    <label for="certificados">Subir Certificados (PDF/JPG)</label>
-                    <input type="file" id="certificados" multiple>
-                </div>
-
                 <div class="button-group">
                     <button type="button" class="cancel-btn" onclick="toggleEdit()">Cancelar</button>
-                    <button type="submit" class="save-btn">Guardar Cambios</button>
                 </div>
             </form>
         </section>
     </main>
+
+    <div class="footer-nav" id="footerNav"></div>
 
     <script src="perfil.js"></script>
 </body>

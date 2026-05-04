@@ -13,7 +13,7 @@ document.getElementById('voluntarioForm').addEventListener('submit', async funct
     password: document.getElementById('contrasena').value,
     municipio: document.getElementById('ciudad').value,
     direccion: "",
-    fechaNacimiento: "2000-01-01",
+    fechaNacimiento: document.getElementById('fechaNacimiento').value,
     disponibilidad: disponibilidades.join(",")
   };
 

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.generaction.backend.dto.ConversacionResumenDTO;
 import com.generaction.backend.dto.MensajeChatDTO;
 import com.generaction.backend.service.ChatService;
 
@@ -41,5 +42,17 @@ public class ChatController {
             @PathVariable Long idVisita,
             @RequestParam String desde) {
         return ResponseEntity.ok(chatService.obtenerMensajesNuevos(idVisita, LocalDateTime.parse(desde)));
+    }
+
+    @GetMapping("/conversaciones/mayor/{idMayor}")
+    public ResponseEntity<List<ConversacionResumenDTO>> conversacionesMayor(
+            @PathVariable Long idMayor) {
+        return ResponseEntity.ok(chatService.obtenerConversacionesMayor(idMayor));
+    }
+
+    @GetMapping("/conversaciones/voluntario/{idVoluntario}")
+    public ResponseEntity<List<ConversacionResumenDTO>> conversacionesVoluntario(
+            @PathVariable Long idVoluntario) {
+        return ResponseEntity.ok(chatService.obtenerConversacionesVoluntario(idVoluntario));
     }
 }

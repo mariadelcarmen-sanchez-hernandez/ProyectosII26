@@ -7,6 +7,20 @@ let taskContainer;
 const mayorId = localStorage.getItem("userId");
 const nombre = localStorage.getItem("nombre") || "Usuario";
 
+async function cerrarSesion() {
+    const token = localStorage.getItem("token");
+    if (token) {
+        try {
+            await fetch(`${API_BASE}/auth/logout`, {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+        } catch (_) {}
+    }
+    localStorage.clear();
+    window.location.href = "login.html";
+}
+
 let tipoActividadSeleccionada = "OTROS";
 
 // Mapa de idSolicitud -> visita (para saber si tiene chat disponible)
@@ -184,7 +198,7 @@ async function addTask() {
                 tipoActividad: tipoActividadSeleccionada,
                 descripcion: descripcion,
                 fechaSolicitada: fechaHoy(),
-                horario: "MANANA"
+                horario: document.getElementById("horarioInput").value
             })
         });
 

@@ -2,6 +2,20 @@ const API_BASE = "http://localhost:8080/api";
 const voluntarioId = localStorage.getItem("userId");
 const nombre = localStorage.getItem("nombre") || "Voluntario";
 
+async function cerrarSesion() {
+    const token = localStorage.getItem("token");
+    if (token) {
+        try {
+            await fetch(`${API_BASE}/auth/logout`, {
+                method: "POST",
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+        } catch (_) {}
+    }
+    localStorage.clear();
+    window.location.href = "login.html";
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
     const welcomeText = document.getElementById("welcomeText");
     if (welcomeText) {

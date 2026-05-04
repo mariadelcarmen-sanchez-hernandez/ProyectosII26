@@ -16,7 +16,7 @@ function construirPayloadMayor() {
     telefono: document.getElementById('telefono').value.trim(),
     direccion: 'No indicada',
     municipio: document.getElementById('ciudad').value.trim() || 'Sin municipio',
-    fechaNacimiento: '1950-01-01',
+    fechaNacimiento: document.getElementById('fechaNacimiento').value || '1950-01-01',
     nivelAutonomia: 'medio',
     preferenciasActividad: document.getElementById('comentarios').value.trim(),
     contactoFamiliarNombre: '',

@@ -9,7 +9,7 @@
 <body>
 
     <div class="topbar">
-        <a href="login.html" class="back-link">← Cerrar Sesión</a>
+        <button class="back-link" onclick="cerrarSesion()">← Cerrar Sesión</button>
         <div class="title">GenerAction</div>
         <div style="width: 60px;"></div>
     </div>
@@ -52,14 +52,26 @@
 
             <input type="text" id="taskInput" placeholder="Describe brevemente la ayuda que necesitas...">
 
+            <select id="horarioInput" class="horario-select">
+                <option value="MANANA">Mañana</option>
+                <option value="TARDE">Tarde</option>
+                <option value="FIN_SEMANA">Fin de semana</option>
+                <option value="FLEXIBLE">Flexible</option>
+            </select>
+
             <button class="save-btn" onclick="addTask()">Guardar Solicitud</button>
         </div>
     </div>
 
     <div class="footer-nav">
-        <a href="inicio.html" class="nav-item active">
+        <a href="paginainiciousuario.html" class="nav-item active">
             <span class="nav-icon">🏠</span>
             <span>Inicio</span>
+        </a>
+
+        <a href="mensajes.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Mensajes</span>
         </a>
 
         <a href="perfil.html" class="nav-item">
