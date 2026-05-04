@@ -13,7 +13,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    await cargarSolicitudes();
+    await Promise.all([
+        cargarMisVisitas(),
+        cargarSolicitudes()
+    ]);
 });
 
 function mostrarEstadoVacio(mensaje = "No hay solicitudes pendientes ahora mismo.") {
@@ -53,6 +56,51 @@ function renderSolicitud(solicitud) {
             </button>
         </div>
     `;
+}
+
+function renderVisita(visita) {
+    const nombreMayor = visita.mayor
+        ? `${visita.mayor.nombre || ""} ${visita.mayor.apellidos || ""}`.trim()
+        : "Mayor";
+
+    const tipoActividad = visita.solicitud?.tipoActividad || "Actividad";
+    const descripcion = visita.solicitud?.descripcion || "";
+    const nombreContactoCodificado = encodeURIComponent(nombreMayor);
+
+    return `
+        <div class="volunteer-card visita-card">
+            <div class="task-header">
+                <span class="category-pill">${tipoActividad}</span>
+                <span class="visita-badge">Aceptada</span>
+            </div>
+            <h4>${nombreMayor}</h4>
+            <p class="task-desc">${descripcion}</p>
+            <button class="chat-btn-vol" onclick="window.location.href='chat.html?idVisita=${visita.idVisita}&nombreContacto=${nombreContactoCodificado}'">
+                💬 Chatear con ${nombreMayor.split(" ")[0]}
+            </button>
+        </div>
+    `;
+}
+
+async function cargarMisVisitas() {
+    try {
+        const res = await fetch(`${API_BASE}/visitas/voluntario/${voluntarioId}`);
+        if (!res.ok) return;
+        const visitas = await res.json();
+
+        const container = document.getElementById("misVisitas");
+        const section = document.getElementById("misVisitasSection");
+
+        if (!Array.isArray(visitas) || visitas.length === 0) {
+            section.style.display = "none";
+            return;
+        }
+
+        section.style.display = "block";
+        container.innerHTML = visitas.map(renderVisita).join("");
+    } catch (e) {
+        console.error("Error cargando visitas del voluntario:", e);
+    }
 }
 
 async function cargarSolicitudes() {
@@ -97,7 +145,7 @@ async function aceptarSolicitud(idSolicitud) {
         }
 
         alert("Solicitud aceptada correctamente");
-        await cargarSolicitudes();
+        await Promise.all([cargarMisVisitas(), cargarSolicitudes()]);
     } catch (error) {
         console.error("Error aceptando solicitud:", error);
         alert("No se pudo aceptar la solicitud.");

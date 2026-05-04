@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenerAction - Chat</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+
+    <div class="chat-topbar">
+        <button class="back-btn" onclick="history.back()">&#8592;</button>
+        <div class="contact-info">
+            <div class="contact-avatar">👤</div>
+            <div>
+                <div class="contact-name" id="contactName">Cargando...</div>
+                <div class="contact-status">En línea</div>
+            </div>
+        </div>
+        <div style="width: 40px;"></div>
+    </div>
+
+    <div class="messages-area" id="messagesArea">
+        <div class="chat-loading">Cargando mensajes...</div>
+    </div>
+
+    <div class="input-area">
+        <input
+            type="text"
+            id="messageInput"
+            placeholder="Escribe un mensaje..."
+            maxlength="500"
+            autocomplete="off"
+        />
+        <button class="send-btn" id="sendBtn" onclick="enviarMensaje()">&#9658;</button>
+    </div>
+
+    <script src="chat.js"></script>
+</body>
+</html>

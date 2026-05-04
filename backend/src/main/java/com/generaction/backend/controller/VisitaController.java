@@ -42,6 +42,11 @@ public class VisitaController {
         return ResponseEntity.ok(visitaService.obtenerPorMayor(idMayor));
     }
 
+    @GetMapping("/mayor/{idMayor}/dto")
+    public ResponseEntity<List<VisitaResponseDTO>> listarPorMayorDTO(@PathVariable Long idMayor) {
+        return ResponseEntity.ok(visitaService.obtenerPorMayorDTO(idMayor));
+    }
+
     @GetMapping("/voluntario/{idVoluntario}")
     public ResponseEntity<List<VisitaResponseDTO>> listarPorVoluntario(@PathVariable Long idVoluntario) {
         return ResponseEntity.ok(visitaService.obtenerPorVoluntarioDTO(idVoluntario));

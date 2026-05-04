@@ -139,6 +139,13 @@ public class VisitaService {
                 .collect(Collectors.toList());
     }
 
+    public List<VisitaResponseDTO> obtenerPorMayorDTO(Long idMayor) {
+        return obtenerPorMayor(idMayor)
+                .stream()
+                .map(this::convertirADTO)
+                .collect(Collectors.toList());
+    }
+
     public VisitaResponseDTO actualizarEstadoDTO(Long idVisita, EstadoVisitaDTO dto) {
         Visita visita = actualizarEstado(idVisita, dto);
         return convertirADTO(visita);

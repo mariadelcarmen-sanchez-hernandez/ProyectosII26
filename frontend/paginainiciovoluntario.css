@@ -79,7 +79,40 @@ body {
     font-size: 1.5rem;
     color: white;
     text-align: center;
-    display: none;
+}
+
+/* Tarjeta de visita aceptada */
+.visita-card {
+    border-left-color: #27ae60;
+}
+
+.visita-badge {
+    background: #e8f8ef;
+    color: #27ae60;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 12px;
+}
+
+/* Botón de chat en tarjeta de voluntario */
+.chat-btn-vol {
+    width: 100%;
+    border: none;
+    background: #27ae60;
+    color: white;
+    padding: 15px;
+    border-radius: 18px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(39, 174, 96, 0.3);
+    transition: 0.25s ease;
+}
+
+.chat-btn-vol:hover {
+    background: #219a55;
+    transform: translateY(-2px);
 }
 
 .tasks-wrapper {

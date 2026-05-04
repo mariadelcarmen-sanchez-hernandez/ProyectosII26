@@ -9,6 +9,9 @@ const nombre = localStorage.getItem("nombre") || "Usuario";
 
 let tipoActividadSeleccionada = "OTROS";
 
+// Mapa de idSolicitud -> visita (para saber si tiene chat disponible)
+let visitasPorSolicitud = {};
+
 document.addEventListener("DOMContentLoaded", async () => {
     modal = document.getElementById("modal");
     taskInput = document.getElementById("taskInput");
@@ -19,7 +22,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         welcomeText.textContent = `Hola, ${nombre}`;
     }
 
-    await cargarSolicitudesMayor();
+    await Promise.all([
+        cargarVisitasMayor(),
+        cargarSolicitudesMayor()
+    ]);
 });
 
 function openModal() {
@@ -63,18 +69,12 @@ function fechaHoy() {
 
 function formatearEstado(estado) {
     switch (estado) {
-        case "PENDIENTE":
-            return "Pendiente";
-        case "ASIGNADA":
-            return "Asignada";
-        case "EN_TRAMITE":
-            return "En trámite";
-        case "COMPLETADA":
-            return "Completada";
-        case "CANCELADA":
-            return "Cancelada";
-        default:
-            return estado;
+        case "PENDIENTE":   return "Pendiente";
+        case "ASIGNADA":    return "Asignada";
+        case "EN_TRAMITE":  return "En trámite";
+        case "COMPLETADA":  return "Completada";
+        case "CANCELADA":   return "Cancelada";
+        default:            return estado;
     }
 }
 
@@ -96,6 +96,11 @@ function renderSolicitudes(solicitudes) {
         const div = document.createElement("div");
         div.className = "task-item";
 
+        const visita = visitasPorSolicitud[solicitud.idSolicitud];
+        const chatBtn = visita
+            ? `<button class="btn-chat" onclick="abrirChat(${visita.idVisita}, '${encodeContactName(visita)}')">💬 Chatear</button>`
+            : "";
+
         div.innerHTML = `
             <div class="task-main">
                 <span class="task-text">${solicitud.descripcion || "Sin descripción"}</span>
@@ -103,11 +108,39 @@ function renderSolicitudes(solicitudes) {
                     <span><strong>Tipo:</strong> ${solicitud.tipoActividad || "-"}</span>
                     <span><strong>Estado:</strong> ${formatearEstado(solicitud.estado)}</span>
                 </div>
+                ${chatBtn}
             </div>
         `;
 
         taskContainer.appendChild(div);
     });
+}
+
+function encodeContactName(visita) {
+    const nombre = visita.voluntario
+        ? `${visita.voluntario.nombre || ""} ${visita.voluntario.apellidos || ""}`.trim()
+        : "Voluntario";
+    return encodeURIComponent(nombre);
+}
+
+function abrirChat(idVisita, nombreContactoCodificado) {
+    window.location.href = `chat.html?idVisita=${idVisita}&nombreContacto=${nombreContactoCodificado}`;
+}
+
+async function cargarVisitasMayor() {
+    try {
+        const res = await fetch(`${API_BASE}/visitas/mayor/${mayorId}/dto`);
+        if (!res.ok) return;
+        const visitas = await res.json();
+        visitasPorSolicitud = {};
+        visitas.forEach(v => {
+            if (v.solicitud && v.solicitud.idSolicitud) {
+                visitasPorSolicitud[v.solicitud.idSolicitud] = v;
+            }
+        });
+    } catch (e) {
+        console.error("Error cargando visitas del mayor:", e);
+    }
 }
 
 async function cargarSolicitudesMayor() {
@@ -168,7 +201,7 @@ async function addTask() {
         });
 
         closeModal();
-        await cargarSolicitudesMayor();
+        await Promise.all([cargarVisitasMayor(), cargarSolicitudesMayor()]);
         alert("Solicitud guardada correctamente");
     } catch (error) {
         console.error("Error al guardar solicitud:", error);
