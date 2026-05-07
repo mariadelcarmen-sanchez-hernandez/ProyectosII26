@@ -87,12 +87,14 @@ function renderVisita(visita) {
             </div>
             <h4>${nombreMayor}</h4>
             <p class="task-desc">${descripcion}</p>
-            <button class="chat-btn-vol" onclick="window.location.href='chat.html?idVisita=${visita.idVisita}&nombreContacto=${nombreContactoCodificado}'">
-                💬 Chatear con ${nombreMayor.split(" ")[0]}
-            </button>
-            <button class="finalizar-btn" onclick="finalizarVisita(${visita.idVisita})">
-                ✅ Marcar como realizada
-            </button>
+            <div class="botones-visita">
+                <button class="finalizar-btn" onclick="finalizarVisita(${visita.idVisita})">
+                    ✅ Finalizar
+                </button>
+                <button class="chat-btn-vol" onclick="window.location.href='chat.html?idVisita=${visita.idVisita}&nombreContacto=${nombreContactoCodificado}'">
+                    💬 Chatear con ${nombreMayor.split(" ")[0]}
+                </button>
+            </div>
         </div>
     `;
 }
@@ -188,7 +190,6 @@ async function finalizarVisita(idVisita) {
 
         if (!response.ok) throw new Error("No se pudo finalizar");
 
-        // Obtener puntos actualizados
         const walletRes = await fetch(`${API_BASE}/voluntarios/${voluntarioId}/wallet`);
         if (walletRes.ok) {
             const wallet = await walletRes.json();

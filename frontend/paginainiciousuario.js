@@ -22,8 +22,6 @@ async function cerrarSesion() {
 }
 
 let tipoActividadSeleccionada = "OTROS";
-
-// Mapa de idSolicitud -> visita (para saber si tiene chat disponible)
 let visitasPorSolicitud = {};
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -166,7 +164,6 @@ async function cargarVisitasMayor() {
             }
         });
 
-        // Detectar visitas REALIZADA sin valorar aún
         const yaValoradas = JSON.parse(localStorage.getItem("visitasValoradas") || "[]");
         const realizadas = visitas.filter(v => v.estado === "REALIZADA" && !yaValoradas.includes(v.idVisita));
 
