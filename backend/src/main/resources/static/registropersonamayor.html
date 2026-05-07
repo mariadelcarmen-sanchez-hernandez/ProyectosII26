@@ -22,7 +22,7 @@
         </button>
         
         <div class="step-info">
-            <span id="stepText">Paso 1 de 7</span>
+            <span id="stepText">Paso 1 de 8</span>
         </div>
 
         <div class="progress-container">
@@ -63,21 +63,16 @@
                 </div>
 
                 <div class="step" data-step="6">
-                    <h2>¿Cuál es su disponibilidad?</h2>
-                    <div class="options-grid">
-                        <label class="option-card">
-                            <input type="checkbox" name="disp" value="manana"> Mañanas
-                        </label>
-                        <label class="option-card">
-                            <input type="checkbox" name="disp" value="tarde"> Tardes
-                        </label>
-                        <label class="option-card">
-                            <input type="checkbox" name="disp" value="fin"> Fines de semana
-                        </label>
-                    </div>
+                    <h2>¿Cuál es su fecha de nacimiento?</h2>
+                    <input type="date" id="fechaNacimiento" required>
                 </div>
 
                 <div class="step" data-step="7">
+                    <h2>¿Cuál es su contraseña?</h2>
+                    <input type="password" id="contrasena" placeholder="Escriba su contraseña..." required>
+                </div>
+
+                <div class="step" data-step="8">
                     <h2>¿Algún comentario adicional?</h2>
                     <textarea id="comentarios" rows="4" placeholder="Cuéntanos un poco sobre ti..."></textarea>
                 </div>
@@ -90,3 +85,5 @@
     <script src="script.js"></script>
 </body>
 </html> 
+
+

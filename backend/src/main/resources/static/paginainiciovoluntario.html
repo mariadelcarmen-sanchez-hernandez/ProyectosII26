@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenerAction - Voluntariado</title>
+    <link rel="stylesheet" href="paginainiciovoluntario.css">
+</head>
+<body>
+
+    <div class="topbar-vol">
+        <button class="back-link" onclick="cerrarSesion()">← Cerrar Sesión</button>
+        <div class="title">GenerAction</div>
+        <div style="width: 60px;"></div>
+    </div>
+
+    <div class="banner-vol">
+        <div class="user-info">
+            <div class="avatar-vol">👤</div>
+            <h2>Panel de Voluntario</h2>
+            <p id="welcomeText">Cargando nombre...</p>
+        </div>
+    </div>
+
+    <div class="main-container">
+
+        <!-- Sección: mis visitas aceptadas con acceso al chat -->
+        <div id="misVisitasSection" style="display:none;">
+            <h3 class="section-title-vol">Mis visitas aceptadas</h3>
+            <div id="misVisitas" class="tasks-wrapper"></div>
+        </div>
+
+        <h3 class="section-title-vol">Tareas cerca de ti</h3>
+
+        <div id="availableTasks" class="tasks-wrapper">
+            <div class="empty-state-card">
+                <div class="empty-icon">🏠</div>
+                <h3>No tienes solicitudes</h3>
+                <p>Las tareas disponibles aparecerán aquí cuando se carguen desde el sistema.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <a href="paginainiciovoluntario.html" class="nav-item active-vol">
+            <span class="nav-icon">🏠</span>
+            <span>Inicio</span>
+        </a>
+
+        <a href="mensajes.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Mensajes</span>
+        </a>
+
+        <a href="perfil.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Perfil</span>
+        </a>
+    </div>
+
+    <script src="paginainiciovoluntario.js"></script>
+</body>
+</html>

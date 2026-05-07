@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - GenerAction</title>
+    <link rel="stylesheet" href="perfil_style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" id="backBtn" class="back-btn">← Volver</a>
+        <div class="nav-title">Mi Perfil</div>
+    </nav>
+
+    <main class="container">
+        <section class="profile-card" id="profileView">
+            <div class="profile-header">
+                <div class="avatar-circle">
+                    <span style="font-size:3rem;">👤</span>
+                </div>
+                <h1 id="displayName">Cargando...</h1>
+                <p id="displayEmail">Cargando email...</p>
+                <button class="main-edit-btn" onclick="toggleEdit()">Editar mi Perfil</button>
+            </div>
+
+            <div class="tasks-container">
+                <div class="tasks-column">
+                    <h3 id="tituloCurso">📋 Tareas En Curso</h3>
+                    <div class="task-list" id="tareasCurso">
+                        <p>Cargando...</p>
+                    </div>
+                </div>
+
+                <div class="tasks-column">
+                    <h3 id="tituloFinalizadas">✅ Tareas Finalizadas</h3>
+                    <div class="task-list" id="tareasFinalizadas">
+                        <p>Cargando...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="edit-card" id="editForm" style="display: none;">
+            <h2>Editar Información</h2>
+            <form id="updateForm" onsubmit="return false;">
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="editName">Nombre Completo</label>
+                        <input type="text" id="editName" value="">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="editPhone">Teléfono</label>
+                        <input type="tel" id="editPhone" value="">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="editEmail">Correo Electrónico</label>
+                    <input type="email" id="editEmail" value="">
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="cancel-btn" onclick="toggleEdit()">Cancelar</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <div class="footer-nav" id="footerNav"></div>
+
+    <script src="perfil.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f5f9;
+    padding-bottom: 90px;
+    min-height: 100vh;
+}
+
+/* TOPBAR */
+.topbar {
+    background: #4a90e2;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.back-link {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.title {
+    font-size: 1.2rem;
+    font-weight: 800;
+}
+
+/* LISTA DE CONVERSACIONES */
+.conversations-list {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.loading, .empty-msg {
+    text-align: center;
+    color: #aaa;
+    padding: 60px 20px;
+    font-size: 0.95rem;
+}
+
+.empty-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+}
+
+/* TARJETA DE CONVERSACIÓN */
+.conv-card {
+    background: white;
+    border-radius: 18px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    text-decoration: none;
+    color: inherit;
+    border-left: 5px solid #4a90e2;
+}
+
+.conv-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.conv-card.sin-mensajes {
+    border-left-color: #d0dce8;
+    opacity: 0.8;
+}
+
+/* AVATAR */
+.conv-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #e8f1ff;
+    color: #4a90e2;
+    font-size: 1.4rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.conv-card.sin-mensajes .conv-avatar {
+    background: #f0f4f8;
+    color: #aaa;
+}
+
+/* TEXTO */
+.conv-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.conv-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 3px;
+}
+
+.conv-nombre {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #222;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.conv-hora {
+    font-size: 0.72rem;
+    color: #aaa;
+    flex-shrink: 0;
+    margin-left: 8px;
+}
+
+.conv-actividad {
+    font-size: 0.78rem;
+    color: #4a90e2;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.conv-preview {
+    font-size: 0.85rem;
+    color: #777;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.conv-preview.sin-msg {
+    color: #bbb;
+    font-style: italic;
+}
+
+/* FLECHA */
+.conv-arrow {
+    color: #ccc;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+/* FOOTER NAV */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.05);
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #b0b0b0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.nav-item.active { color: #4a90e2; }
+.nav-icon { font-size: 1.3rem; margin-bottom: 3px; }

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenerAction - Mis Solicitudes</title>
+    <link rel="stylesheet" href="paginainiciousuario.css?v=99">
+</head>
+<body>
+
+    <div class="topbar">
+        <button class="back-link" onclick="cerrarSesion()">← Cerrar Sesión</button>
+        <div class="title">GenerAction</div>
+        <div style="width: 60px;"></div>
+    </div>
+
+    <div class="banner">
+        <div class="user-info">
+            <div class="avatar">👤</div>
+            <h2 id="panelTitle">Panel de Usuario</h2>
+            <p id="welcomeText">Cargando...</p>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="cta">
+            <button onclick="openModal()">+ Solicitar Ayuda</button>
+        </div>
+
+        <div class="card" id="taskContainer">
+            <div class="empty-state">
+                <div class="icon-house">🏠</div>
+                <h2>No tienes solicitudes</h2>
+                <p>Presiona el botón de arriba para solicitar ayuda</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+
+            <h2>Nueva solicitud</h2>
+            <p class="subtitle">Selecciona una sugerencia o escribe lo que necesites.</p>
+
+            <div class="suggestions">
+                <div class="suggestion-tag" onclick="fillForm('COMPRA', 'Ir a la compra')">🛒 Ir a la compra</div>
+                <div class="suggestion-tag" onclick="fillForm('PASEO', 'Pasear al perro')">🐕 Pasear al perro</div>
+                <div class="suggestion-tag" onclick="fillForm('TECNOLOGIA', 'Ayuda con el móvil')">📱 Ayuda con el móvil</div>
+                <div class="suggestion-tag" onclick="fillForm('MEDICINAS', 'Recoger medicinas')">💊 Medicinas</div>
+            </div>
+
+            <input type="text" id="taskInput" placeholder="Describe brevemente la ayuda que necesitas...">
+
+            <select id="horarioInput" class="horario-select">
+                <option value="MANANA">Mañana</option>
+                <option value="TARDE">Tarde</option>
+                <option value="FIN_SEMANA">Fin de semana</option>
+                <option value="FLEXIBLE">Flexible</option>
+            </select>
+
+            <button class="save-btn" onclick="addTask()">Guardar Solicitud</button>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <a href="paginainiciousuario.html" class="nav-item active">
+            <span class="nav-icon">🏠</span>
+            <span>Inicio</span>
+        </a>
+
+        <a href="mensajes.html" class="nav-item">
+            <span class="nav-icon">💬</span>
+            <span>Mensajes</span>
+        </a>
+
+        <a href="perfil.html" class="nav-item">
+            <span class="nav-icon">👤</span>
+            <span>Perfil</span>
+        </a>
+    </div>
+
+    <script src="paginainiciousuario.js?v=99"></script>
+</body>
+</html>
