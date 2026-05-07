@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8080/api";
+const API_BASE = "https://proyectosii26.onrender.com/api";
 const voluntarioId = localStorage.getItem("userId");
 const nombre = localStorage.getItem("nombre") || "Voluntario";
 
@@ -55,7 +55,6 @@ function renderSolicitud(solicitud) {
                 <span class="category-pill">${solicitud.tipoActividad || "Actividad"}</span>
                 <span class="task-distance">${solicitud.mayor?.municipio || ""}</span>
             </div>
-
             <h4>${nombreMayor}</h4>
             <p class="task-author">
                 <strong>Fecha:</strong> ${solicitud.fechaSolicitada || "Sin fecha"}
@@ -64,7 +63,6 @@ function renderSolicitud(solicitud) {
                 <strong>Horario:</strong> ${solicitud.horario || "Sin horario"}
             </p>
             <p class="task-desc">${solicitud.descripcion || "Sin descripción"}</p>
-
             <button class="accept-btn-vol" onclick="aceptarSolicitud(${solicitud.idSolicitud})">
                 Aceptar solicitud
             </button>
@@ -85,12 +83,15 @@ function renderVisita(visita) {
         <div class="volunteer-card visita-card">
             <div class="task-header">
                 <span class="category-pill">${tipoActividad}</span>
-                <span class="visita-badge">Aceptada</span>
+                <span class="visita-badge">En curso</span>
             </div>
             <h4>${nombreMayor}</h4>
             <p class="task-desc">${descripcion}</p>
             <button class="chat-btn-vol" onclick="window.location.href='chat.html?idVisita=${visita.idVisita}&nombreContacto=${nombreContactoCodificado}'">
                 💬 Chatear con ${nombreMayor.split(" ")[0]}
+            </button>
+            <button class="finalizar-btn" onclick="finalizarVisita(${visita.idVisita})">
+                ✅ Marcar como realizada
             </button>
         </div>
     `;
@@ -110,8 +111,14 @@ async function cargarMisVisitas() {
             return;
         }
 
+        const enCurso = visitas.filter(v => v.estado === "PROGRAMADA");
+        if (enCurso.length === 0) {
+            section.style.display = "none";
+            return;
+        }
+
         section.style.display = "block";
-        container.innerHTML = visitas.map(renderVisita).join("");
+        container.innerHTML = enCurso.map(renderVisita).join("");
     } catch (e) {
         console.error("Error cargando visitas del voluntario:", e);
     }
@@ -144,9 +151,7 @@ async function aceptarSolicitud(idSolicitud) {
     try {
         const response = await fetch(`${API_BASE}/solicitudes/asignar`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 idSolicitud: Number(idSolicitud),
                 idVoluntario: Number(voluntarioId)
@@ -163,5 +168,38 @@ async function aceptarSolicitud(idSolicitud) {
     } catch (error) {
         console.error("Error aceptando solicitud:", error);
         alert("No se pudo aceptar la solicitud.");
+    }
+}
+
+async function finalizarVisita(idVisita) {
+    if (!confirm("¿Confirmas que has completado esta tarea?")) return;
+
+    const ahora = new Date().toISOString().split(".")[0];
+
+    try {
+        const response = await fetch(`${API_BASE}/visitas/${idVisita}/realizar`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                fechaVisita: ahora,
+                duracionMinutos: 60
+            })
+        });
+
+        if (!response.ok) throw new Error("No se pudo finalizar");
+
+        // Obtener puntos actualizados
+        const walletRes = await fetch(`${API_BASE}/voluntarios/${voluntarioId}/wallet`);
+        if (walletRes.ok) {
+            const wallet = await walletRes.json();
+            alert(`✅ ¡Tarea completada! Has ganado 10 puntos. Total: ${wallet.puntosWallet} puntos 🎉`);
+        } else {
+            alert("✅ ¡Tarea completada! Has ganado 10 puntos 🎉");
+        }
+
+        await Promise.all([cargarMisVisitas(), cargarSolicitudes()]);
+    } catch (error) {
+        console.error("Error finalizando visita:", error);
+        alert("No se pudo finalizar la tarea.");
     }
 }
