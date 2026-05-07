@@ -106,7 +106,20 @@ function renderSolicitudes(solicitudes) {
         return;
     }
 
-    solicitudes.forEach((solicitud) => {
+    const filtradas = solicitudes.filter(s => s.estado !== "COMPLETADA" && s.estado !== "CANCELADA");
+
+    if (filtradas.length === 0) {
+        taskContainer.innerHTML = `
+            <div class="empty-state">
+                <div class="icon-house">🏠</div>
+                <h2>No tienes solicitudes activas</h2>
+                <p>Presiona el botón de arriba para solicitar ayuda</p>
+            </div>
+        `;
+        return;
+    }
+
+    filtradas.forEach((solicitud) => {
         const div = document.createElement("div");
         div.className = "task-item";
 
@@ -152,6 +165,16 @@ async function cargarVisitasMayor() {
                 visitasPorSolicitud[v.solicitud.idSolicitud] = v;
             }
         });
+
+        // Detectar visitas REALIZADA sin valorar aún
+        const yaValoradas = JSON.parse(localStorage.getItem("visitasValoradas") || "[]");
+        const realizadas = visitas.filter(v => v.estado === "REALIZADA" && !yaValoradas.includes(v.idVisita));
+
+        for (const visita of realizadas) {
+            yaValoradas.push(visita.idVisita);
+            localStorage.setItem("visitasValoradas", JSON.stringify(yaValoradas));
+            await mostrarPopupValoracion(visita.idVisita);
+        }
     } catch (e) {
         console.error("Error cargando visitas del mayor:", e);
     }
@@ -220,5 +243,39 @@ async function addTask() {
     } catch (error) {
         console.error("Error al guardar solicitud:", error);
         alert("No se pudo guardar la solicitud.");
+    }
+}
+
+async function mostrarPopupValoracion(idVisita) {
+    const puntuacion = prompt("⭐ ¿Cómo valorarías la ayuda recibida? (1-5 estrellas)");
+    if (!puntuacion) return;
+
+    const num = parseInt(puntuacion);
+    if (isNaN(num) || num < 1 || num > 5) {
+        alert("Por favor introduce un número entre 1 y 5.");
+        return;
+    }
+
+    const comentario = prompt("💬 ¿Quieres dejar algún comentario? (opcional)") || "";
+
+    try {
+        const res = await fetch(`${API_BASE}/valoraciones`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                idVisita: idVisita,
+                puntuacion: num,
+                comentario: comentario,
+                rol: "MAYOR"
+            })
+        });
+
+        if (res.ok) {
+            alert("¡Gracias por tu valoración! 😊");
+        } else {
+            alert("No se pudo guardar la valoración.");
+        }
+    } catch (e) {
+        console.error("Error enviando valoración:", e);
     }
 }
