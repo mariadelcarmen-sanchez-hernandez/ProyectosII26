@@ -14,8 +14,12 @@ import com.generaction.backend.dto.SolicitudResumenDTO;
 import com.generaction.backend.dto.VisitaResponseDTO;
 import com.generaction.backend.dto.VoluntarioResumenDTO;
 import com.generaction.backend.entity.Mayor;
+import com.generaction.backend.entity.Solicitud;
 import com.generaction.backend.entity.Visita;
+import com.generaction.backend.entity.Voluntario;
+import com.generaction.backend.repository.SolicitudRepository;
 import com.generaction.backend.repository.VisitaRepository;
+import com.generaction.backend.repository.VoluntarioRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,8 +28,9 @@ import lombok.RequiredArgsConstructor;
 public class VisitaService {
 
     private final VisitaRepository visitaRepository;
-    
     private final NotificacionService notificacionService;
+    private final SolicitudRepository solicitudRepository;
+    private final VoluntarioRepository voluntarioRepository;
 
     public List<Visita> obtenerTodas() {
         return visitaRepository.findAll();
@@ -59,10 +64,23 @@ public class VisitaService {
         visita.setDuracionMinutos(dto.getDuracionMinutos());
         visita.setEstado(Visita.EstadoVisita.REALIZADA);
 
+        // Marcar solicitud como COMPLETADA
+        Solicitud solicitud = visita.getSolicitud();
+        if (solicitud != null) {
+            solicitud.setEstado(Solicitud.EstadoSolicitud.COMPLETADA);
+            solicitudRepository.save(solicitud);
+        }
+
+        // Sumar 10 puntos al voluntario
+        Voluntario voluntario = visita.getVoluntario();
+        if (voluntario != null) {
+            voluntario.setPuntosWallet(voluntario.getPuntosWallet() + 10);
+            voluntarioRepository.save(voluntario);
+        }
+
         Visita visitaGuardada = visitaRepository.save(visita);
 
         Mayor mayor = visitaGuardada.getMayor();
-
         if (mayor != null && mayor.getContactoFamiliarTelefono() != null
                 && !mayor.getContactoFamiliarTelefono().isBlank()) {
 
@@ -72,7 +90,6 @@ public class VisitaService {
             notificacionDTO.setMensaje("El voluntario ha llegado a la visita.");
             notificacionDTO.setFecha(LocalDateTime.now());
             notificacionDTO.setLeida(false);
-
             notificacionService.crearNotificacion(notificacionDTO);
         }
 
@@ -150,5 +167,4 @@ public class VisitaService {
         Visita visita = actualizarEstado(idVisita, dto);
         return convertirADTO(visita);
     }
-
 }
