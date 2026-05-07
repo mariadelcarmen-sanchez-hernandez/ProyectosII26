@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8080/api";
+const API_BASE = "https://proyectosii26.onrender.com/api";
 
 let modal;
 let taskInput;

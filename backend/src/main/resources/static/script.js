@@ -27,7 +27,7 @@ function construirPayloadMayor() {
 async function registrarMayor() {
   const payload = construirPayloadMayor();
 
-  const response = await fetch("http://localhost:8080/api/mayores", {
+  const response = await fetch("https://proyectosii26.onrender.com/api/mayores", {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
@@ -75,7 +75,7 @@ nextBtn.addEventListener('click', () => {
 
     registrarMayor()
       .then(async (mayor) => {
-        const loginResponse = await fetch("http://localhost:8080/api/auth/login", {
+        const loginResponse = await fetch("https://proyectosii26.onrender.com/api/auth/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: emailMayor, password: passwordMayor })

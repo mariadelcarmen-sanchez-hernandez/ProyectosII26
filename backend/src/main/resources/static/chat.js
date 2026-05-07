@@ -1,4 +1,4 @@
-const API_BASE = "http://localhost:8080/api";
+const API_BASE = "https://proyectosii26.onrender.com/api";
 
 const params = new URLSearchParams(window.location.search);
 const idVisita = params.get("idVisita");
