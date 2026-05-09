@@ -1,4 +1,4 @@
-const API_BASE = "https://generaction.onrender.com/api";
+const API_BASE = "https://proyectosii26.onrender.com/api";
 const voluntarioId = localStorage.getItem("userId");
 const nombre = localStorage.getItem("nombre") || "Voluntario";
 

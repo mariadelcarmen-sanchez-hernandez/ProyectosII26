@@ -1,4 +1,4 @@
-const API_BASE = "https://generaction.onrender.com/api";
+const API_BASE = "https://proyectosii26.onrender.com/api";
 
 let modal;
 let taskInput;
