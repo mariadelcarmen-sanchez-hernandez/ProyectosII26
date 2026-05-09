@@ -18,7 +18,7 @@ document.getElementById('voluntarioForm').addEventListener('submit', async funct
   };
 
   try {
-    const response = await fetch("https://proyectosii26.onrender.com/api/voluntarios", {
+    const response = await fetch("https://generaction.onrender.com/api/voluntarios", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datos)
@@ -27,7 +27,7 @@ document.getElementById('voluntarioForm').addEventListener('submit', async funct
     if (response.ok) {
       const voluntario = await response.json();
 
-      const loginResponse = await fetch("https://proyectosii26.onrender.com/api/auth/login", {
+      const loginResponse = await fetch("https://generaction.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: datos.email, password: datos.password })
