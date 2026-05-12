@@ -63,6 +63,27 @@
         </div>
     </div>
 
+    <!-- Modal valoración de visita -->
+    <div class="modal" id="modal-valoracion">
+        <div class="modal-content">
+            <h2>⭐ Valorar visita</h2>
+            <p class="subtitle">Cuéntanos cómo fue la experiencia.</p>
+
+            <div class="star-selector" id="starSelector">
+                <span class="star-opt" data-val="1" onclick="seleccionarEstrellas(1)">★</span>
+                <span class="star-opt" data-val="2" onclick="seleccionarEstrellas(2)">★</span>
+                <span class="star-opt" data-val="3" onclick="seleccionarEstrellas(3)">★</span>
+                <span class="star-opt" data-val="4" onclick="seleccionarEstrellas(4)">★</span>
+                <span class="star-opt" data-val="5" onclick="seleccionarEstrellas(5)">★</span>
+            </div>
+            <p class="star-hint" id="starHint">Toca para puntuar</p>
+
+            <textarea id="comentarioValoracion" placeholder="¿Quieres dejar algún comentario? (opcional)"></textarea>
+
+            <button class="save-btn" onclick="enviarValoracion()">Publicar Valoración</button>
+        </div>
+    </div>
+
     <div class="footer-nav">
         <a href="paginainiciousuario.html" class="nav-item active">
             <span class="nav-icon">🏠</span>

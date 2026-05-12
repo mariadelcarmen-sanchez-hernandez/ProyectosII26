@@ -243,29 +243,48 @@ async function addTask() {
     }
 }
 
-async function mostrarPopupValoracion(idVisita) {
-    const puntuacion = prompt("⭐ ¿Cómo valorarías la ayuda recibida? (1-5 estrellas)");
-    if (!puntuacion) return;
+let _visitaIdPendiente = null;
+let _estrellasSeleccionadas = 0;
 
-    const num = parseInt(puntuacion);
-    if (isNaN(num) || num < 1 || num > 5) {
-        alert("Por favor introduce un número entre 1 y 5.");
+function seleccionarEstrellas(val) {
+    _estrellasSeleccionadas = val;
+    document.querySelectorAll(".star-opt").forEach(s => {
+        s.classList.toggle("active", parseInt(s.dataset.val) <= val);
+    });
+    const etiquetas = ["", "Muy malo", "Malo", "Regular", "Bueno", "Excelente"];
+    document.getElementById("starHint").textContent = etiquetas[val];
+}
+
+function mostrarPopupValoracion(idVisita) {
+    _visitaIdPendiente = idVisita;
+    _estrellasSeleccionadas = 0;
+    document.querySelectorAll(".star-opt").forEach(s => s.classList.remove("active"));
+    document.getElementById("starHint").textContent = "Toca para puntuar";
+    document.getElementById("comentarioValoracion").value = "";
+    document.getElementById("modal-valoracion").style.display = "flex";
+}
+
+async function enviarValoracion() {
+    if (_estrellasSeleccionadas === 0) {
+        alert("Por favor selecciona una puntuación.");
         return;
     }
 
-    const comentario = prompt("💬 ¿Quieres dejar algún comentario? (opcional)") || "";
+    const comentario = document.getElementById("comentarioValoracion").value.trim();
 
     try {
         const res = await fetch(`${API_BASE}/valoraciones`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                idVisita: idVisita,
-                puntuacion: num,
+                idVisita: _visitaIdPendiente,
+                puntuacion: _estrellasSeleccionadas,
                 comentario: comentario,
                 rol: "MAYOR"
             })
         });
+
+        document.getElementById("modal-valoracion").style.display = "none";
 
         if (res.ok) {
             alert("¡Gracias por tu valoración! 😊");
@@ -274,5 +293,6 @@ async function mostrarPopupValoracion(idVisita) {
         }
     } catch (e) {
         console.error("Error enviando valoración:", e);
+        alert("Error al enviar la valoración.");
     }
 }
