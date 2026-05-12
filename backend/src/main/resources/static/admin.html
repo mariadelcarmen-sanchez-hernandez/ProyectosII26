@@ -759,7 +759,7 @@
             if (!token || rol !== 'ADMIN') window.location.replace('login.html');
         })();
 
-        const API = 'http://localhost:8080';
+        const API = 'https://proyectosii26.onrender.com';
 
         function authFetch(path) {
             return fetch(API + path, {
@@ -796,12 +796,94 @@
                 document.querySelector('.stat-card.green .stat-value').textContent  = d.totalVoluntarios || 0;
                 document.querySelector('.stat-card.orange .stat-value').textContent = d.totalSolicitudes || 0;
                 document.querySelector('.stat-card.gold .stat-value').textContent   = d.totalResenas || 0;
+
                 var est   = d.solicitudesPorEstado || {};
                 var chips = document.querySelectorAll('.filter-chip .chip-count');
                 if (chips[0]) chips[0].textContent = d.totalSolicitudes || 0;
                 if (chips[1]) chips[1].textContent = est.PENDIENTE || 0;
                 if (chips[2]) chips[2].textContent = (est.ASIGNADA || 0) + (est.EN_TRAMITE || 0);
                 if (chips[3]) chips[3].textContent = (est.COMPLETADA || 0) + (est.CANCELADA || 0);
+
+                // Actualizar donut chart con datos reales
+                var totalSol    = d.totalSolicitudes || 0;
+                var completadas = (est.COMPLETADA || 0) + (est.CANCELADA || 0);
+                var enCurso     = (est.ASIGNADA || 0) + (est.EN_TRAMITE || 0);
+                var pendientes  = est.PENDIENTE || 0;
+                var circ        = 219.9;
+                var divisor     = totalSol || 1;
+
+                var pComp  = (completadas / divisor) * circ;
+                var pCurso = (enCurso     / divisor) * circ;
+                var pPend  = (pendientes  / divisor) * circ;
+
+                var circles = document.querySelectorAll('.donut-svg circle');
+                if (circles[1]) circles[1].setAttribute('stroke-dasharray', pComp.toFixed(1)  + ' ' + circ);
+                if (circles[2]) {
+                    circles[2].setAttribute('stroke-dasharray',  pCurso.toFixed(1) + ' ' + circ);
+                    circles[2].setAttribute('stroke-dashoffset', (-pComp).toFixed(1));
+                }
+                if (circles[3]) {
+                    circles[3].setAttribute('stroke-dasharray',  pPend.toFixed(1) + ' ' + circ);
+                    circles[3].setAttribute('stroke-dashoffset', (-(pComp + pCurso)).toFixed(1));
+                }
+
+                document.querySelector('.donut-num').textContent = totalSol;
+                var legend = document.querySelectorAll('.legend-item strong');
+                if (legend[0]) legend[0].textContent = completadas;
+                if (legend[1]) legend[1].textContent = enCurso;
+                if (legend[2]) legend[2].textContent = pendientes;
+
+            }).catch(console.error);
+        }
+
+        // Mini reseñas del resumen (overview)
+        function loadMiniResenas() {
+            authFetch('/api/admin/resenas').then(function (list) {
+                var miniList = document.querySelector('.mini-review-list');
+                if (!miniList) return;
+                if (!list.length) {
+                    miniList.innerHTML = '<p style="color:#888;padding:8px 0">Sin reseñas todavía.</p>';
+                    return;
+                }
+                var ultimas = list.slice(-4).reverse();
+                miniList.innerHTML = ultimas.map(function (r) {
+                    var stars     = '★'.repeat(r.puntuacion) + '☆'.repeat(5 - r.puntuacion);
+                    var starClass = r.puntuacion >= 5 ? '' : ' four';
+                    return '<div class="mini-review">' +
+                        '<div class="mini-review-top">' +
+                        '<span class="mini-name">' + r.autor + '</span>' +
+                        '<span class="mini-stars' + starClass + '">' + stars + '</span>' +
+                        '</div>' +
+                        '<p class="mini-text">"' + (r.comentario || 'Sin comentario') + '"</p>' +
+                        '</div>';
+                }).join('');
+            }).catch(console.error);
+        }
+
+        // Categorías más solicitadas (overview)
+        var EMOJIS_TIPO = { COMPRA: '🛒', MEDICINAS: '💊', TECNOLOGIA: '📱', PASEO: '🚶', OTROS: '📋' };
+        var COLORES_CAT = ['#2ecc71', '#f59e0b', '#4a90e2', '#a78bfa'];
+
+        function loadCategorias() {
+            authFetch('/api/admin/solicitudes').then(function (list) {
+                var counts = {};
+                list.forEach(function (s) {
+                    var tipo = s.tipoActividad || 'OTROS';
+                    counts[tipo] = (counts[tipo] || 0) + 1;
+                });
+                var sorted = Object.entries(counts).sort(function (a, b) { return b[1] - a[1]; }).slice(0, 4);
+                var max = sorted.length ? sorted[0][1] : 1;
+                var catBars = document.querySelector('.cat-bars');
+                if (!catBars || !sorted.length) return;
+                catBars.innerHTML = sorted.map(function (entry, i) {
+                    var emoji = EMOJIS_TIPO[entry[0]] || '📋';
+                    var pct   = Math.round((entry[1] / max) * 100);
+                    return '<div class="cat-row">' +
+                        '<span class="cat-label">' + emoji + ' ' + entry[0] + '</span>' +
+                        '<div class="cat-track"><div class="cat-fill" style="width:' + pct + '%;background:' + COLORES_CAT[i] + '"></div></div>' +
+                        '<span class="cat-count">' + entry[1] + '</span>' +
+                        '</div>';
+                }).join('');
             }).catch(console.error);
         }
 
@@ -915,6 +997,8 @@
         document.addEventListener('DOMContentLoaded', function () {
             tabLoaded['overview'] = true;
             loadStats();
+            loadMiniResenas();
+            loadCategorias();
         });
     </script>
 </body>
